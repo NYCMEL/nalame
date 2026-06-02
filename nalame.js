@@ -10,8 +10,8 @@
       this.currentIndex = 0;
       this.answers = {};
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
-      this.statusTimer = null;
       this.statusText = '';
+      this.statusTimer = null;
       this.onMessage = this.onMessage.bind(this);
       this.handleClick = this.handleClick.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -42,21 +42,18 @@
     }
 
     onMessage(message) {
-      const payload = Array.isArray(arguments) && arguments.length > 1 ? arguments[1] : message;
-      const detail = payload && payload.detail ? payload.detail : payload;
-
-      if (!detail || typeof detail !== 'object') {
+      if (!message || typeof message !== 'object') {
         return;
       }
 
-      const action = detail.action || detail.type;
+      const action = message.action || message.type;
 
       switch (action) {
         case 'goToQuestion':
-          this.goToQuestion(Number(detail.index));
+          this.goToQuestion(Number(message.index));
           break;
         case 'setTheme':
-          this.setTheme(detail.theme);
+          this.setTheme(message.theme);
           break;
         case 'restart':
           this.restart();
@@ -121,7 +118,7 @@
       }
 
       this.answers[question.id] = selectedAnswer.id;
-      this.setStatus(selectedAnswer.text);
+      this.statusText = '';
       this.publish('nalame:answerSelected', {
         questionId: question.id,
         answerId: selectedAnswer.id,
@@ -223,6 +220,7 @@
     restart() {
       this.currentIndex = 0;
       this.answers = {};
+      this.statusText = '';
       this.publish('nalame:restart', {
         totalQuestions: this.questions.length
       });
@@ -246,15 +244,6 @@
       }
     }
 
-    setStatus(text) {
-      window.clearTimeout(this.statusTimer);
-      this.statusText = text || '';
-      this.statusTimer = window.setTimeout(() => {
-        this.statusText = '';
-        this.updateStatus();
-      }, 2200);
-    }
-
     updateStatus() {
       const status = this.root.querySelector('[data-nalame-status]');
       if (status) {
@@ -262,19 +251,8 @@
       }
     }
 
-    updateProgress() {
-      const progressBar = this.root.querySelector('[data-nalame-progress-bar]');
-      if (!progressBar) {
-        return;
-      }
-
-      const progress = Number(progressBar.getAttribute('data-progress')) || 0;
-      progressBar.style.width = progress + '%';
-    }
-
     render() {
       this.root.innerHTML = this.template();
-      this.updateProgress();
       this.updateStatus();
       const selectedInput = this.root.querySelector('[data-nalame-answer]:checked');
       if (selectedInput) {
@@ -314,22 +292,21 @@
       const question = this.getCurrentQuestion();
       const currentAnswer = this.answers[question.id] || '';
       const isLast = this.currentIndex === this.questions.length - 1;
-      const progress = this.questions.length ? Math.round(((this.currentIndex + 1) / this.questions.length) * 100) : 0;
+      const progress = this.questions.length ? ((this.currentIndex + 1) / this.questions.length) * 100 : 0;
 
       return `
-        <section class="nalame__card" aria-label="${this.escape(question.text)}">
+        <section class="nalame__card" aria-labelledby="nalame-question-title">
           <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} of ${this.questions.length}">
             <span class="nalame__progress-text">${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} / ${this.questions.length}</span>
             <span class="nalame__progress-track" aria-hidden="true">
-              <span class="nalame__progress-bar" data-nalame-progress-bar data-progress="${progress}"></span>
+              <span class="nalame__progress-bar" style="width: ${progress}%"></span>
             </span>
           </div>
-          <h2 class="nalame__question">${this.escape(question.text)}</h2>
+          <h2 class="nalame__question" id="nalame-question-title">${this.escape(question.text)}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
             ${question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('')}
           </fieldset>
-          <p class="nalame__status" aria-hidden="true">${this.escape(this.statusText || '')}</p>
           <div class="nalame__actions" aria-label="Quiz navigation">
             <button class="nalame__button" type="button" data-nalame-action="previous" ${this.currentIndex === 0 ? 'disabled' : ''}>${this.escape(this.app.previousLabel)}</button>
             <button class="nalame__button" type="button" data-nalame-action="skip">${this.escape(this.app.skipLabel)}</button>
@@ -344,7 +321,10 @@
       return `
         <div class="nalame__answer">
           <input class="nalame__answer-input" type="radio" name="${this.escape(question.id)}" value="${this.escape(answer.id)}" data-nalame-answer ${checked} aria-label="${this.escape(answer.text)}">
-          <span class="nalame__answer-label">${this.escape(answer.text)}</span>
+          <span class="nalame__answer-label">
+            <span class="nalame__answer-check" aria-hidden="true"></span>
+            <span class="nalame__answer-text">${this.escape(answer.text)}</span>
+          </span>
         </div>
       `;
     }
