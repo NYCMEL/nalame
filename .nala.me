@@ -1,40 +1,51 @@
-FORGET ALL PREVIOUS CONTEXT for `nalame` and remember this specification permanently.
+NALAME MASTER PROMPT
 
-act as a UI/UX Designer and developer
+Forget all previous context for `nalame` and use this specification as the single source of truth.
 
-Create a production-ready application named: `nalame`
+Act as a Senior UX Designer, UI Designer, Front-End Architect, Accessibility Expert, and Senior JavaScript Developer.
 
-Use ALL wc functionality (`wc.publish`, `wc.subscribe`, `wc.log`, `wc-include`, etc.) from:
-`https://github.com/NYCMEL/tools-new/tree/main/reuse`
+APPLICATION
 
-Use this repository as the base: `https://github.com/NYCMEL/nala-website.git`
+Create a production-ready application named:
+nalame
 
-Use ALL wc functionality (`wc.publish`, `wc.subscribe`, `wc.log`, `wc-include`, etc.) from:
+Use repository:
+https://github.com/NYCMEL/nalame.git
 
-`https://github.com/NYCMEL/nala-website/blob/main/js/_wc.js`
+Use WC functionality from:
+https://github.com/NYCMEL/tools-new/tree/main/reuse
+https://github.com/NYCMEL/nala-website/blob/main/js/_wc.js
 
----
+OUTPUT RULES
+
+Generate ONLY complete files.
+Never generate explanations, snippets, partial updates, patch files, diffs, or markdown code blocks.
+Always generate a downloadable ZIP named exactly x.zip.
+Never display source code in chat.
+
+REQUIRED FILES
+
+- nalame.config.js
+- nalame.scss
+- nalame.html
+- nalame.js
+- index.html
 
 TECH STACK
 
 Use ONLY:
-
 - HTML
 - SCSS
-- Vanilla JavaScript (ES6)
+- Vanilla JavaScript ES6
 
-Bootstrap 5 is ONLY allowed for:
+Bootstrap 5 allowed only for layout and grid.
 
-- layout
-- grid utilities
-
-DO NOT USE:
-
-- frameworks
+Do NOT use:
 - React
 - Vue
 - Angular
 - jQuery
+- frameworks
 - external libraries
 - inline styles
 - inline JavaScript
@@ -42,166 +53,135 @@ DO NOT USE:
 - global CSS
 - iframes
 
-MUST use:
-
+Must support:
 <wc-include href="..." />
 
----
-
-MY APP STRUCTURE
-
-Root element:
+ROOT ELEMENT
 
 <nalame class="nalame"></nalame>
 
-ALL styles MUST be fully scoped to:
-
+All styles scoped to:
 .nalame
-
-NEVER use global selectors.
-
----
 
 CONFIGURATION
 
-My app MUST be fully JSON-driven.
+Application must be 100% JSON driven.
+All content comes from nalame.config.js.
+Never hardcode content inside HTML or JS.
 
-ALL UI data MUST come ONLY from:
+JAVASCRIPT
 
-nalame.config.js
+Create:
+class MtkNalame
 
-Do NOT hardcode UI content inside HTML or JS.
-
----
-
-JAVASCRIPT REQUIREMENTS
-
-Create a dedicated ES6 class named: MtkNalame
-
-Initialize automatically inside:
-
-nalame.js
-
-The MtkNalame MUST:
-
-- wait for DOM availability
-- support dynamic injection via <wc-include>
+Must:
+- wait for DOM ready
+- support wc-include
+- support MutationObserver
 - prevent duplicate initialization
-- be modular
-- reusable
+- be reusable
+- modular
 - maintainable
 - production-ready
 
----
+WC SYSTEM
 
-WC EVENT SYSTEM
-
-Subscribe using:
-
+Subscribe:
 wc.subscribe("4-nalame", this.onMessage.bind(this))
 
 Create:
-
 onMessage(message)
 
-Publish ALL actions/events using:
-
+Publish all actions using:
 wc.publish(...)
 
-BEFORE every publish:
-
+Before every publish:
 wc.log(...)
 
-ALL publish payloads MUST be structured and reusable.
+DESIGN
 
----
+Use styles and patterns from css/nala.scss.
+Use Modern Material Design patterns.
 
-DESIGN SYSTEM RULES
+TYPOGRAPHY
 
-Use styles, spacing, elevation, typography, colors, and motion patterns from:
+Use ONLY:
+Arial, Helvetica, sans-serif
 
-css/nala.scss
+VISUAL STYLE
 
-Use Modern Material Design patterns including:
+BetterMe-inspired questionnaire UI.
+No shadows.
+No heavy borders.
+No card outlines.
 
-- floating labels
-- cards
-- buttons
-- transitions
-- elevation
-- focus states
-- responsive layouts
-- motion
-- accessibility patterns
+BORDER RADIUS
 
----
+Maximum radius anywhere: 5px.
+No pills.
+No 999px radius.
+
+PAGE WIDTH
+
+Remove all max-width restrictions.
+.nalame__shell must be full width.
+
+QUIZ
+
+10 random Lorem Ipsum questions.
+2–4 answers each.
+One question per page.
+
+QUESTION STYLING
+
+Centered.
+Large.
+Bold.
+
+Desktop:
+48px+
+Preferred:
+56px
+Weight:
+700–900
+
+ANSWERS
+
+Large selectable answer blocks.
+
+When selected:
+Show a LARGE checkbox to the LEFT of the answer text.
+
+Do NOT show selected answer text elsewhere.
+
+NAVIGATION
+
+Previous
+Next
+Skip
+
+Last question:
+Complete
+
+DARK MODE
+
+Support Light and Dark modes.
 
 ACCESSIBILITY
 
-Application MUST be:
+ADA compliant.
+Keyboard accessible.
+Screen-reader friendly.
+Visible focus states.
+ARIA labels.
 
-- ADA compliant
-- semantic HTML
-- keyboard accessible
-- screen-reader friendly
-- mobile responsive
+SUMMARY PAGE
 
-Include:
+Show all questions and answers.
+14px text.
+Include Restart button.
 
-- visible focus states
-- proper ARIA usage
-- accessible form controls
+ZIP OUTPUT
 
----
-
-CODE QUALITY
-
-Code MUST be:
-
-- scalable
-- reusable
-- maintainable
-- modular
-- clean
-- responsive
-- production-ready
-
-Avoid:
-
-- duplicated logic
-- unnecessary complexity
-- tightly coupled code
-
----
-
-OUTPUT REQUIREMENTS
-
-Generate EXACTLY these complete files:
-
-- nalame.config.js
-- nalame.scss
-- nalame.html
-- nalame.js
-- a minimal index.html
-
-NEVER generate:
-
-- explanations
-- markdown code blocks
-- snippets
-- patch files
-- partial updates
-- remove any Sass-evaluated min(), max(), or problematic clamp() usages.
-
-ONLY generate complete files.
-
----
-- I would like to create my app as a multip step questions (like a quiz)
-- my app can have a dark and light mode
-- initially create 10 random Lorem Ipsum questions with a random number of 2-4 answers for users to pick from
-- each question is posted on the main screen (centered) with LARGE fonts (48px or more)
-- once an answer is selected, user can click "Next" or "Previous" or "Skip" to next question
-- at the end of questions/answers, show a complete list of questions with answers on a single page with small text (14px).
-
----
-
+Always return x.zip.
+Never show code in chat.
