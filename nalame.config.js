@@ -1,124 +1,118 @@
-window.nalameConfig = {
-  app: {
-    name: "nalame",
-    topic: "4-nalame",
-    publishTopic: "3-nalame",
-    analyticsPrefix: "nalame",
-    locale: "en-US"
+window.NalameConfig = {
+  meta: {
+    appName: "nalame",
+    version: "1.0.0",
+    topicSubscribe: "4-nalame",
+    topicPublish: "nalame-action"
   },
   brand: {
-    label: "NalaMe",
-    logoAlt: "NalaMe logo",
-    logoText: "NM"
+    name: "Nalame",
+    eyebrow: "Personalized fitness plan",
+    logoText: "N",
+    ariaLabel: "Nalame home"
   },
   hero: {
-    eyebrow: "PERSONALIZED FITNESS PLAN",
-    title: "Choose your age range",
-    subtitle: "Get a simple bodyweight plan built around your starting point, schedule, and goals.",
-    helperText: "Select one option to continue.",
-    imageAlt: "Person doing a bodyweight workout",
-    image: "",
-    progressLabel: "Step 1 of 5"
+    badge: "7-minute setup",
+    title: "Build a stronger body with a plan made for your lifestyle",
+    subtitle: "Answer a few quick questions and get a guided calisthenics-style plan you can customize later with your own content, images, and program details.",
+    primaryAction: "Start my plan",
+    secondaryAction: "See how it works",
+    imageAlt: "Person training at home with a guided fitness plan",
+    image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1100&q=80",
+    stats: [
+      { "value": "10 min", "label": "daily sessions" },
+      { "value": "0", "label": "equipment needed" },
+      { "value": "4 wk", "label": "starter path" }
+    ]
   },
-  ageOptions: [
-    {
-      id: "age-18-29",
-      label: "Age: 18-29",
-      description: "Build strength, mobility, and consistency.",
-      image: "",
-      imageAlt: "Young adult workout profile",
-      value: "18-29"
-    },
-    {
-      id: "age-30-39",
-      label: "Age: 30-39",
-      description: "Balance busy days with focused training.",
-      image: "",
-      imageAlt: "Adult workout profile",
-      value: "30-39"
-    },
-    {
-      id: "age-40-49",
-      label: "Age: 40-49",
-      description: "Improve control, endurance, and flexibility.",
-      image: "",
-      imageAlt: "Middle-aged adult workout profile",
-      value: "40-49"
-    },
-    {
-      id: "age-50-plus",
-      label: "Age: 50+",
-      description: "Move safely with progressive bodyweight work.",
-      image: "",
-      imageAlt: "Older adult workout profile",
-      value: "50+"
-    }
-  ],
-  form: {
-    sectionTitle: "Your profile",
-    fields: [
+  trust: {
+    title: "Designed for beginners and returners",
+    items: [
+      "Bodyweight-first workouts",
+      "Mobile-friendly guidance",
+      "Progressive daily steps"
+    ]
+  },
+  steps: {
+    title: "Your plan starts with simple questions",
+    items: [
       {
-        id: "firstName",
-        name: "firstName",
-        label: "First name",
-        type: "text",
-        autocomplete: "given-name",
-        required: false,
-        error: "Enter your first name."
+        "icon": "person",
+        "title": "Tell us your goal",
+        "text": "Choose your main focus so the experience can guide the next step."
       },
       {
-        id: "goal",
-        name: "goal",
-        label: "Main goal",
-        type: "select",
-        required: false,
-        options: [
-          { "label": "Build strength", "value": "strength" },
-          { "label": "Lose weight", "value": "weight-loss" },
-          { "label": "Improve mobility", "value": "mobility" },
-          { "label": "Start a routine", "value": "routine" }
-        ],
-        error: "Choose your main goal."
+        "icon": "schedule",
+        "title": "Pick your routine",
+        "text": "Select a realistic schedule that fits into your daily life."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Follow your path",
+        "text": "Use a clear plan with cards, prompts, and progress cues."
       }
     ]
   },
-  actions: {
-    primary: {
-      label: "Continue",
-      ariaLabel: "Continue after selecting age range",
-      event: "nalame.continue"
-    },
-    secondary: {
-      label: "Learn more",
-      ariaLabel: "Learn more about this plan",
-      event: "nalame.learnMore"
-    }
+  quiz: {
+    title: "Let’s personalize your starting point",
+    subtitle: "This sample form is fully JSON-driven and ready for your next prompt updates.",
+    submitLabel: "Continue",
+    fields: [
+      {
+        "name": "goal",
+        "label": "Main goal",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "value": "strength", "label": "Build strength" },
+          { "value": "mobility", "label": "Improve mobility" },
+          { "value": "weight", "label": "Lose weight" },
+          { "value": "habit", "label": "Build a daily habit" }
+        ]
+      },
+      {
+        "name": "experience",
+        "label": "Experience level",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "value": "beginner", "label": "Beginner" },
+          { "value": "returning", "label": "Returning" },
+          { "value": "active", "label": "Active" }
+        ]
+      },
+      {
+        "name": "email",
+        "label": "Email address",
+        "type": "email",
+        "required": true,
+        "placeholder": "you@example.com"
+      }
+    ]
   },
-  trust: [
-    "No equipment required",
-    "Beginner friendly",
-    "Mobile-first plan"
-  ],
-  legal: {
-    text: "By choosing your age and continuing, you agree to review our policies before continuing.",
-    links: [
-      { "label": "Terms of Service", "href": "#" },
-      { "label": "Privacy Policy", "href": "#" }
+  benefits: {
+    title: "What this landing page supports",
+    items: [
+      {
+        "title": "Conversion-focused layout",
+        "text": "A clear hero, proof area, guided steps, and form section."
+      },
+      {
+        "title": "Material-inspired UI",
+        "text": "Cards, elevation, focus states, motion, and accessible controls."
+      },
+      {
+        "title": "Easy content replacement",
+        "text": "Text, labels, images, buttons, stats, and form fields live in config."
+      }
     ]
   },
   footer: {
-    title: "Docs",
+    text: "© 2026 Nalame. All content is configurable.",
     links: [
-      { "label": "FAQ", "href": "#" },
-      { "label": "Terms and Conditions", "href": "#" },
-      { "label": "Privacy Policy", "href": "#" },
-      { "label": "Subscription Policy", "href": "#" },
-      { "label": "Money-Back Policy", "href": "#" }
+      { "label": "Privacy", "href": "#privacy" },
+      { "label": "Terms", "href": "#terms" },
+      { "label": "Contact", "href": "#contact" }
     ]
-  },
-  messages: {
-    selectAge: "Please select your age range to continue.",
-    ready: "NalaMe is ready.",
-    updated: "NalaMe content updated."
   }
 };

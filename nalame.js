@@ -1,358 +1,312 @@
 class MtkNalame {
-  constructor(root, config) {
+  constructor(root) {
     this.root = root;
-    this.config = config || window.nalameConfig || {};
-    this.state = {
-      selectedAge: "",
-      form: {}
-    };
-    this.topic = this.config?.app?.topic || "4-nalame";
-    this.publishTopic = this.config?.app?.publishTopic || "3-nalame";
-    this.boundOnMessage = this.onMessage.bind(this);
+    this.config = window.NalameConfig || {};
+    this.meta = this.config.meta || {};
+    this.publishTopic = this.meta.topicPublish || 'nalame-action';
+    this.subscribeTopic = this.meta.topicSubscribe || '4-nalame';
+    this.container = this.root.querySelector('[data-nalame-root]') || this.root;
+    this.onMessage = this.onMessage.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   init() {
-    if (!this.root || this.root.dataset.nalameReady === "true") {
+    if (this.root.dataset.nalameInitialized === 'true') {
       return;
     }
 
-    this.root.dataset.nalameReady = "true";
+    this.root.dataset.nalameInitialized = 'true';
     this.render();
     this.bindEvents();
     this.subscribe();
-    this.publish("nalame.ready", {
-      message: this.config?.messages?.ready || "Ready",
-      component: this.config?.app?.name || "nalame"
-    });
+    this.publish('ready', { appName: this.meta.appName || 'nalame' });
+  }
+
+  bindEvents() {
+    this.root.addEventListener('click', this.handleClick);
+    this.root.addEventListener('submit', this.handleSubmit);
   }
 
   subscribe() {
-    if (window.wc && typeof window.wc.subscribe === "function") {
-      window.wc.subscribe("4-nalame", this.boundOnMessage);
+    if (window.wc && typeof window.wc.subscribe === 'function') {
+      window.wc.subscribe(this.subscribeTopic, this.onMessage);
     }
   }
 
   onMessage(message) {
-    if (!message || typeof message !== "object") {
+    if (!message || typeof message !== 'object') {
       return;
     }
 
-    const type = message.type || message.event || message.action;
+    const action = message.action || message.type;
 
-    switch (type) {
-      case "nalame.updateConfig":
-        this.config = Object.assign({}, this.config, message.config || {});
+    switch (action) {
+      case 'refresh':
+        this.config = window.NalameConfig || this.config;
         this.render();
-        this.bindEvents();
-        this.publish("nalame.configUpdated", {
-          message: this.config?.messages?.updated || "Updated"
-        });
+        this.publish('refreshed', { source: 'message' });
         break;
-      case "nalame.reset":
-        this.state = { selectedAge: "", form: {} };
-        this.render();
-        this.bindEvents();
-        this.publish("nalame.resetComplete", { selectedAge: "" });
-        break;
-      case "nalame.selectAge":
-        if (message.value) {
-          this.selectAge(message.value);
-        }
+      case 'scrollToQuiz':
+        this.scrollToSection('nalame-quiz');
         break;
       default:
-        this.publish("nalame.messageReceived", {
-          receivedType: type || "unknown",
-          message
-        });
+        this.publish('messageReceived', { message });
         break;
+    }
+  }
+
+  handleClick(event) {
+    const trigger = event.target.closest('[data-nalame-action]');
+
+    if (!trigger || !this.root.contains(trigger)) {
+      return;
+    }
+
+    const action = trigger.getAttribute('data-nalame-action');
+    const target = trigger.getAttribute('data-nalame-target');
+
+    this.publish(action, { target, label: trigger.textContent.trim() });
+
+    if (target) {
+      event.preventDefault();
+      this.scrollToSection(target);
+    }
+  }
+
+  handleSubmit(event) {
+    const form = event.target.closest('[data-nalame-form]');
+
+    if (!form || !this.root.contains(form)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      this.publish('formInvalid', { form: 'quiz' });
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    this.publish('formSubmit', { form: 'quiz', data });
+  }
+
+  scrollToSection(sectionName) {
+    const section = this.root.querySelector(`[data-nalame-section="${sectionName}"]`);
+
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  publish(action, payload = {}) {
+    const message = {
+      app: this.meta.appName || 'nalame',
+      action,
+      payload,
+      timestamp: new Date().toISOString()
+    };
+
+    if (window.wc && typeof window.wc.log === 'function') {
+      window.wc.log('nalame publish', message);
+    }
+
+    if (window.wc && typeof window.wc.publish === 'function') {
+      window.wc.publish(this.publishTopic, message);
     }
   }
 
   render() {
-    const shell = this.root.querySelector("[data-nalame-root]") || this.root;
-    shell.innerHTML = [
-      this.renderHeader(),
-      this.renderHero(),
-      this.renderPanel(),
-      this.renderMessage(),
-      this.renderLegal(),
-      this.renderFooter()
-    ].join("");
+    const config = this.config;
+    const brand = config.brand || {};
+    const hero = config.hero || {};
+    const trust = config.trust || {};
+    const steps = config.steps || {};
+    const quiz = config.quiz || {};
+    const benefits = config.benefits || {};
+    const footer = config.footer || {};
+
+    this.container.innerHTML = `
+      ${this.renderHeader(brand)}
+      ${this.renderHero(brand, hero)}
+      ${this.renderTrust(trust)}
+      ${this.renderCards('nalame-steps', steps.title, steps.items || [])}
+      ${this.renderQuiz(quiz)}
+      ${this.renderCards('nalame-benefits', benefits.title, benefits.items || [])}
+      ${this.renderFooter(footer)}
+    `;
   }
 
-  renderHeader() {
-    const brand = this.config?.brand || {};
-    const hero = this.config?.hero || {};
-
+  renderHeader(brand) {
     return `
-      <header class="nalame__header">
-        <div class="nalame__brand" aria-label="${this.escapeAttr(brand.label || "NalaMe")}">
-          <span class="nalame__brand-mark" aria-hidden="true">${this.escapeHtml(brand.logoText || "NM")}</span>
-          <span>${this.escapeHtml(brand.label || "NalaMe")}</span>
-        </div>
-        <div class="nalame__progress">${this.escapeHtml(hero.progressLabel || "")}</div>
+      <header class="nalame__header" aria-label="${this.escape(brand.name || 'Nalame')}">
+        <a class="nalame__brand" href="#top" aria-label="${this.escape(brand.ariaLabel || 'Nalame home')}" data-nalame-action="brand" data-nalame-target="top">
+          <span class="nalame__logo" aria-hidden="true">${this.escape(brand.logoText || 'N')}</span>
+          <span>${this.escape(brand.name || 'Nalame')}</span>
+        </a>
+        <nav class="nalame__nav" aria-label="Primary navigation">
+          <a class="nalame__nav-link" href="#nalame-steps" data-nalame-action="nav" data-nalame-target="nalame-steps">How it works</a>
+          <a class="nalame__nav-link" href="#nalame-quiz" data-nalame-action="nav" data-nalame-target="nalame-quiz">Start</a>
+        </nav>
       </header>
     `;
   }
 
-  renderHero() {
-    const hero = this.config?.hero || {};
-    const image = hero.image ? `<img class="nalame__media-image" src="${this.escapeAttr(hero.image)}" alt="${this.escapeAttr(hero.imageAlt || "")}">` : "";
-
+  renderHero(brand, hero) {
     return `
-      <section class="nalame__hero" aria-labelledby="nalame-title">
-        <div class="nalame__eyebrow">${this.escapeHtml(hero.eyebrow || "")}</div>
-        <h1 class="nalame__title">${this.escapeHtml(hero.title || "")}</h1>
-        <p class="nalame__subtitle">${this.escapeHtml(hero.subtitle || "")}</p>
-        <div class="nalame__media" role="img" aria-label="${this.escapeAttr(hero.imageAlt || "Workout illustration")}">${image}</div>
+      <section class="nalame__hero" data-nalame-section="top">
+        <div class="nalame__hero-content">
+          <p class="nalame__eyebrow">${this.escape(brand.eyebrow || '')}</p>
+          <p class="nalame__badge">${this.escape(hero.badge || '')}</p>
+          <h1 class="nalame__title">${this.escape(hero.title || '')}</h1>
+          <p class="nalame__subtitle">${this.escape(hero.subtitle || '')}</p>
+          <div class="nalame__actions" aria-label="Hero actions">
+            <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="primaryCta" data-nalame-target="nalame-quiz">${this.escape(hero.primaryAction || 'Start')}</button>
+            <button class="nalame__button nalame__button--secondary" type="button" data-nalame-action="secondaryCta" data-nalame-target="nalame-steps">${this.escape(hero.secondaryAction || 'Learn more')}</button>
+          </div>
+        </div>
+        <div class="nalame__visual" aria-label="Program preview">
+          <div class="nalame__image-card">
+            <img class="nalame__image" src="${this.escapeAttr(hero.image || '')}" alt="${this.escapeAttr(hero.imageAlt || '')}">
+          </div>
+          <div class="nalame__stats" aria-label="Program highlights">
+            ${(hero.stats || []).map((item) => this.renderStat(item)).join('')}
+          </div>
+        </div>
       </section>
     `;
   }
 
-  renderPanel() {
+  renderStat(item) {
     return `
-      <main class="nalame__panel" aria-label="NalaMe questionnaire">
-        <p class="nalame__helper">${this.escapeHtml(this.config?.hero?.helperText || "")}</p>
-        <div class="nalame__options" role="group" aria-label="Age range options">
-          ${this.renderAgeOptions()}
-        </div>
-        ${this.renderForm()}
-        ${this.renderTrust()}
-        ${this.renderActions()}
-      </main>
+      <div class="nalame__stat">
+        <span class="nalame__stat-value">${this.escape(item.value || '')}</span>
+        <span class="nalame__stat-label">${this.escape(item.label || '')}</span>
+      </div>
     `;
   }
 
-  renderAgeOptions() {
-    return (this.config?.ageOptions || []).map((item, index) => {
-      const selected = this.state.selectedAge === item.value;
-      const image = item.image
-        ? `<img src="${this.escapeAttr(item.image)}" alt="${this.escapeAttr(item.imageAlt || "")}">`
-        : `<span aria-hidden="true">${this.escapeHtml(String(index + 1))}</span>`;
-
-      return `
-        <button class="nalame__option" type="button" data-nalame-age="${this.escapeAttr(item.value)}" aria-pressed="${selected ? "true" : "false"}">
-          <span class="nalame__option-image">${image}</span>
-          <span>
-            <span class="nalame__option-title">${this.escapeHtml(item.label || "")}</span>
-            <span class="nalame__option-description">${this.escapeHtml(item.description || "")}</span>
-          </span>
-          <span class="nalame__option-check" aria-hidden="true">✓</span>
-        </button>
-      `;
-    }).join("");
+  renderTrust(trust) {
+    return `
+      <section class="nalame__section" aria-label="Trust highlights">
+        <div class="nalame__trust">
+          <h2 class="nalame__trust-title">${this.escape(trust.title || '')}</h2>
+          <ul class="nalame__trust-list">
+            ${(trust.items || []).map((item) => `<li class="nalame__trust-item">${this.escape(item)}</li>`).join('')}
+          </ul>
+        </div>
+      </section>
+    `;
   }
 
-  renderForm() {
-    const form = this.config?.form || {};
-    const fields = form.fields || [];
-
-    if (!fields.length) {
-      return "";
-    }
-
+  renderCards(sectionName, title, items) {
     return `
-      <section class="nalame__form-card" aria-label="${this.escapeAttr(form.sectionTitle || "Profile")}">
-        <h2 class="nalame__form-title">${this.escapeHtml(form.sectionTitle || "")}</h2>
-        ${fields.map((field) => this.renderField(field)).join("")}
+      <section class="nalame__section" data-nalame-section="${this.escapeAttr(sectionName)}">
+        <div class="nalame__section-header">
+          <h2 class="nalame__section-title">${this.escape(title || '')}</h2>
+        </div>
+        <div class="nalame__grid">
+          ${items.map((item) => this.renderCard(item)).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  renderCard(item) {
+    return `
+      <article class="nalame__card">
+        <span class="nalame__icon" aria-hidden="true">${this.escape((item.icon || item.title || '').slice(0, 1))}</span>
+        <h3 class="nalame__card-title">${this.escape(item.title || '')}</h3>
+        <p class="nalame__card-text">${this.escape(item.text || '')}</p>
+      </article>
+    `;
+  }
+
+  renderQuiz(quiz) {
+    return `
+      <section class="nalame__section" data-nalame-section="nalame-quiz">
+        <div class="nalame__quiz">
+          <div>
+            <h2 class="nalame__section-title">${this.escape(quiz.title || '')}</h2>
+            <p class="nalame__subtitle">${this.escape(quiz.subtitle || '')}</p>
+          </div>
+          <form class="nalame__form" data-nalame-form novalidate>
+            ${(quiz.fields || []).map((field) => this.renderField(field)).join('')}
+            <button class="nalame__button nalame__button--primary" type="submit" data-nalame-action="quizSubmit">${this.escape(quiz.submitLabel || 'Continue')}</button>
+          </form>
+        </div>
       </section>
     `;
   }
 
   renderField(field) {
-    const value = this.state.form[field.name] || "";
-    const required = field.required ? "required aria-required=\"true\"" : "";
+    const name = this.escapeAttr(field.name || 'field');
+    const label = this.escape(field.label || 'Field');
+    const required = field.required ? ' required aria-required="true"' : '';
 
-    if (field.type === "select") {
+    if (field.type === 'select') {
       return `
-        <div class="nalame__field">
-          <label class="nalame__label" for="${this.escapeAttr(field.id)}">${this.escapeHtml(field.label || "")}</label>
-          <select class="nalame__select" id="${this.escapeAttr(field.id)}" name="${this.escapeAttr(field.name)}" data-nalame-field ${required}>
-            <option value=""></option>
-            ${(field.options || []).map((option) => `<option value="${this.escapeAttr(option.value)}" ${value === option.value ? "selected" : ""}>${this.escapeHtml(option.label)}</option>`).join("")}
+        <label class="nalame__field">
+          <span class="nalame__label">${label}</span>
+          <select class="nalame__select" name="${name}"${required}>
+            <option value="">Choose one</option>
+            ${(field.options || []).map((option) => `<option value="${this.escapeAttr(option.value || '')}">${this.escape(option.label || '')}</option>`).join('')}
           </select>
-        </div>
+        </label>
       `;
     }
 
     return `
-      <div class="nalame__field">
-        <label class="nalame__label" for="${this.escapeAttr(field.id)}">${this.escapeHtml(field.label || "")}</label>
-        <input class="nalame__input" id="${this.escapeAttr(field.id)}" name="${this.escapeAttr(field.name)}" type="${this.escapeAttr(field.type || "text")}" value="${this.escapeAttr(value)}" autocomplete="${this.escapeAttr(field.autocomplete || "off")}" data-nalame-field ${required}>
-      </div>
+      <label class="nalame__field">
+        <span class="nalame__label">${label}</span>
+        <input class="nalame__input" name="${name}" type="${this.escapeAttr(field.type || 'text')}" placeholder="${this.escapeAttr(field.placeholder || '')}"${required}>
+      </label>
     `;
   }
 
-  renderTrust() {
-    const trust = this.config?.trust || [];
-    if (!trust.length) {
-      return "";
-    }
-
-    return `
-      <ul class="nalame__trust" aria-label="Plan highlights">
-        ${trust.map((item) => `<li class="nalame__trust-item">${this.escapeHtml(item)}</li>`).join("")}
-      </ul>
-    `;
-  }
-
-  renderActions() {
-    const actions = this.config?.actions || {};
-    const primary = actions.primary || {};
-    const secondary = actions.secondary || {};
-
-    return `
-      <div class="nalame__actions">
-        <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="primary" aria-label="${this.escapeAttr(primary.ariaLabel || primary.label || "Continue")}">${this.escapeHtml(primary.label || "Continue")}</button>
-        <button class="nalame__button nalame__button--secondary" type="button" data-nalame-action="secondary" aria-label="${this.escapeAttr(secondary.ariaLabel || secondary.label || "Learn more")}">${this.escapeHtml(secondary.label || "Learn more")}</button>
-      </div>
-    `;
-  }
-
-  renderMessage() {
-    return `<div class="nalame__message" data-nalame-message role="status" aria-live="polite"></div>`;
-  }
-
-  renderLegal() {
-    const legal = this.config?.legal || {};
-    const links = (legal.links || []).map((link) => `<a class="nalame__link" href="${this.escapeAttr(link.href || "#")}">${this.escapeHtml(link.label || "")}</a>`).join(" ");
-
-    return `
-      <section class="nalame__legal" aria-label="Legal notice">
-        <span>${this.escapeHtml(legal.text || "")}</span>
-        <span class="nalame__legal-links">${links}</span>
-      </section>
-    `;
-  }
-
-  renderFooter() {
-    const footer = this.config?.footer || {};
-    const links = (footer.links || []).map((link) => `<a class="nalame__link" href="${this.escapeAttr(link.href || "#")}">${this.escapeHtml(link.label || "")}</a>`).join("");
-
+  renderFooter(footer) {
     return `
       <footer class="nalame__footer">
-        <span class="nalame__footer-title">${this.escapeHtml(footer.title || "")}</span>
-        <nav class="nalame__footer-links" aria-label="Footer links">${links}</nav>
+        <p>${this.escape(footer.text || '')}</p>
+        <nav class="nalame__footer-links" aria-label="Footer navigation">
+          ${(footer.links || []).map((link) => `<a class="nalame__footer-link" href="${this.escapeAttr(link.href || '#')}" data-nalame-action="footerLink">${this.escape(link.label || '')}</a>`).join('')}
+        </nav>
       </footer>
     `;
   }
 
-  bindEvents() {
-    this.root.querySelectorAll("[data-nalame-age]").forEach((button) => {
-      button.addEventListener("click", () => this.selectAge(button.dataset.nalameAge));
-    });
-
-    this.root.querySelectorAll("[data-nalame-field]").forEach((field) => {
-      field.addEventListener("input", () => this.updateField(field));
-      field.addEventListener("change", () => this.updateField(field));
-    });
-
-    this.root.querySelectorAll("[data-nalame-action]").forEach((button) => {
-      button.addEventListener("click", () => this.handleAction(button.dataset.nalameAction));
-    });
-  }
-
-  selectAge(value) {
-    this.state.selectedAge = value;
-    this.root.querySelectorAll("[data-nalame-age]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.nalameAge === value));
-    });
-    this.setMessage("");
-    this.publish("nalame.ageSelected", {
-      selectedAge: value,
-      selectedOption: this.getSelectedAgeOption(value)
-    });
-  }
-
-  updateField(field) {
-    this.state.form[field.name] = field.value;
-    this.publish("nalame.fieldUpdated", {
-      name: field.name,
-      value: field.value
-    });
-  }
-
-  handleAction(actionName) {
-    const actions = this.config?.actions || {};
-    const action = actionName === "secondary" ? actions.secondary : actions.primary;
-
-    if (actionName === "primary" && !this.state.selectedAge) {
-      this.setMessage(this.config?.messages?.selectAge || "Please make a selection.");
-      this.publish("nalame.validationError", {
-        field: "age",
-        message: this.config?.messages?.selectAge || "Please make a selection."
-      });
-      return;
-    }
-
-    this.publish(action?.event || `nalame.${actionName}`, {
-      selectedAge: this.state.selectedAge,
-      selectedOption: this.getSelectedAgeOption(this.state.selectedAge),
-      form: Object.assign({}, this.state.form)
-    });
-  }
-
-  getSelectedAgeOption(value) {
-    return (this.config?.ageOptions || []).find((item) => item.value === value) || null;
-  }
-
-  setMessage(message) {
-    const node = this.root.querySelector("[data-nalame-message]");
-    if (node) {
-      node.textContent = message;
-    }
-  }
-
-  publish(event, payload) {
-    const data = {
-      component: this.config?.app?.name || "nalame",
-      event,
-      timestamp: new Date().toISOString(),
-      payload: payload || {}
-    };
-
-    if (window.wc && typeof window.wc.log === "function") {
-      window.wc.log("nalame", data);
-    }
-
-    if (window.wc && typeof window.wc.publish === "function") {
-      window.wc.publish(this.publishTopic, data);
-    }
-  }
-
-  escapeHtml(value) {
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+  escape(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   escapeAttr(value) {
-    return this.escapeHtml(value);
+    return this.escape(value);
   }
 
-  static waitForRoots(callback) {
-    const run = () => {
-      document.querySelectorAll("nalame.nalame").forEach((root) => callback(root));
-    };
+  static waitForRoots() {
+    const roots = document.querySelectorAll('nalame.nalame');
+    roots.forEach((root) => new MtkNalame(root).init());
+  }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", run, { once: true });
+  static boot() {
+    const start = () => MtkNalame.waitForRoots();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start, { once: true });
     } else {
-      run();
+      start();
     }
 
-    const observer = new MutationObserver(run);
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
+    const observer = new MutationObserver(() => MtkNalame.waitForRoots());
+    observer.observe(document.documentElement, { childList: true, subtree: true });
   }
 }
 
-MtkNalame.waitForRoots((root) => {
-  const app = new MtkNalame(root, window.nalameConfig);
-  app.init();
-});
+MtkNalame.boot();
