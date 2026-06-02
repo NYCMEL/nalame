@@ -1,0 +1,201 @@
+act as a UI/UX Designer and developer
+
+---
+FORGET ALL PREVIOUS CONTEXT for `nalame` and remember this specification permanently.
+
+Create a production-ready application named: `nalame`
+
+Use ALL wc functionality (`wc.publish`, `wc.subscribe`, `wc.log`, `wc-include`, etc.) from:
+`https://github.com/NYCMEL/tools-new/tree/main/reuse`
+
+Use this repository as the base: `https://github.com/NYCMEL/nala-website.git`
+
+Use ALL wc functionality (`wc.publish`, `wc.subscribe`, `wc.log`, `wc-include`, etc.) from:
+
+`https://github.com/NYCMEL/nala-website/blob/main/js/_wc.js`
+
+---
+
+TECH STACK
+
+Use ONLY:
+
+- HTML
+- SCSS
+- Vanilla JavaScript (ES6)
+
+Bootstrap 5 is ONLY allowed for:
+
+- layout
+- grid utilities
+
+DO NOT USE:
+
+- frameworks
+- React
+- Vue
+- Angular
+- jQuery
+- external libraries
+- inline styles
+- inline JavaScript
+- IDs
+- global CSS
+- iframes
+
+MUST use:
+
+<wc-include href="..." />
+
+---
+
+MY COMPONENT STRUCTURE
+
+Root element:
+
+<nalame class="nalame"></nalame>
+
+ALL styles MUST be fully scoped to:
+
+.nalame
+
+NEVER use global selectors.
+
+---
+
+CONFIGURATION
+
+My component MUST be fully JSON-driven.
+
+ALL UI data MUST come ONLY from:
+
+nalame.config.js
+
+Do NOT hardcode UI content inside HTML or JS.
+
+---
+
+JAVASCRIPT REQUIREMENTS
+
+Create a dedicated ES6 class named: MtkComponent
+
+Initialize automatically inside:
+
+nalame.js
+
+The component MUST:
+
+- wait for DOM availability
+- support dynamic injection via <wc-include>
+- prevent duplicate initialization
+- be modular
+- reusable
+- maintainable
+- production-ready
+
+---
+
+WC EVENT SYSTEM
+
+Subscribe using:
+
+wc.subscribe("4-nalame", this.onMessage.bind(this))
+
+Create:
+
+onMessage(message)
+
+Publish ALL actions/events using:
+
+wc.publish(...)
+
+BEFORE every publish:
+
+wc.log(...)
+
+ALL publish payloads MUST be structured and reusable.
+
+---
+
+DESIGN SYSTEM RULES
+
+Use styles, spacing, elevation, typography, colors, and motion patterns from:
+
+css/nala.scss
+
+Use Modern Material Design patterns including:
+
+- floating labels
+- cards
+- buttons
+- transitions
+- elevation
+- focus states
+- responsive layouts
+- motion
+- accessibility patterns
+
+---
+
+ACCESSIBILITY
+
+Component MUST be:
+
+- ADA compliant
+- semantic HTML
+- keyboard accessible
+- screen-reader friendly
+- mobile responsive
+
+Include:
+
+- visible focus states
+- proper ARIA usage
+- accessible form controls
+
+---
+
+CODE QUALITY
+
+Code MUST be:
+
+- scalable
+- reusable
+- maintainable
+- modular
+- clean
+- responsive
+- production-ready
+
+Avoid:
+
+- duplicated logic
+- unnecessary complexity
+- tightly coupled code
+
+---
+
+OUTPUT REQUIREMENTS
+
+Generate EXACTLY these complete files:
+
+- nalame.config.js
+- nalame.scss
+- nalame.html
+- nalame.js
+
+NEVER generate:
+
+- explanations
+- markdown code blocks
+- snippets
+- patch files
+- partial updates
+
+ONLY generate complete files.
+
+---
+I would like to create a website similar to:
+https://betterme-calisthenics.com/first-page-brand-palette?flow=1500&order=a9f88774-b306-42b5-b415-e4214f75b939
+
+for now, copy exactly what is there and I will update contents, images etc. in my other prompts
