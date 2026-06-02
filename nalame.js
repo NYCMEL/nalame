@@ -7,6 +7,7 @@
       this.config = window.NalameConfig || {};
       this.app = this.config.app || {};
       this.questions = Array.isArray(this.config.questions) ? this.config.questions : [];
+      this.questionMedia = this.config.questionMedia || {};
       this.currentIndex = 0;
       this.answers = {};
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
@@ -254,10 +255,6 @@
     render() {
       this.root.innerHTML = this.template();
       this.updateStatus();
-      const selectedInput = this.root.querySelector('[data-nalame-answer]:checked');
-      if (selectedInput) {
-        selectedInput.focus({ preventScroll: true });
-      }
     }
 
     template() {
@@ -302,6 +299,7 @@
               <span class="nalame__progress-bar" style="width: ${progress}%"></span>
             </span>
           </div>
+          ${this.mediaTemplate(question)}
           <h2 class="nalame__question" id="nalame-question-title">${this.escape(question.text)}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
@@ -313,6 +311,21 @@
             <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)}</button>
           </div>
         </section>
+      `;
+    }
+
+
+    mediaTemplate(question) {
+      const media = this.questionMedia && question ? this.questionMedia[question.id] : null;
+
+      if (!media || !media.src) {
+        return '';
+      }
+
+      return `
+        <figure class="nalame__media">
+          <img class="nalame__media-image" src="${this.escape(media.src)}" alt="${this.escape(media.alt || '')}" loading="lazy">
+        </figure>
       `;
     }
 

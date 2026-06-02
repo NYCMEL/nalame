@@ -25,6 +25,12 @@
       answerGroupLabel: 'Answer choices',
       summaryAriaLabel: 'Completed quiz answers'
     },
+    questionMedia: {
+      'question-04': {
+        src: 'assets/locksmith-stuck.svg',
+        alt: 'Stuck key locksmith illustration'
+      }
+    },
     questions: [
       {
         id: 'question-01',

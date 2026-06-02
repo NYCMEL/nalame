@@ -182,6 +182,21 @@
   background: var(--nalame-color-primary);
   transition: width var(--nalame-motion); }
 
+.nalame__media {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 var(--nalame-space-6); }
+
+.nalame__media-image {
+  width: 22rem;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: none; }
+
 .nalame__question {
   width: 100%;
   margin: 0 auto var(--nalame-space-6);
@@ -215,10 +230,10 @@
 
 .nalame__answer-label {
   min-height: 4.75rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
   align-items: center;
-  justify-content: flex-start;
-  gap: var(--nalame-space-4);
+  column-gap: var(--nalame-space-4);
   padding: var(--nalame-space-4);
   border: 0;
   border-radius: 5px;
@@ -229,19 +244,23 @@
   font-weight: 900;
   line-height: 1.25;
   text-align: left;
-  transition: transform var(--nalame-motion), border-color var(--nalame-motion), background-color var(--nalame-motion), box-shadow var(--nalame-motion); }
+  transition: border-color var(--nalame-motion), background-color var(--nalame-motion), box-shadow var(--nalame-motion); }
 
 .nalame__answer-check {
   width: 2.75rem;
   height: 2.75rem;
   display: inline-flex;
-  flex: 0 0 2.75rem;
   align-items: center;
   justify-content: center;
   border: 3px solid currentColor;
   border-radius: 5px;
   color: inherit;
-  background: transparent; }
+  background: transparent;
+  line-height: 1; }
+
+.nalame__answer-text {
+  display: block;
+  min-width: 0; }
 
 .nalame__answer-input:checked + .nalame__answer-label .nalame__answer-check::after {
   content: "✓";
@@ -252,8 +271,7 @@
 
 .nalame__answer-input:checked + .nalame__answer-label {
   background: var(--nalame-color-text);
-  box-shadow: none;
-  transform: translateY(-2px); }
+  box-shadow: none; }
 
 .nalame__answer-input:focus-visible + .nalame__answer-label,
 .nalame__button:focus-visible,
@@ -283,14 +301,9 @@
 .nalame[data-theme="dark"] .nalame__button--primary {
   color: #1d1b20; }
 
-.nalame__button:hover,
-.nalame__theme-button:hover {
-  transform: translateY(-1px); }
-
 .nalame__button:disabled {
   cursor: not-allowed;
-  opacity: 0.48;
-  transform: none; }
+  opacity: 0.48; }
 
 .nalame__summary {
   display: grid;
