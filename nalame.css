@@ -1,0 +1,312 @@
+.nalame {
+  --nalame-color-bg: #f8f6ef;
+  --nalame-color-surface: #ffffff;
+  --nalame-color-surface-alt: #fff9ea;
+  --nalame-color-primary: #293f2d;
+  --nalame-color-primary-strong: #17271b;
+  --nalame-color-accent: #f2c14e;
+  --nalame-color-text: #172018;
+  --nalame-color-muted: #647067;
+  --nalame-color-border: rgba(23, 32, 24, 0.14);
+  --nalame-shadow-1: 0 0.75rem 1.75rem rgba(23, 32, 24, 0.10);
+  --nalame-shadow-2: 0 1.5rem 3.5rem rgba(23, 32, 24, 0.18);
+  --nalame-radius-sm: 0.75rem;
+  --nalame-radius-md: 1.25rem;
+  --nalame-radius-lg: 2rem;
+  --nalame-speed: 180ms;
+  display: block;
+  min-height: 100%;
+  color: var(--nalame-color-text);
+  background: radial-gradient(circle at top left, rgba(242, 193, 78, 0.24), transparent 22rem), var(--nalame-color-bg);
+  font-family: inherit; }
+  .nalame *,
+  .nalame *::before,
+  .nalame *::after {
+    box-sizing: border-box; }
+  .nalame a {
+    color: inherit; }
+  .nalame button,
+  .nalame input,
+  .nalame select {
+    font: inherit; }
+  .nalame button {
+    cursor: pointer; }
+  .nalame button:focus-visible,
+  .nalame a:focus-visible,
+  .nalame input:focus-visible,
+  .nalame select:focus-visible {
+    outline: 0.2rem solid rgba(242, 193, 78, 0.9);
+    outline-offset: 0.2rem; }
+  .nalame .nalame__shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding: 1rem; }
+  .nalame .nalame__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0; }
+  .nalame .nalame__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    font-weight: 800; }
+  .nalame .nalame__logo {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 1rem;
+    color: var(--nalame-color-primary-strong);
+    background: var(--nalame-color-accent);
+    box-shadow: var(--nalame-shadow-1); }
+  .nalame .nalame__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; }
+  .nalame .nalame__nav-link {
+    color: var(--nalame-color-muted);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none; }
+  .nalame .nalame__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem 0 1.5rem; }
+  .nalame .nalame__eyebrow,
+  .nalame .nalame__badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 999rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase; }
+  .nalame .nalame__eyebrow {
+    color: var(--nalame-color-primary);
+    margin: 0 0 1rem; }
+  .nalame .nalame__badge {
+    padding: 0.5rem 0.85rem;
+    margin: 0 0 1rem;
+    background: rgba(242, 193, 78, 0.28);
+    color: var(--nalame-color-primary-strong); }
+  .nalame .nalame__title {
+    max-width: 46rem;
+    margin: 0;
+    font-size: 5.5rem;
+    line-height: 0.95;
+    letter-spacing: -0.055em; }
+  .nalame .nalame__subtitle {
+    max-width: 42rem;
+    margin: 1.25rem 0 0;
+    color: var(--nalame-color-muted);
+    font-size: 1.25rem;
+    line-height: 1.65; }
+  .nalame .nalame__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem; }
+  .nalame .nalame__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    border: 0;
+    border-radius: 999rem;
+    padding: 0.85rem 1.25rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform var(--nalame-speed) ease, box-shadow var(--nalame-speed) ease, background var(--nalame-speed) ease; }
+  .nalame .nalame__button:hover {
+    transform: translateY(-0.08rem); }
+  .nalame .nalame__button--primary {
+    color: #ffffff;
+    background: var(--nalame-color-primary);
+    box-shadow: var(--nalame-shadow-1); }
+  .nalame .nalame__button--secondary {
+    color: var(--nalame-color-primary);
+    background: var(--nalame-color-surface);
+    border: 0.0625rem solid var(--nalame-color-border); }
+  .nalame .nalame__visual {
+    position: relative; }
+  .nalame .nalame__image-card {
+    overflow: hidden;
+    border-radius: var(--nalame-radius-lg);
+    background: var(--nalame-color-surface);
+    box-shadow: var(--nalame-shadow-2); }
+  .nalame .nalame__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover; }
+  .nalame .nalame__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem; }
+  .nalame .nalame__stat {
+    padding: 1rem;
+    border: 0.0625rem solid var(--nalame-color-border);
+    border-radius: var(--nalame-radius-md);
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--nalame-shadow-1); }
+  .nalame .nalame__stat-value {
+    display: block;
+    color: var(--nalame-color-primary);
+    font-size: 1.35rem;
+    font-weight: 900; }
+  .nalame .nalame__stat-label {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--nalame-color-muted);
+    font-size: 0.85rem; }
+  .nalame .nalame__section {
+    padding: 2rem 0; }
+  .nalame .nalame__section-header {
+    max-width: 44rem;
+    margin-bottom: 1.25rem; }
+  .nalame .nalame__section-title {
+    margin: 0;
+    font-size: 3rem;
+    line-height: 1.05;
+    letter-spacing: -0.035em; }
+  .nalame .nalame__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem; }
+  .nalame .nalame__card {
+    min-height: 100%;
+    padding: 1.25rem;
+    border: 0.0625rem solid var(--nalame-color-border);
+    border-radius: var(--nalame-radius-md);
+    background: var(--nalame-color-surface);
+    box-shadow: var(--nalame-shadow-1); }
+  .nalame .nalame__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    color: var(--nalame-color-primary-strong);
+    background: rgba(242, 193, 78, 0.32);
+    font-weight: 900; }
+  .nalame .nalame__card-title {
+    margin: 0;
+    font-size: 1.15rem; }
+  .nalame .nalame__card-text {
+    margin: 0.65rem 0 0;
+    color: var(--nalame-color-muted);
+    line-height: 1.6; }
+  .nalame .nalame__trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--nalame-radius-md);
+    background: var(--nalame-color-primary);
+    color: #ffffff; }
+  .nalame .nalame__trust-title {
+    margin: 0;
+    font-size: 1.1rem; }
+  .nalame .nalame__trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+  .nalame .nalame__trust-item {
+    border-radius: 999rem;
+    padding: 0.45rem 0.75rem;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 0.88rem;
+    font-weight: 700; }
+  .nalame .nalame__quiz {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.25rem;
+    border-radius: var(--nalame-radius-lg);
+    background: var(--nalame-color-surface-alt);
+    box-shadow: var(--nalame-shadow-1); }
+  .nalame .nalame__form {
+    display: grid;
+    gap: 1rem; }
+  .nalame .nalame__field {
+    position: relative; }
+  .nalame .nalame__input,
+  .nalame .nalame__select {
+    width: 100%;
+    min-height: 3.6rem;
+    border: 0.0625rem solid var(--nalame-color-border);
+    border-radius: var(--nalame-radius-sm);
+    padding: 1.3rem 1rem 0.55rem;
+    color: var(--nalame-color-text);
+    background: var(--nalame-color-surface);
+    transition: border-color var(--nalame-speed) ease, box-shadow var(--nalame-speed) ease; }
+  .nalame .nalame__input:focus,
+  .nalame .nalame__select:focus {
+    border-color: var(--nalame-color-primary);
+    box-shadow: 0 0 0 0.25rem rgba(41, 63, 45, 0.12); }
+  .nalame .nalame__label {
+    position: absolute;
+    top: 0.45rem;
+    left: 1rem;
+    color: var(--nalame-color-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    pointer-events: none; }
+  .nalame .nalame__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 2rem 0 1rem;
+    color: var(--nalame-color-muted); }
+  .nalame .nalame__footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem; }
+  .nalame .nalame__footer-link {
+    font-weight: 700;
+    text-decoration: none; }
+  @media (max-width: 54rem) {
+    .nalame .nalame__hero,
+    .nalame .nalame__quiz {
+      grid-template-columns: 1fr; }
+    .nalame .nalame__grid,
+    .nalame .nalame__stats {
+      grid-template-columns: 1fr; }
+    .nalame .nalame__nav {
+      display: none; }
+    .nalame .nalame__title {
+      font-size: 4.25rem; }
+    .nalame .nalame__section-title {
+      font-size: 2.4rem; }
+    .nalame .nalame__subtitle {
+      font-size: 1.1rem; } }
+  @media (max-width: 36rem) {
+    .nalame .nalame__title {
+      font-size: 2.8rem; }
+    .nalame .nalame__section-title {
+      font-size: 2rem; } }
+  @media (prefers-reduced-motion: reduce) {
+    .nalame *,
+    .nalame *::before,
+    .nalame *::after {
+      scroll-behavior: auto;
+      transition-duration: 0.01ms;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1; } }
