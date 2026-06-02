@@ -75,7 +75,7 @@
         text: 'Aenean eu leo quam pellentesque ornare sem?',
         answers: [
           { id: 'q06-a01', text: 'Fringilla mollis interdum' },
-          { id: 'q06-a02', text: 'Euismod vestibul um' },
+          { id: 'q06-a02', text: 'Euismod vestibulum' },
           { id: 'q06-a03', text: 'Ligula porta felis euismod' },
           { id: 'q06-a04', text: 'Tellus ac cursus commodo' }
         ]

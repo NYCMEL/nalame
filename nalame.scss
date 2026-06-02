@@ -7,14 +7,14 @@
   --nalame-color-background: #030302;
   --nalame-color-text: #f2eadf;
   --nalame-color-muted: #958f88;
-  --nalame-color-outline: #3a352e;
+  --nalame-color-outline: transparent;
   --nalame-color-focus: #f2eadf;
-  --nalame-color-card: #030302;
+  --nalame-color-card: transparent;
   --nalame-color-success: #e9dfcf;
   --nalame-shadow-1: none;
   --nalame-shadow-2: none;
-  --nalame-radius-sm: 12px;
-  --nalame-radius-md: 16px;
+  --nalame-radius-sm: 999px;
+  --nalame-radius-md: 999px;
   --nalame-radius-lg: 0;
   --nalame-space-1: 0.25rem;
   --nalame-space-2: 0.5rem;
@@ -23,12 +23,13 @@
   --nalame-space-5: 1.5rem;
   --nalame-space-6: 2rem;
   --nalame-space-7: 3rem;
-  --nalame-font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --nalame-font-family: Avenir, "Avenir Next", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --nalame-font-display: Georgia, "Times New Roman", serif;
   --nalame-motion: 180ms ease;
   display: block;
   min-height: 100vh;
   color: var(--nalame-color-text);
-  background: var(--nalame-color-background);
+  background: radial-gradient(circle at 50% 0%, #17130f 0%, var(--nalame-color-background) 42%, #030302 100%);
   font-family: var(--nalame-font-family);
 }
 
@@ -41,13 +42,13 @@
   --nalame-color-background: #030302;
   --nalame-color-text: #f2eadf;
   --nalame-color-muted: #958f88;
-  --nalame-color-outline: #3a352e;
+  --nalame-color-outline: transparent;
   --nalame-color-focus: #f2eadf;
-  --nalame-color-card: #030302;
+  --nalame-color-card: transparent;
   --nalame-color-success: #e9dfcf;
   --nalame-shadow-1: none;
   --nalame-shadow-2: none;
-  background: var(--nalame-color-background);
+  background: radial-gradient(circle at 50% 0%, #17130f 0%, var(--nalame-color-background) 42%, #030302 100%);
 }
 
 .nalame[data-theme="light"] {
@@ -59,11 +60,11 @@
   --nalame-color-background: #f2eadf;
   --nalame-color-text: #080706;
   --nalame-color-muted: #6f665d;
-  --nalame-color-outline: #d4c7b7;
+  --nalame-color-outline: transparent;
   --nalame-color-focus: #080706;
-  --nalame-color-card: #f2eadf;
+  --nalame-color-card: transparent;
   --nalame-color-success: #080706;
-  background: var(--nalame-color-background);
+  background: radial-gradient(circle at 50% 0%, #fff8ed 0%, var(--nalame-color-background) 46%, #eadfcd 100%);
 }
 
 .nalame * {
@@ -72,12 +73,11 @@
 
 .nalame__shell {
   width: 100%;
-  max-width: 1280px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  padding: 0 var(--nalame-space-5) var(--nalame-space-5);
+  margin: 0;
+  padding: 0 var(--nalame-space-7) var(--nalame-space-6);
 }
 
 .nalame__header {
@@ -86,8 +86,8 @@
   justify-content: space-between;
   gap: var(--nalame-space-4);
   min-height: 5.8rem;
-  margin-bottom: var(--nalame-space-7);
-  border-bottom: 1px solid rgba(233, 223, 207, 0.08);
+  margin-bottom: var(--nalame-space-6);
+  border: 0;
 }
 
 .nalame__brand {
@@ -97,16 +97,16 @@
 
 .nalame__eyebrow {
   color: var(--nalame-color-muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .nalame__title {
   margin: 0;
   color: var(--nalame-color-text);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 900;
   line-height: 1.2;
   letter-spacing: -0.04em;
@@ -117,16 +117,20 @@
   align-items: center;
   gap: var(--nalame-space-2);
   padding: var(--nalame-space-2);
-  border: 1px solid rgba(233, 223, 207, 0.32);
+  border: 0;
   border-radius: 999px;
-  background: transparent;
+  background: rgba(233, 223, 207, 0.08);
   box-shadow: none;
+}
+
+.nalame[data-theme="light"] .nalame__theme {
+  background: rgba(8, 7, 6, 0.06);
 }
 
 .nalame__theme-label {
   color: var(--nalame-color-muted);
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .nalame__theme-button,
@@ -136,8 +140,8 @@
   border-radius: 999px;
   cursor: pointer;
   font: inherit;
-  font-weight: 800;
-  transition: transform var(--nalame-motion), background-color var(--nalame-motion), color var(--nalame-motion), box-shadow var(--nalame-motion);
+  font-weight: 900;
+  transition: transform var(--nalame-motion), background-color var(--nalame-motion), color var(--nalame-motion), opacity var(--nalame-motion);
 }
 
 .nalame__theme-button {
@@ -147,7 +151,7 @@
 }
 
 .nalame__theme-button[aria-pressed="true"] {
-  color: var(--nalame-color-surface);
+  color: var(--nalame-color-background);
   background: var(--nalame-color-primary-strong);
 }
 
@@ -160,12 +164,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .nalame__card {
   width: 100%;
-  max-width: 1280px;
   min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: var(--nalame-space-7) 0;
   border: 0;
   border-radius: 0;
@@ -176,23 +183,29 @@
 .nalame__progress-wrap {
   display: grid;
   gap: var(--nalame-space-2);
+  width: 100%;
   margin-bottom: var(--nalame-space-6);
 }
 
 .nalame__progress-text {
   color: var(--nalame-color-muted);
-  font-size: 1rem;
+  font-size: 0.82rem;
   font-weight: 900;
   text-align: center;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .nalame__progress-track {
-  height: 1px;
+  width: 100%;
+  height: 2px;
   overflow: hidden;
-  border-radius: 0;
-  background: rgba(233, 223, 207, 0.1);
+  border-radius: 999px;
+  background: rgba(233, 223, 207, 0.14);
+}
+
+.nalame[data-theme="light"] .nalame__progress-track {
+  background: rgba(8, 7, 6, 0.12);
 }
 
 .nalame__progress-bar {
@@ -204,22 +217,22 @@
 }
 
 .nalame__question {
-  max-width: 980px;
-  margin: 0 auto var(--nalame-space-6);
+  width: 100%;
+  margin: 0 auto var(--nalame-space-7);
   color: var(--nalame-color-text);
-  font-size: 3.25rem;
-  font-weight: 900;
-  line-height: 1.05;
+  font-family: var(--nalame-font-display);
+  font-size: 5rem;
+  font-weight: 500;
+  line-height: 0.98;
   letter-spacing: -0.055em;
   text-align: center;
-  text-wrap: balance;
 }
 
 .nalame__answers {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--nalame-space-4);
-  max-width: 800px;
   margin: 0 auto;
   padding: 0;
   border: 0;
@@ -239,25 +252,25 @@
 }
 
 .nalame__answer-label {
-  min-height: 4rem;
+  min-height: 4.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--nalame-space-4);
-  border: 1px solid rgba(233, 223, 207, 0.12);
-  border-radius: var(--nalame-radius-sm);
+  padding: var(--nalame-space-4) var(--nalame-space-5);
+  border: 0;
+  border-radius: 999px;
   color: var(--nalame-color-background);
   background: var(--nalame-color-primary);
   box-shadow: none;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 900;
   line-height: 1.25;
   text-align: center;
-  transition: transform var(--nalame-motion), border-color var(--nalame-motion), background-color var(--nalame-motion), box-shadow var(--nalame-motion);
+  transition: transform var(--nalame-motion), background-color var(--nalame-motion), color var(--nalame-motion), opacity var(--nalame-motion);
 }
 
 .nalame__answer-input:checked + .nalame__answer-label {
-  border-color: var(--nalame-color-primary);
+  color: var(--nalame-color-background);
   background: var(--nalame-color-text);
   box-shadow: none;
   transform: translateY(-2px);
@@ -275,7 +288,7 @@
   margin-top: var(--nalame-space-4);
   color: var(--nalame-color-muted);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
 }
 
@@ -290,13 +303,17 @@
 .nalame__button {
   padding: 0 var(--nalame-space-5);
   color: var(--nalame-color-text);
-  border: 1px solid rgba(233, 223, 207, 0.18);
-  background: transparent;
+  border: 0;
+  background: rgba(233, 223, 207, 0.1);
+}
+
+.nalame[data-theme="light"] .nalame__button {
+  background: rgba(8, 7, 6, 0.08);
 }
 
 .nalame__button--primary {
   color: var(--nalame-color-background);
-  border-color: var(--nalame-color-primary-strong);
+  border: 0;
   background: var(--nalame-color-primary-strong);
   box-shadow: none;
 }
@@ -306,7 +323,8 @@
 }
 
 .nalame__button:hover,
-.nalame__theme-button:hover {
+.nalame__theme-button:hover,
+.nalame__answer-label:hover {
   transform: translateY(-1px);
 }
 
@@ -319,6 +337,7 @@
 .nalame__summary {
   display: grid;
   gap: var(--nalame-space-4);
+  justify-content: stretch;
 }
 
 .nalame__summary-header {
@@ -329,20 +348,24 @@
 
 .nalame__summary-title {
   margin: 0;
-  font-size: 2rem;
-  line-height: 1.15;
+  font-family: var(--nalame-font-display);
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
 }
 
 .nalame__summary-intro {
   margin: 0;
   color: var(--nalame-color-muted);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .nalame__summary-list {
   display: grid;
   gap: var(--nalame-space-3);
+  width: 100%;
   margin: var(--nalame-space-4) 0 0;
   padding: 0;
   list-style: none;
@@ -352,9 +375,9 @@
   display: grid;
   gap: var(--nalame-space-2);
   padding: var(--nalame-space-4);
-  border: 1px solid rgba(233, 223, 207, 0.12);
-  border-radius: var(--nalame-radius-sm);
-  background: var(--nalame-color-surface);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   font-size: 0.875rem;
   line-height: 1.45;
 }
@@ -367,7 +390,7 @@
 .nalame__summary-answer {
   margin: 0;
   color: var(--nalame-color-muted);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .nalame__sr-only {
@@ -381,6 +404,20 @@
   border: 0;
 }
 
+@media (max-width: 900px) {
+  .nalame__shell {
+    padding: 0 var(--nalame-space-5) var(--nalame-space-5);
+  }
+
+  .nalame__question {
+    font-size: 4rem;
+  }
+
+  .nalame__answers {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   .nalame__shell {
     padding: var(--nalame-space-4);
@@ -389,6 +426,7 @@
   .nalame__header {
     align-items: flex-start;
     flex-direction: column;
+    margin-bottom: var(--nalame-space-5);
   }
 
   .nalame__theme {
@@ -403,17 +441,13 @@
   }
 
   .nalame__question {
-    font-size: 3rem;
-  }
-
-  .nalame__answers {
-    grid-template-columns: 1fr;
+    font-size: 3.2rem;
   }
 }
 
 @media (max-width: 420px) {
   .nalame__question {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 
   .nalame__actions {
