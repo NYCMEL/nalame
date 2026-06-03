@@ -336,7 +336,6 @@
             <h1 class="nalame__title">${this.escape(this.app.title)}</h1>
           </div>
           <div class="nalame__theme" role="group" aria-label="${this.escape(this.app.modeLabel)}">
-            <span class="nalame__theme-label">${this.escape(this.app.modeLabel)}</span>
             <button class="nalame__theme-button" type="button" data-nalame-action="theme-light" aria-pressed="${this.theme === 'light'}">${this.escape(this.app.lightLabel)}</button>
             <button class="nalame__theme-button" type="button" data-nalame-action="theme-dark" aria-pressed="${this.theme === 'dark'}">${this.escape(this.app.darkLabel)}</button>
           </div>
@@ -359,9 +358,8 @@
             ${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}
           </fieldset>
           <div class="nalame__actions" aria-label="Quiz navigation">
-            <button class="nalame__button" type="button" data-nalame-action="previous" ${questionIndex === 0 ? 'disabled' : ''}>${this.escape(this.app.previousLabel)}</button>
-            <button class="nalame__button" type="button" data-nalame-action="skip">${this.escape(this.app.skipLabel)}</button>
-            <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)}</button>
+            <button class="nalame__button" type="button" data-nalame-action="previous" ${questionIndex === 0 ? 'disabled' : ''}>&#8249; ${this.escape(this.app.previousLabel)}</button>
+            <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)} &#8250;</button>
           </div>
         </section>
       `;
