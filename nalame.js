@@ -315,8 +315,9 @@
     }
 
 
+
     mediaTemplate(question) {
-      const media = this.questionMedia && question ? this.questionMedia[question.id] : null;
+      const media = this.questionMedia && question ? (this.questionMedia[question.id] || this.questionMedia.default) : null;
 
       if (!media || !media.src) {
         return '';
@@ -324,7 +325,7 @@
 
       return `
         <figure class="nalame__media">
-          <img class="nalame__media-image" src="${this.escape(media.src)}" alt="${this.escape(media.alt || '')}" loading="lazy">
+          <img class="nalame__media-image" src="${this.escape(media.src)}" alt="${this.escape(media.alt || '')}">
         </figure>
       `;
     }
