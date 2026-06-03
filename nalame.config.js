@@ -26,13 +26,45 @@
       summaryAriaLabel: 'Completed quiz answers'
     },
     questionMedia: {
-      default: {
-        src: 'assets/locksmith-stuck.png',
-        alt: 'Stuck locksmith illustration'
+      'question-01': {
+        src: 'assets/question_1.png',
+        alt: 'Question 1 illustration'
+      },
+      'question-02': {
+        src: 'assets/question_2.png',
+        alt: 'Question 2 illustration'
+      },
+      'question-03': {
+        src: 'assets/question_3.png',
+        alt: 'Question 3 illustration'
       },
       'question-04': {
-        src: 'assets/locksmith-stuck.png',
-        alt: 'Stuck locksmith illustration'
+        src: 'assets/question_4.png',
+        alt: 'Question 4 illustration'
+      },
+      'question-05': {
+        src: 'assets/question_5.png',
+        alt: 'Question 5 illustration'
+      },
+      'question-06': {
+        src: 'assets/question_6.png',
+        alt: 'Question 6 illustration'
+      },
+      'question-07': {
+        src: 'assets/question_7.png',
+        alt: 'Question 7 illustration'
+      },
+      'question-08': {
+        src: 'assets/question_8.png',
+        alt: 'Question 8 illustration'
+      },
+      'question-09': {
+        src: 'assets/question_9.png',
+        alt: 'Question 9 illustration'
+      },
+      'question-10': {
+        src: 'assets/question_10.png',
+        alt: 'Question 10 illustration'
       }
     },
     questions: [

@@ -7,6 +7,7 @@
       this.config = window.NalameConfig || {};
       this.app = this.config.app || {};
       this.questions = Array.isArray(this.config.questions) ? this.config.questions : [];
+      this.questionMedia = this.config.questionMedia || {};
       this.currentIndex = 0;
       this.answers = {};
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
@@ -226,6 +227,7 @@
 
     skip() {
       const question = this.getCurrentQuestion();
+
       if (question) {
         this.answers[question.id] = '';
         this.publish('nalame:skipped', {
@@ -350,6 +352,7 @@
 
       return `
         <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
+          ${this.questionImageTemplate(question)}
           <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
@@ -364,8 +367,23 @@
       `;
     }
 
+    questionImageTemplate(question) {
+      const media = this.questionMedia && question ? this.questionMedia[question.id] : null;
+
+      if (!media || !media.src) {
+        return '<figure class="nalame__question-media nalame__question-media--empty" aria-hidden="true"></figure>';
+      }
+
+      return `
+        <figure class="nalame__question-media">
+          <img class="nalame__question-image" src="${this.escape(media.src)}" alt="${this.escape(media.alt || '')}">
+        </figure>
+      `;
+    }
+
     answerTemplate(question, answer, currentAnswer) {
       const checked = currentAnswer === answer.id ? 'checked' : '';
+
       return `
         <div class="nalame__answer">
           <input class="nalame__answer-input" type="radio" name="${this.escape(question.id)}" value="${this.escape(answer.id)}" data-nalame-answer ${checked} aria-label="${this.escape(answer.text)}">
