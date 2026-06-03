@@ -207,21 +207,21 @@
       }
 
       this.isTransitioning = true;
-      this.transitionActive = true;
       this.transitionDirection = direction === 'previous' ? 'previous' : 'next';
-      this.transitionFromIndex = this.currentIndex;
-      this.transitionToIndex = targetIndex;
+      this.currentIndex = targetIndex;
+      this.transitionActive = true;
+
+      this.publish(this.transitionDirection === 'previous' ? 'nalame:previous' : 'nalame:next', {
+        index: this.currentIndex,
+        complete: this.currentIndex >= this.questions.length,
+        questionId: this.getCurrentQuestion() ? this.getCurrentQuestion().id : ''
+      });
+
       this.render();
 
       window.setTimeout(() => {
-        this.currentIndex = targetIndex;
         this.transitionActive = false;
         this.isTransitioning = false;
-        this.publish(this.transitionDirection === 'previous' ? 'nalame:previous' : 'nalame:next', {
-          index: this.currentIndex,
-          complete: this.currentIndex >= this.questions.length,
-          questionId: this.getCurrentQuestion() ? this.getCurrentQuestion().id : ''
-        });
         this.render();
       }, this.transitionDuration);
     }
@@ -293,41 +293,13 @@
     }
 
     screenStackTemplate() {
-      if (!this.transitionActive) {
-        return `
-          <div class="nalame__screen-viewport">
-            <div class="nalame__screen-track">
-              <div class="nalame__screen">
-                ${this.contentTemplate(this.currentIndex)}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      if (this.transitionDirection === 'previous') {
-        return `
-          <div class="nalame__screen-viewport" aria-live="polite">
-            <div class="nalame__screen-track nalame__screen-track--push-right">
-              <div class="nalame__screen">
-                ${this.contentTemplate(this.transitionToIndex)}
-              </div>
-              <div class="nalame__screen">
-                ${this.contentTemplate(this.transitionFromIndex)}
-              </div>
-            </div>
-          </div>
-        `;
-      }
+      const directionClass = this.transitionDirection === 'previous' ? 'nalame__screen-track--fade-lift-back' : 'nalame__screen-track--fade-lift';
 
       return `
-        <div class="nalame__screen-viewport" aria-live="polite">
-          <div class="nalame__screen-track nalame__screen-track--push-left">
+        <div class="nalame__screen-viewport">
+          <div class="nalame__screen-track ${this.transitionActive ? directionClass : ''}">
             <div class="nalame__screen">
-              ${this.contentTemplate(this.transitionFromIndex)}
-            </div>
-            <div class="nalame__screen">
-              ${this.contentTemplate(this.transitionToIndex)}
+              ${this.contentTemplate(this.currentIndex)}
             </div>
           </div>
         </div>

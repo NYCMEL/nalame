@@ -598,186 +598,7 @@ to {
   align-items: flex-start;
 }
 
-.nalame__screen-viewport {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-}
 
-.nalame__screen-track {
-  width: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  box-sizing: border-box;
-}
-
-.nalame__screen-track--push-left,
-.nalame__screen-track--push-right {
-  width: 200%;
-  max-width: 200%;
-  will-change: transform;
-}
-
-.nalame__screen-track--push-left {
-  animation: nalamePushLeft 320ms ease both;
-}
-
-.nalame__screen-track--push-right {
-  transform: translateX(-50%);
-  animation: nalamePushRight 320ms ease both;
-}
-
-.nalame__screen {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  flex: 0 0 100%;
-  box-sizing: border-box;
-}
-
-.nalame__screen-track--push-left .nalame__screen,
-.nalame__screen-track--push-right .nalame__screen {
-  width: 50%;
-  max-width: 50%;
-  flex: 0 0 50%;
-  box-sizing: border-box;
-}
-
-.nalame__card,
-.nalame__card--quiz {
-  width: 100%;
-  max-width: 100%;
-  min-height: 0;
-  display: grid;
-  grid-template-rows: 11.5rem 22rem 4rem;
-  align-content: start;
-  row-gap: var(--nalame-space-4);
-  padding: var(--nalame-space-4) 0 0;
-  box-sizing: border-box;
-}
-
-.nalame__progress-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  width: 100vw;
-  height: 40px;
-  min-height: 40px;
-  display: block;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  box-sizing: border-box;
-}
-
-.nalame__progress-text {
-  display: none;
-}
-
-.nalame__progress-track {
-  width: 100vw;
-  height: 40px;
-  display: block;
-  overflow: hidden;
-  border-radius: 0;
-  background: rgba(8, 7, 6, 0.14);
-}
-
-.nalame__progress-bar {
-  width: 0;
-  height: 40px;
-  display: block;
-  border-radius: 0;
-  background: var(--nalame-color-primary);
-  transition: width var(--nalame-motion);
-}
-
-.nalame[data-theme="light"] .nalame__progress-bar {
-  background: #080706;
-}
-
-.nalame[data-theme="dark"] .nalame__progress-bar {
-  background: #f2eadf;
-}
-
-.nalame__question {
-  width: 100%;
-  min-height: 11.5rem;
-  max-height: 11.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  overflow: hidden;
-  color: var(--nalame-color-text);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 3.5rem;
-  font-weight: 900;
-  line-height: 1.05;
-  text-align: center;
-  box-sizing: border-box;
-}
-
-.nalame__answers {
-  width: 100%;
-  max-width: 1280px;
-  min-height: 22rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-content: start;
-  gap: var(--nalame-space-4);
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.nalame__answer,
-.nalame__answer-label {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.nalame__answer-label {
-  overflow: hidden;
-}
-
-.nalame__answer-text {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.nalame__actions {
-  min-height: 4rem;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0;
-}
-
-@keyframes nalamePushLeft {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes nalamePushRight {
-  from {
-    transform: translateX(-50%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
 
 @media (max-width: 720px) {
   .nalame__shell {
@@ -819,6 +640,79 @@ to {
   .nalame__answers {
     min-height: 25rem;
   }
+}
+
+
+
+.nalame__screen-viewport {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.nalame__screen-track {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box;
+  will-change: opacity, transform;
+}
+
+.nalame__screen-track--fade-lift {
+  animation: nalameFadeLift 320ms ease both;
+}
+
+.nalame__screen-track--fade-lift-back {
+  animation: nalameFadeLiftBack 320ms ease both;
+}
+
+.nalame__screen {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@keyframes nalameFadeLift {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes nalameFadeLiftBack {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nalame__progress-wrap {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  z-index: 99999 !important;
+  display: block !important;
+}
+
+.nalame__progress-track,
+.nalame__progress-bar {
+  height: 20px !important;
+  min-height: 20px !important;
 }
 
 
