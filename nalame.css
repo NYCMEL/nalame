@@ -189,7 +189,7 @@
   margin: 0 0 var(--nalame-space-6); }
 
 .nalame__media-image {
-  width: 24rem;
+  width: 12rem;
   max-width: 100%;
   height: auto;
   display: block;
@@ -413,7 +413,7 @@
   visibility: hidden; }
 
 .nalame__media-image {
-  width: 18rem;
+  width: 12rem;
   max-height: 12.5rem;
   object-fit: contain; }
 
@@ -475,6 +475,26 @@
     max-height: 10.5rem; }
   .nalame__answers {
     min-height: 23rem; } }
+
+.nalame__card {
+  opacity: 1;
+  transform: translateX(0); }
+
+.nalame__card.is-exiting-left {
+  opacity: 0;
+  transform: translateX(-110%);
+  transition: opacity 260ms ease, transform 260ms ease; }
+
+.nalame__card.is-entering-fade {
+  opacity: 0;
+  transform: translateX(0);
+  animation: nalameFadeIn 260ms ease forwards; }
+
+@keyframes nalameFadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {
   .nalame,

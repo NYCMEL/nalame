@@ -13,6 +13,9 @@
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
       this.statusText = '';
       this.statusTimer = null;
+      this.transitionState = '';
+      this.isTransitioning = false;
+      this.transitionDuration = 260;
       this.onMessage = this.onMessage.bind(this);
       this.handleClick = this.handleClick.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -179,21 +182,34 @@
     }
 
     next() {
-      if (this.currentIndex >= this.questions.length) {
+      if (this.currentIndex >= this.questions.length || this.isTransitioning) {
         return;
       }
 
-      const nextIndex = this.currentIndex + 1;
-      this.currentIndex = nextIndex;
-      this.publish('nalame:next', {
-        index: this.currentIndex,
-        complete: this.currentIndex >= this.questions.length
-      });
+      this.isTransitioning = true;
+      this.transitionState = 'is-exiting-left';
       this.render();
+
+      window.setTimeout(() => {
+        const nextIndex = this.currentIndex + 1;
+        this.currentIndex = nextIndex;
+        this.transitionState = 'is-entering-fade';
+        this.publish('nalame:next', {
+          index: this.currentIndex,
+          complete: this.currentIndex >= this.questions.length
+        });
+        this.render();
+
+        window.setTimeout(() => {
+          this.transitionState = '';
+          this.isTransitioning = false;
+          this.render();
+        }, this.transitionDuration);
+      }, this.transitionDuration);
     }
 
     previous() {
-      if (this.currentIndex <= 0) {
+      if (this.currentIndex <= 0 || this.isTransitioning) {
         return;
       }
 
@@ -292,7 +308,7 @@
       const progress = this.questions.length ? ((this.currentIndex + 1) / this.questions.length) * 100 : 0;
 
       return `
-        <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
+        <section class="nalame__card nalame__card--quiz ${this.escape(this.transitionState)}" aria-labelledby="nalame-question-title">
           <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} of ${this.questions.length}">
             <span class="nalame__progress-text">${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} / ${this.questions.length}</span>
             <span class="nalame__progress-track" aria-hidden="true">
@@ -348,7 +364,7 @@
 
     summaryTemplate() {
       return `
-        <section class="nalame__card nalame__summary" aria-label="${this.escape(this.app.summaryAriaLabel)}">
+        <section class="nalame__card nalame__summary ${this.escape(this.transitionState)}" aria-label="${this.escape(this.app.summaryAriaLabel)}">
           <div class="nalame__summary-header">
             <h2 class="nalame__summary-title">${this.escape(this.app.summaryTitle)}</h2>
             <p class="nalame__summary-intro">${this.escape(this.app.summaryIntro)}</p>
