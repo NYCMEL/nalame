@@ -943,3 +943,15 @@ to {
 .nalame__card--quiz {
   overflow: visible !important;
 }
+
+
+.nalame__question {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  align-items: center !important;
+  padding-left: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1280px !important;
+  width: 100% !important;
+}
