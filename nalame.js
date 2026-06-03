@@ -292,7 +292,7 @@
       const progress = this.questions.length ? ((this.currentIndex + 1) / this.questions.length) * 100 : 0;
 
       return `
-        <section class="nalame__card" aria-labelledby="nalame-question-title">
+        <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
           <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} of ${this.questions.length}">
             <span class="nalame__progress-text">${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} / ${this.questions.length}</span>
             <span class="nalame__progress-track" aria-hidden="true">
@@ -316,11 +316,14 @@
 
 
 
+
     mediaTemplate(question) {
       const media = this.questionMedia && question ? (this.questionMedia[question.id] || this.questionMedia.default) : null;
 
       if (!media || !media.src) {
-        return '';
+        return `
+          <figure class="nalame__media nalame__media--empty" aria-hidden="true"></figure>
+        `;
       }
 
       return `
