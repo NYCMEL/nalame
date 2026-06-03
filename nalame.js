@@ -13,9 +13,12 @@
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
       this.statusText = '';
       this.statusTimer = null;
-      this.transitionState = '';
       this.isTransitioning = false;
-      this.transitionDuration = 260;
+      this.transitionDuration = 320;
+      this.transitionDirection = 'next';
+      this.transitionFromIndex = 0;
+      this.transitionToIndex = 0;
+      this.transitionActive = false;
       this.onMessage = this.onMessage.bind(this);
       this.handleClick = this.handleClick.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -77,6 +80,10 @@
     }
 
     handleClick(event) {
+      if (this.isTransitioning) {
+        return;
+      }
+
       const actionTarget = event.target.closest('[data-nalame-action]');
       if (!actionTarget) {
         return;
@@ -109,6 +116,10 @@
     }
 
     handleChange(event) {
+      if (this.isTransitioning) {
+        return;
+      }
+
       const input = event.target.closest('[data-nalame-answer]');
       if (!input) {
         return;
@@ -133,7 +144,7 @@
     }
 
     handleKeydown(event) {
-      if (event.altKey || event.ctrlKey || event.metaKey) {
+      if (this.isTransitioning || event.altKey || event.ctrlKey || event.metaKey) {
         return;
       }
 
@@ -169,16 +180,11 @@
     }
 
     goToQuestion(index) {
-      if (!Number.isInteger(index) || index < 0 || index >= this.questions.length) {
+      if (!Number.isInteger(index) || index < 0 || index > this.questions.length || index === this.currentIndex || this.isTransitioning) {
         return;
       }
 
-      this.currentIndex = index;
-      this.publish('nalame:questionChanged', {
-        index: this.currentIndex,
-        questionId: this.getCurrentQuestion().id
-      });
-      this.render();
+      this.slideTo(index, index > this.currentIndex ? 'next' : 'previous');
     }
 
     next() {
@@ -186,26 +192,7 @@
         return;
       }
 
-      this.isTransitioning = true;
-      this.transitionState = 'is-exiting-left';
-      this.render();
-
-      window.setTimeout(() => {
-        const nextIndex = this.currentIndex + 1;
-        this.currentIndex = nextIndex;
-        this.transitionState = 'is-entering-fade';
-        this.publish('nalame:next', {
-          index: this.currentIndex,
-          complete: this.currentIndex >= this.questions.length
-        });
-        this.render();
-
-        window.setTimeout(() => {
-          this.transitionState = '';
-          this.isTransitioning = false;
-          this.render();
-        }, this.transitionDuration);
-      }, this.transitionDuration);
+      this.slideTo(this.currentIndex + 1, 'next');
     }
 
     previous() {
@@ -213,12 +200,34 @@
         return;
       }
 
-      this.currentIndex -= 1;
-      this.publish('nalame:previous', {
-        index: this.currentIndex,
-        questionId: this.getCurrentQuestion().id
-      });
+      this.slideTo(this.currentIndex - 1, 'previous');
+    }
+
+    slideTo(targetIndex, direction) {
+      if (!Number.isInteger(targetIndex) || targetIndex < 0 || targetIndex > this.questions.length || this.isTransitioning) {
+        return;
+      }
+
+      this.isTransitioning = true;
+      this.transitionActive = true;
+      this.transitionDirection = direction === 'previous' ? 'previous' : 'next';
+      this.transitionFromIndex = this.currentIndex;
+      this.transitionToIndex = targetIndex;
       this.render();
+
+      window.setTimeout(() => {
+        this.currentIndex = targetIndex;
+        this.transitionActive = false;
+        this.isTransitioning = false;
+
+        this.publish(this.transitionDirection === 'previous' ? 'nalame:previous' : 'nalame:next', {
+          index: this.currentIndex,
+          complete: this.currentIndex >= this.questions.length,
+          questionId: this.getCurrentQuestion() ? this.getCurrentQuestion().id : ''
+        });
+
+        this.render();
+      }, this.transitionDuration);
     }
 
     skip() {
@@ -238,6 +247,8 @@
       this.currentIndex = 0;
       this.answers = {};
       this.statusText = '';
+      this.transitionActive = false;
+      this.isTransitioning = false;
       this.publish('nalame:restart', {
         totalQuestions: this.questions.length
       });
@@ -278,11 +289,48 @@
         <div class="nalame__shell">
           ${this.headerTemplate()}
           <main class="nalame__main">
-            ${this.currentIndex >= this.questions.length ? this.summaryTemplate() : this.questionTemplate()}
+            ${this.screenStackTemplate()}
           </main>
           <div class="nalame__sr-only" aria-live="polite" data-nalame-status>${this.escape(this.statusText || '')}</div>
         </div>
       `;
+    }
+
+    screenStackTemplate() {
+      if (!this.transitionActive) {
+        return `
+          <div class="nalame__screen-viewport">
+            <div class="nalame__screen-track">
+              <div class="nalame__screen nalame__screen--current">
+                ${this.contentTemplate(this.currentIndex)}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const trackClass = this.transitionDirection === 'previous' ? 'nalame__screen-track--push-right' : 'nalame__screen-track--push-left';
+
+      return `
+        <div class="nalame__screen-viewport" aria-live="polite">
+          <div class="nalame__screen-track ${trackClass}">
+            <div class="nalame__screen">
+              ${this.contentTemplate(this.transitionFromIndex)}
+            </div>
+            <div class="nalame__screen">
+              ${this.contentTemplate(this.transitionToIndex)}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    contentTemplate(index) {
+      if (index >= this.questions.length) {
+        return this.summaryTemplate();
+      }
+
+      return this.questionTemplate(index);
     }
 
     headerTemplate() {
@@ -301,37 +349,35 @@
       `;
     }
 
-    questionTemplate() {
-      const question = this.getCurrentQuestion();
-      const currentAnswer = this.answers[question.id] || '';
-      const isLast = this.currentIndex === this.questions.length - 1;
-      const progress = this.questions.length ? ((this.currentIndex + 1) / this.questions.length) * 100 : 0;
+    questionTemplate(index) {
+      const questionIndex = Number.isInteger(index) ? index : this.currentIndex;
+      const question = this.questions[questionIndex] || this.getCurrentQuestion();
+      const currentAnswer = question ? this.answers[question.id] || '' : '';
+      const isLast = questionIndex === this.questions.length - 1;
+      const progress = this.questions.length ? ((questionIndex + 1) / this.questions.length) * 100 : 0;
 
       return `
-        <section class="nalame__card nalame__card--quiz ${this.escape(this.transitionState)}" aria-labelledby="nalame-question-title">
-          <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} of ${this.questions.length}">
-            <span class="nalame__progress-text">${this.escape(this.app.progressLabel)} ${this.currentIndex + 1} / ${this.questions.length}</span>
+        <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
+          <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${questionIndex + 1} of ${this.questions.length}">
+            <span class="nalame__progress-text">${this.escape(this.app.progressLabel)} ${questionIndex + 1} / ${this.questions.length}</span>
             <span class="nalame__progress-track" aria-hidden="true">
               <span class="nalame__progress-bar" style="width: ${progress}%"></span>
             </span>
           </div>
           ${this.mediaTemplate(question)}
-          <h2 class="nalame__question" id="nalame-question-title">${this.escape(question.text)}</h2>
+          <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
-            ${question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('')}
+            ${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}
           </fieldset>
           <div class="nalame__actions" aria-label="Quiz navigation">
-            <button class="nalame__button" type="button" data-nalame-action="previous" ${this.currentIndex === 0 ? 'disabled' : ''}>${this.escape(this.app.previousLabel)}</button>
+            <button class="nalame__button" type="button" data-nalame-action="previous" ${questionIndex === 0 ? 'disabled' : ''}>${this.escape(this.app.previousLabel)}</button>
             <button class="nalame__button" type="button" data-nalame-action="skip">${this.escape(this.app.skipLabel)}</button>
             <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)}</button>
           </div>
         </section>
       `;
     }
-
-
-
 
     mediaTemplate(question) {
       const media = this.questionMedia && question ? (this.questionMedia[question.id] || this.questionMedia.default) : null;
@@ -364,7 +410,7 @@
 
     summaryTemplate() {
       return `
-        <section class="nalame__card nalame__summary ${this.escape(this.transitionState)}" aria-label="${this.escape(this.app.summaryAriaLabel)}">
+        <section class="nalame__card nalame__summary" aria-label="${this.escape(this.app.summaryAriaLabel)}">
           <div class="nalame__summary-header">
             <h2 class="nalame__summary-title">${this.escape(this.app.summaryTitle)}</h2>
             <p class="nalame__summary-intro">${this.escape(this.app.summaryIntro)}</p>
