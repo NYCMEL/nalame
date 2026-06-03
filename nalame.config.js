@@ -38,7 +38,7 @@
     questions: [
       {
         id: 'question-01',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?',
+        text: 'Lorem ipsum dolor sit amet, consectetur?',
         answers: [
           { id: 'q01-a01', text: 'Praesent commodo cursus magna' },
           { id: 'q01-a02', text: 'Vestibulum id ligula porta felis' },
