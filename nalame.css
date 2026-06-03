@@ -372,8 +372,6 @@
   .nalame__button {
     width: 100%; } }
 
-
-
 .nalame__card--quiz {
   min-height: 0;
   display: grid;
@@ -434,20 +432,10 @@
     min-height: 23rem; } }
 
 to {
-    opacity: 1; } }
-
-
-
-
-
-
-
-
-
+  opacity: 1; }
 
 .nalame__card--quiz {
-  grid-template-rows: 40px 12.5rem 20rem 4rem;
-}
+  grid-template-rows: 40px 12.5rem 20rem 4rem; }
 
 .nalame__progress-wrap {
   width: 100%;
@@ -456,12 +444,10 @@ to {
   display: flex;
   align-items: flex-start;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 .nalame__progress-text {
-  display: none;
-}
+  display: none; }
 
 .nalame__progress-track {
   width: 100%;
@@ -469,8 +455,7 @@ to {
   display: block;
   overflow: hidden;
   border-radius: 5px;
-  background: rgba(233, 223, 207, 0.16);
-}
+  background: rgba(233, 223, 207, 0.16); }
 
 .nalame__progress-bar {
   width: 0;
@@ -478,108 +463,73 @@ to {
   display: block;
   border-radius: 5px;
   background: var(--nalame-color-primary);
-  transition: width var(--nalame-motion);
-}
+  transition: width var(--nalame-motion); }
 
 @media (max-width: 720px) {
   .nalame__card--quiz {
-    grid-template-rows: 40px 11.5rem 22rem 10rem;
-  }
-}
+    grid-template-rows: 40px 11.5rem 22rem 10rem; } }
 
 @media (max-width: 420px) {
   .nalame__card--quiz {
-    grid-template-rows: 40px 10.5rem 23rem 10rem;
-  }
-}
-
-
+    grid-template-rows: 40px 10.5rem 23rem 10rem; } }
 
 .nalame {
-  overflow-x: hidden;
-}
+  overflow-x: hidden; }
 
 .nalame__shell {
-  padding-top: 40px;
-}
+  padding-top: 40px; }
 
 .nalame__header {
-  margin-bottom: var(--nalame-space-5);
-}
+  margin-bottom: var(--nalame-space-5); }
 
 .nalame__main {
   width: 100%;
-  align-items: flex-start;
-}
-
-
+  align-items: flex-start; }
 
 @media (max-width: 720px) {
   .nalame__shell {
-    padding-top: 40px;
-  }
-
+    padding-top: 40px; }
   .nalame__card--quiz {
     grid-template-rows: 10.5rem 24rem 10rem;
     row-gap: var(--nalame-space-3);
-    padding-top: 0;
-  }
-
+    padding-top: 0; }
   .nalame__question {
     min-height: 10.5rem;
     max-height: 10.5rem;
-    font-size: 3rem;
-  }
-
+    font-size: 3rem; }
   .nalame__answers {
-    min-height: 24rem;
-  }
-
+    min-height: 24rem; }
   .nalame__actions {
-    min-height: 10rem;
-  }
-}
+    min-height: 10rem; } }
 
 @media (max-width: 420px) {
   .nalame__card--quiz {
-    grid-template-rows: 9.5rem 25rem 10rem;
-  }
-
+    grid-template-rows: 9.5rem 25rem 10rem; }
   .nalame__question {
     min-height: 9.5rem;
     max-height: 9.5rem;
-    font-size: 2.5rem;
-  }
-
+    font-size: 2.5rem; }
   .nalame__answers {
-    min-height: 25rem;
-  }
-}
-
-
+    min-height: 25rem; } }
 
 .nalame {
-  overflow-x: hidden;
-}
+  overflow-x: hidden; }
 
 .nalame__shell {
   width: 100%;
   min-height: 100vh;
   padding-top: 20px;
-  overflow-x: hidden;
-}
+  overflow-x: hidden; }
 
 .nalame__header {
-  margin-bottom: var(--nalame-space-4);
-}
+  margin-bottom: var(--nalame-space-4); }
 
 .nalame__main {
   width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  overflow: visible;
-}
+  overflow: visible; }
 
 .nalame__progress-wrap {
   position: fixed;
@@ -595,12 +545,10 @@ to {
   padding: 0;
   background: transparent;
   overflow: visible;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__progress-text {
-  display: none;
-}
+  display: none; }
 
 .nalame__progress-track {
   width: 100vw;
@@ -610,8 +558,7 @@ to {
   overflow: hidden;
   border-radius: 0;
   background: rgba(8, 7, 6, 0.14);
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__progress-bar {
   width: 0;
@@ -620,46 +567,38 @@ to {
   display: block;
   border-radius: 0;
   background: var(--nalame-color-primary);
-  transition: width var(--nalame-motion);
-}
+  transition: width var(--nalame-motion); }
 
 .nalame[data-theme="light"] .nalame__progress-bar {
-  background: #080706;
-}
+  background: #080706; }
 
 .nalame[data-theme="dark"] .nalame__progress-bar {
-  background: #f2eadf;
-}
+  background: #f2eadf; }
 
 .nalame__screen-viewport {
   width: 100%;
   max-width: 100%;
   overflow: visible;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__screen-track {
   width: 100%;
   max-width: 100%;
   display: block;
   box-sizing: border-box;
-  will-change: opacity, transform;
-}
+  will-change: opacity, transform; }
 
 .nalame__screen-track--fade-lift {
-  animation: nalameFadeLift 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+  animation: nalameFadeLift 650ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 .nalame__screen-track--fade-lift-back {
-  animation: nalameFadeLiftBack 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+  animation: nalameFadeLiftBack 650ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 .nalame__screen {
   width: 100%;
   max-width: 100%;
   display: block;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__card,
 .nalame__card--quiz {
@@ -675,8 +614,7 @@ to {
   box-shadow: none;
   background: transparent;
   box-sizing: border-box;
-  overflow: visible;
-}
+  overflow: visible; }
 
 .nalame__question {
   width: 100%;
@@ -694,8 +632,7 @@ to {
   font-weight: 900;
   line-height: 1.05;
   text-align: center;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__answers {
   width: 100%;
@@ -710,15 +647,13 @@ to {
   margin: 0 auto;
   padding: 0;
   border: 0;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__answer {
   width: 100%;
   max-width: 100%;
   display: block;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame__answer-label {
   width: 100%;
@@ -729,88 +664,60 @@ to {
   align-items: center;
   column-gap: var(--nalame-space-4);
   box-sizing: border-box;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 .nalame__answer-text {
   min-width: 0;
-  overflow-wrap: anywhere;
-}
+  overflow-wrap: anywhere; }
 
 .nalame__actions {
   min-height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0;
-}
+  margin-top: 0; }
 
 @keyframes nalameFadeLift {
   from {
     opacity: 0;
-    transform: translateY(18px) scale(0.985);
-  }
-
+    transform: translateY(18px) scale(0.985); }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+    transform: translateY(0) scale(1); } }
 
 @keyframes nalameFadeLiftBack {
   from {
     opacity: 0;
-    transform: translateY(-12px) scale(0.985);
-  }
-
+    transform: translateY(-12px) scale(0.985); }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+    transform: translateY(0) scale(1); } }
 
 @media (max-width: 720px) {
   .nalame__shell {
-    padding-top: 20px;
-  }
-
+    padding-top: 20px; }
   .nalame__card--quiz {
     grid-template-rows: 10.5rem 24rem 10rem;
     row-gap: var(--nalame-space-3);
-    padding-top: 0;
-  }
-
+    padding-top: 0; }
   .nalame__question {
     min-height: 10.5rem;
     max-height: 10.5rem;
-    font-size: 3rem;
-  }
-
+    font-size: 3rem; }
   .nalame__answers {
-    min-height: 24rem;
-  }
-
+    min-height: 24rem; }
   .nalame__actions {
-    min-height: 10rem;
-  }
-}
+    min-height: 10rem; } }
 
 @media (max-width: 420px) {
   .nalame__card--quiz {
-    grid-template-rows: 9.5rem 25rem 10rem;
-  }
-
+    grid-template-rows: 9.5rem 25rem 10rem; }
   .nalame__question {
     min-height: 9.5rem;
     max-height: 9.5rem;
-    font-size: 2.5rem;
-  }
-
+    font-size: 2.5rem; }
   .nalame__answers {
-    min-height: 25rem;
-  }
-}
-
+    min-height: 25rem; } }
 
 @media (prefers-reduced-motion: reduce) {
   .nalame,
@@ -820,10 +727,8 @@ to {
     animation-duration: 0.01ms;
     animation-iteration-count: 1; } }
 
-
 .nalame__shell {
-  padding-top: 20px !important;
-}
+  padding-top: 20px !important; }
 
 .nalame__progress-wrap {
   position: fixed !important;
@@ -834,28 +739,23 @@ to {
   height: 20px !important;
   min-height: 20px !important;
   z-index: 99999 !important;
-  display: block !important;
-}
+  display: block !important; }
 
 .nalame__progress-track {
   width: 100vw !important;
   height: 20px !important;
-  min-height: 20px !important;
-}
+  min-height: 20px !important; }
 
 .nalame__progress-bar {
   height: 20px !important;
-  min-height: 20px !important;
-}
+  min-height: 20px !important; }
 
 .nalame__screen-viewport,
 .nalame__screen-track,
 .nalame__screen,
 .nalame__card,
 .nalame__card--quiz {
-  overflow: visible !important;
-}
-
+  overflow: visible !important; }
 
 .nalame__question {
   justify-content: flex-start !important;
@@ -865,5 +765,4 @@ to {
   margin-left: auto !important;
   margin-right: auto !important;
   max-width: 1280px !important;
-  width: 100% !important;
-}
+  width: 100% !important; }
