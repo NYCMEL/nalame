@@ -368,7 +368,6 @@
       return `
         <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
           <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${questionIndex + 1} of ${this.questions.length}">
-            <span class="nalame__progress-text">${this.escape(this.app.progressLabel)} ${questionIndex + 1} / ${this.questions.length}</span>
             <span class="nalame__progress-track" aria-hidden="true">
               <span class="nalame__progress-bar" style="width: ${progress}%"></span>
             </span>

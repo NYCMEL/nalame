@@ -372,13 +372,12 @@
   .nalame__button {
     width: 100%; } }
 
-.nalame__main {
-  align-items: flex-start; }
+
 
 .nalame__card--quiz {
   min-height: 0;
   display: grid;
-  grid-template-rows: 2.75rem 12.5rem 20rem 4rem;
+  grid-template-rows: 40px 12.5rem 20rem 4rem;
   align-content: start;
   row-gap: var(--nalame-space-4);
   padding: var(--nalame-space-4) 0 0; }
@@ -414,7 +413,7 @@
 
 @media (max-width: 720px) {
   .nalame__card--quiz {
-    grid-template-rows: 2.75rem 11.5rem 22rem 10rem;
+    grid-template-rows: 40px 11.5rem 22rem 10rem;
     row-gap: var(--nalame-space-3);
     padding-top: 0; }
   .nalame__question {
@@ -427,7 +426,7 @@
 
 @media (max-width: 420px) {
   .nalame__card--quiz {
-    grid-template-rows: 2.75rem 10.5rem 23rem 10rem; }
+    grid-template-rows: 40px 10.5rem 23rem 10rem; }
   .nalame__question {
     min-height: 10.5rem;
     max-height: 10.5rem; }
@@ -441,6 +440,77 @@ to {
 
 
 
+
+
+
+
+
+.nalame__card--quiz {
+  grid-template-rows: 40px 12.5rem 20rem 4rem;
+}
+
+.nalame__progress-wrap {
+  width: 100%;
+  min-height: 40px;
+  height: 40px;
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.nalame__progress-text {
+  display: none;
+}
+
+.nalame__progress-track {
+  width: 100%;
+  height: 40px;
+  display: block;
+  overflow: hidden;
+  border-radius: 5px;
+  background: rgba(233, 223, 207, 0.16);
+}
+
+.nalame__progress-bar {
+  width: 0;
+  height: 40px;
+  display: block;
+  border-radius: 5px;
+  background: var(--nalame-color-primary);
+  transition: width var(--nalame-motion);
+}
+
+@media (max-width: 720px) {
+  .nalame__card--quiz {
+    grid-template-rows: 40px 11.5rem 22rem 10rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .nalame__card--quiz {
+    grid-template-rows: 40px 10.5rem 23rem 10rem;
+  }
+}
+
+
+
+.nalame {
+  overflow-x: hidden;
+}
+
+.nalame__shell {
+  padding-top: 40px;
+}
+
+.nalame__header {
+  margin-bottom: var(--nalame-space-5);
+}
+
+.nalame__main {
+  width: 100%;
+  align-items: flex-start;
+}
 
 .nalame__screen-viewport {
   width: 100%;
@@ -485,14 +555,101 @@ to {
 .nalame__screen-track--push-left .nalame__screen,
 .nalame__screen-track--push-right .nalame__screen {
   width: 50%;
-  min-width: 0;
   max-width: 50%;
   flex: 0 0 50%;
+  box-sizing: border-box;
 }
 
 .nalame__card,
-.nalame__card--quiz,
-.nalame__answers,
+.nalame__card--quiz {
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 11.5rem 22rem 4rem;
+  align-content: start;
+  row-gap: var(--nalame-space-4);
+  padding: var(--nalame-space-4) 0 0;
+  box-sizing: border-box;
+}
+
+.nalame__progress-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 40px;
+  min-height: 40px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.nalame__progress-text {
+  display: none;
+}
+
+.nalame__progress-track {
+  width: 100vw;
+  height: 40px;
+  display: block;
+  overflow: hidden;
+  border-radius: 0;
+  background: rgba(8, 7, 6, 0.14);
+}
+
+.nalame__progress-bar {
+  width: 0;
+  height: 40px;
+  display: block;
+  border-radius: 0;
+  background: var(--nalame-color-primary);
+  transition: width var(--nalame-motion);
+}
+
+.nalame[data-theme="light"] .nalame__progress-bar {
+  background: #080706;
+}
+
+.nalame[data-theme="dark"] .nalame__progress-bar {
+  background: #f2eadf;
+}
+
+.nalame__question {
+  width: 100%;
+  min-height: 11.5rem;
+  max-height: 11.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  color: var(--nalame-color-text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nalame__answers {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 22rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+  gap: var(--nalame-space-4);
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .nalame__answer,
 .nalame__answer-label {
   width: 100%;
@@ -500,8 +657,20 @@ to {
   box-sizing: border-box;
 }
 
-.nalame__answers {
-  grid-auto-columns: 100%;
+.nalame__answer-label {
+  overflow: hidden;
+}
+
+.nalame__answer-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.nalame__actions {
+  min-height: 4rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
 }
 
 @keyframes nalamePushLeft {
@@ -524,6 +693,48 @@ to {
   }
 }
 
+@media (max-width: 720px) {
+  .nalame__shell {
+    padding-top: 40px;
+  }
+
+  .nalame__card--quiz {
+    grid-template-rows: 10.5rem 24rem 10rem;
+    row-gap: var(--nalame-space-3);
+    padding-top: 0;
+  }
+
+  .nalame__question {
+    min-height: 10.5rem;
+    max-height: 10.5rem;
+    font-size: 3rem;
+  }
+
+  .nalame__answers {
+    min-height: 24rem;
+  }
+
+  .nalame__actions {
+    min-height: 10rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .nalame__card--quiz {
+    grid-template-rows: 9.5rem 25rem 10rem;
+  }
+
+  .nalame__question {
+    min-height: 9.5rem;
+    max-height: 9.5rem;
+    font-size: 2.5rem;
+  }
+
+  .nalame__answers {
+    min-height: 25rem;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .nalame,
@@ -532,3 +743,39 @@ to {
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;
     animation-iteration-count: 1; } }
+
+
+.nalame__shell {
+  padding-top: 20px !important;
+}
+
+.nalame__progress-wrap {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  z-index: 99999 !important;
+  display: block !important;
+}
+
+.nalame__progress-track {
+  width: 100vw !important;
+  height: 20px !important;
+  min-height: 20px !important;
+}
+
+.nalame__progress-bar {
+  height: 20px !important;
+  min-height: 20px !important;
+}
+
+.nalame__screen-viewport,
+.nalame__screen-track,
+.nalame__screen,
+.nalame__card,
+.nalame__card--quiz {
+  overflow: visible !important;
+}
