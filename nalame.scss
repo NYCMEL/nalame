@@ -219,7 +219,6 @@
 
 .nalame__answer {
   position: relative;
-  background: red!important;
 }
 
 .nalame__answer-input {
@@ -968,3 +967,20 @@ to {
 .nalame[data-theme="dark"] .nalame__progress-bar {
   background: #f2eadf !important;
 }
+
+
+.nalame__answer {
+  border: 2px solid transparent !important;
+  transition: border-color 220ms ease, box-shadow 220ms ease !important;
+}
+
+.nalame__answer:hover,
+.nalame__answer:focus-within {
+  border-color: lime !important;
+}
+
+.nalame__answer-input:checked + .nalame__answer-label,
+.nalame__answer:has(.nalame__answer-input:checked) {
+  border-color: lime !important;
+}
+
