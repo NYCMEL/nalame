@@ -178,14 +178,7 @@
   margin-bottom: var(--nalame-space-6);
 }
 
-.nalame__progress-text {
-  color: var(--nalame-color-muted);
-  font-size: 1rem;
-  font-weight: 900;
-  text-align: center;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
+
 
 .nalame__progress-track {
   height: 1px;
@@ -544,27 +537,11 @@ to {
   padding: 0;
 }
 
-.nalame__progress-text {
-  display: none;
-}
 
-.nalame__progress-track {
-  width: 100%;
-  height: 40px;
-  display: block;
-  overflow: hidden;
-  border-radius: 5px;
-  background: rgba(233, 223, 207, 0.16);
-}
 
-.nalame__progress-bar {
-  width: 0;
-  height: 40px;
-  display: block;
-  border-radius: 5px;
-  background: var(--nalame-color-primary);
-  transition: width var(--nalame-motion);
-}
+
+
+
 
 @media (max-width: 720px) {
   .nalame__card--quiz {
@@ -666,47 +643,13 @@ to {
   overflow: visible;
 }
 
-.nalame__progress-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: auto;
-  z-index: 99999;
-  width: 100vw;
-  height: 20px;
-  min-height: 20px;
-  display: block;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  overflow: visible;
-  box-sizing: border-box;
-}
 
-.nalame__progress-text {
-  display: none;
-}
 
-.nalame__progress-track {
-  width: 100vw;
-  height: 20px;
-  min-height: 20px;
-  display: block;
-  overflow: hidden;
-  border-radius: 0;
-  background: rgba(8, 7, 6, 0.14);
-  box-sizing: border-box;
-}
 
-.nalame__progress-bar {
-  width: 0;
-  height: 20px;
-  min-height: 20px;
-  display: block;
-  border-radius: 0;
-  background: var(--nalame-color-primary);
-  transition: width var(--nalame-motion);
-}
+
+
+
+
 
 .nalame[data-theme="light"] .nalame__progress-bar {
   background: #080706;
@@ -897,6 +840,37 @@ to {
 }
 
 
+
+.nalame {
+  overflow-x: hidden;
+}
+
+.nalame__shell {
+  padding-top: 20px !important;
+}
+
+
+
+
+
+
+
+.nalame[data-theme="light"] .nalame__progress-bar {
+  background: #080706 !important;
+}
+
+.nalame[data-theme="dark"] .nalame__progress-bar {
+  background: #f2eadf !important;
+}
+
+.nalame__screen-viewport,
+.nalame__screen-track,
+.nalame__screen,
+.nalame__card,
+.nalame__card--quiz {
+  overflow: visible !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nalame,
   .nalame * {
@@ -912,28 +886,11 @@ to {
   padding-top: 20px !important;
 }
 
-.nalame__progress-wrap {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100vw !important;
-  height: 20px !important;
-  min-height: 20px !important;
-  z-index: 99999 !important;
-  display: block !important;
-}
 
-.nalame__progress-track {
-  width: 100vw !important;
-  height: 20px !important;
-  min-height: 20px !important;
-}
 
-.nalame__progress-bar {
-  height: 20px !important;
-  min-height: 20px !important;
-}
+
+
+
 
 .nalame__screen-viewport,
 .nalame__screen-track,
@@ -953,4 +910,60 @@ to {
   margin-right: auto !important;
   max-width: 1280px !important;
   width: 100% !important;
+}
+
+
+.nalame__shell {
+  padding-top: 20px !important;
+}
+
+.nalame__progress-wrap {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 2147483647 !important;
+  width: 100vw !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  box-sizing: border-box !important;
+}
+
+.nalame__progress-track {
+  width: 100vw !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  display: block !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+  background: rgba(8, 7, 6, 0.14) !important;
+  box-sizing: border-box !important;
+}
+
+.nalame__progress-bar {
+  width: 0;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  display: block !important;
+  border-radius: 0 !important;
+  background: var(--nalame-color-primary) !important;
+  transition: width var(--nalame-motion);
+  box-sizing: border-box !important;
+}
+
+.nalame[data-theme="light"] .nalame__progress-bar {
+  background: #080706 !important;
+}
+
+.nalame[data-theme="dark"] .nalame__progress-bar {
+  background: #f2eadf !important;
 }

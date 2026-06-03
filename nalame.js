@@ -15,8 +15,6 @@
       this.transitionDuration = 650;
       this.transitionActive = false;
       this.transitionDirection = 'next';
-      this.transitionFromIndex = 0;
-      this.transitionToIndex = 0;
       this.onMessage = this.onMessage.bind(this);
       this.handleClick = this.handleClick.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -182,7 +180,7 @@
         return;
       }
 
-      this.slideTo(index, index > this.currentIndex ? 'next' : 'previous');
+      this.fadeTo(index, index > this.currentIndex ? 'next' : 'previous');
     }
 
     next() {
@@ -190,7 +188,7 @@
         return;
       }
 
-      this.slideTo(this.currentIndex + 1, 'next');
+      this.fadeTo(this.currentIndex + 1, 'next');
     }
 
     previous() {
@@ -198,10 +196,10 @@
         return;
       }
 
-      this.slideTo(this.currentIndex - 1, 'previous');
+      this.fadeTo(this.currentIndex - 1, 'previous');
     }
 
-    slideTo(targetIndex, direction) {
+    fadeTo(targetIndex, direction) {
       if (!Number.isInteger(targetIndex) || targetIndex < 0 || targetIndex > this.questions.length || this.isTransitioning) {
         return;
       }
@@ -243,8 +241,8 @@
       this.currentIndex = 0;
       this.answers = {};
       this.statusText = '';
-      this.isTransitioning = false;
       this.transitionActive = false;
+      this.isTransitioning = false;
       this.publish('nalame:restart', {
         totalQuestions: this.questions.length
       });
@@ -283,11 +281,25 @@
     template() {
       return `
         <div class="nalame__shell">
+          ${this.progressTemplate()}
           ${this.headerTemplate()}
           <main class="nalame__main">
             ${this.screenStackTemplate()}
           </main>
           <div class="nalame__sr-only" aria-live="polite" data-nalame-status>${this.escape(this.statusText || '')}</div>
+        </div>
+      `;
+    }
+
+    progressTemplate() {
+      const completed = this.questions.length ? Math.min(this.currentIndex, this.questions.length) : 0;
+      const progress = this.questions.length ? (completed / this.questions.length) * 100 : 0;
+
+      return `
+        <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${completed} of ${this.questions.length}">
+          <span class="nalame__progress-track" aria-hidden="true">
+            <span class="nalame__progress-bar" style="width: ${progress}%"></span>
+          </span>
         </div>
       `;
     }
@@ -335,15 +347,9 @@
       const question = this.questions[questionIndex] || this.getCurrentQuestion();
       const currentAnswer = question ? this.answers[question.id] || '' : '';
       const isLast = questionIndex === this.questions.length - 1;
-      const progress = this.questions.length ? ((questionIndex + 1) / this.questions.length) * 100 : 0;
 
       return `
         <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
-          <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel)} ${questionIndex + 1} of ${this.questions.length}">
-            <span class="nalame__progress-track" aria-hidden="true">
-              <span class="nalame__progress-bar" style="width: ${progress}%"></span>
-            </span>
-          </div>
           <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
