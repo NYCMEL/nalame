@@ -7,18 +7,16 @@
       this.config = window.NalameConfig || {};
       this.app = this.config.app || {};
       this.questions = Array.isArray(this.config.questions) ? this.config.questions : [];
-      this.questionMedia = this.config.questionMedia || {};
       this.currentIndex = 0;
       this.answers = {};
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
       this.statusText = '';
-      this.statusTimer = null;
       this.isTransitioning = false;
       this.transitionDuration = 320;
+      this.transitionActive = false;
       this.transitionDirection = 'next';
       this.transitionFromIndex = 0;
       this.transitionToIndex = 0;
-      this.transitionActive = false;
       this.onMessage = this.onMessage.bind(this);
       this.handleClick = this.handleClick.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -219,13 +217,11 @@
         this.currentIndex = targetIndex;
         this.transitionActive = false;
         this.isTransitioning = false;
-
         this.publish(this.transitionDirection === 'previous' ? 'nalame:previous' : 'nalame:next', {
           index: this.currentIndex,
           complete: this.currentIndex >= this.questions.length,
           questionId: this.getCurrentQuestion() ? this.getCurrentQuestion().id : ''
         });
-
         this.render();
       }, this.transitionDuration);
     }
@@ -247,8 +243,8 @@
       this.currentIndex = 0;
       this.answers = {};
       this.statusText = '';
-      this.transitionActive = false;
       this.isTransitioning = false;
+      this.transitionActive = false;
       this.publish('nalame:restart', {
         totalQuestions: this.questions.length
       });
@@ -301,7 +297,7 @@
         return `
           <div class="nalame__screen-viewport">
             <div class="nalame__screen-track">
-              <div class="nalame__screen nalame__screen--current">
+              <div class="nalame__screen">
                 ${this.contentTemplate(this.currentIndex)}
               </div>
             </div>
@@ -309,11 +305,24 @@
         `;
       }
 
-      const trackClass = this.transitionDirection === 'previous' ? 'nalame__screen-track--push-right' : 'nalame__screen-track--push-left';
+      if (this.transitionDirection === 'previous') {
+        return `
+          <div class="nalame__screen-viewport" aria-live="polite">
+            <div class="nalame__screen-track nalame__screen-track--push-right">
+              <div class="nalame__screen">
+                ${this.contentTemplate(this.transitionToIndex)}
+              </div>
+              <div class="nalame__screen">
+                ${this.contentTemplate(this.transitionFromIndex)}
+              </div>
+            </div>
+          </div>
+        `;
+      }
 
       return `
         <div class="nalame__screen-viewport" aria-live="polite">
-          <div class="nalame__screen-track ${trackClass}">
+          <div class="nalame__screen-track nalame__screen-track--push-left">
             <div class="nalame__screen">
               ${this.contentTemplate(this.transitionFromIndex)}
             </div>
@@ -364,7 +373,7 @@
               <span class="nalame__progress-bar" style="width: ${progress}%"></span>
             </span>
           </div>
-                    <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
+          <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
             ${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}
