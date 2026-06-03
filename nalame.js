@@ -12,7 +12,7 @@
       this.theme = this.app.defaultTheme === 'dark' ? 'dark' : 'light';
       this.statusText = '';
       this.isTransitioning = false;
-      this.transitionDuration = 320;
+      this.transitionDuration = 650;
       this.transitionActive = false;
       this.transitionDirection = 'next';
       this.transitionFromIndex = 0;

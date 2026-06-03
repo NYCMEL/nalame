@@ -647,11 +647,11 @@ to {
 }
 
 .nalame__screen-track--fade-lift {
-  animation: nalameFadeLift 320ms ease both;
+  animation: nalameFadeLift 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .nalame__screen-track--fade-lift-back {
-  animation: nalameFadeLiftBack 320ms ease both;
+  animation: nalameFadeLiftBack 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .nalame__screen {
