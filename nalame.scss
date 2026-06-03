@@ -202,23 +202,6 @@
   transition: width var(--nalame-motion);
 }
 
-.nalame__media {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 0 0 var(--nalame-space-6);
-}
-
-.nalame__media-image {
-  width: 12rem;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  border: 0;
-  border-radius: 5px;
-  box-shadow: none;
-}
-
 .nalame__question {
   width: 100%;
   margin: 0 auto var(--nalame-space-6);
@@ -459,7 +442,7 @@
 .nalame__card--quiz {
   min-height: 0;
   display: grid;
-  grid-template-rows: 2.75rem 13rem 12.5rem 20rem 4rem;
+  grid-template-rows: 2.75rem 12.5rem 20rem 4rem;
   align-content: start;
   row-gap: var(--nalame-space-4);
   padding: var(--nalame-space-4) 0 0;
@@ -468,24 +451,6 @@
 .nalame__progress-wrap {
   min-height: 2.75rem;
   margin-bottom: 0;
-}
-
-.nalame__media {
-  min-height: 13rem;
-  max-height: 13rem;
-  align-items: center;
-  margin: 0;
-  overflow: hidden;
-}
-
-.nalame__media--empty {
-  visibility: hidden;
-}
-
-.nalame__media-image {
-  width: 12rem;
-  max-height: 12.5rem;
-  object-fit: contain;
 }
 
 .nalame__question {
@@ -519,19 +484,9 @@
 
 @media (max-width: 720px) {
   .nalame__card--quiz {
-    grid-template-rows: 2.75rem 11rem 11.5rem 22rem 10rem;
+    grid-template-rows: 2.75rem 11.5rem 22rem 10rem;
     row-gap: var(--nalame-space-3);
     padding-top: 0;
-  }
-
-  .nalame__media {
-    min-height: 11rem;
-    max-height: 11rem;
-  }
-
-  .nalame__media-image {
-    width: 12rem;
-    max-height: 10.5rem;
   }
 
   .nalame__question {
@@ -550,17 +505,7 @@
 
 @media (max-width: 420px) {
   .nalame__card--quiz {
-    grid-template-rows: 2.75rem 9.5rem 10.5rem 23rem 10rem;
-  }
-
-  .nalame__media {
-    min-height: 9.5rem;
-    max-height: 9.5rem;
-  }
-
-  .nalame__media-image {
-    width: 12rem;
-    max-height: 9rem;
+    grid-template-rows: 2.75rem 10.5rem 23rem 10rem;
   }
 
   .nalame__question {
@@ -574,64 +519,32 @@
 }
 
 
-to {
+.nalame__card {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nalame__card.is-exiting-left {
+  opacity: 0;
+  transform: translateX(-110%);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.nalame__card.is-entering-fade {
+  opacity: 0;
+  transform: translateX(0);
+  animation: nalameFadeIn 260ms ease forwards;
+}
+
+@keyframes nalameFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
     opacity: 1;
   }
 }
-
-
-.nalame__screen-viewport {
-  width: 100%;
-  overflow: hidden;
-}
-
-.nalame__screen-track {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-}
-
-.nalame__screen-track--push-left,
-.nalame__screen-track--push-right {
-  width: 200%;
-  grid-template-columns: 50% 50%;
-  will-change: transform;
-}
-
-.nalame__screen-track--push-left {
-  animation: nalamePushLeft 320ms ease both;
-}
-
-.nalame__screen-track--push-right {
-  transform: translateX(-50%);
-  animation: nalamePushRight 320ms ease both;
-}
-
-.nalame__screen {
-  width: 100%;
-  min-width: 0;
-}
-
-@keyframes nalamePushLeft {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes nalamePushRight {
-  from {
-    transform: translateX(-50%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
 
 @media (prefers-reduced-motion: reduce) {
   .nalame,
@@ -640,6 +553,5 @@ to {
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
-    animation-name: none;
   }
 }

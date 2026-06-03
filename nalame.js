@@ -364,8 +364,7 @@
               <span class="nalame__progress-bar" style="width: ${progress}%"></span>
             </span>
           </div>
-          ${this.mediaTemplate(question)}
-          <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
+                    <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
             ${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}
@@ -376,22 +375,6 @@
             <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)}</button>
           </div>
         </section>
-      `;
-    }
-
-    mediaTemplate(question) {
-      const media = this.questionMedia && question ? (this.questionMedia[question.id] || this.questionMedia.default) : null;
-
-      if (!media || !media.src) {
-        return `
-          <figure class="nalame__media nalame__media--empty" aria-hidden="true"></figure>
-        `;
-      }
-
-      return `
-        <figure class="nalame__media">
-          <img class="nalame__media-image" src="${this.escape(media.src)}" alt="${this.escape(media.alt || '')}">
-        </figure>
       `;
     }
 
