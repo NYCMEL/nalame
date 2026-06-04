@@ -751,3 +751,13 @@
     animation-iteration-count: 1;
   }
 }
+
+/* nalame 25 percent top placement */
+.nalame__main {
+  align-items: flex-start !important;
+  justify-content: center !important;
+}
+
+.nalame__card--quiz {
+  margin-top: 25vh !important;
+}
