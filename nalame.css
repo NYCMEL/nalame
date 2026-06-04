@@ -1,16 +1,21 @@
 @charset "UTF-8";
 .nalame {
-  --nalame-color-primary: #080706;
-  --nalame-color-primary-strong: #080706;
-  --nalame-color-secondary: #6f665d;
-  --nalame-color-surface: #f2eadf;
-  --nalame-color-surface-variant: #efe6d8;
-  --nalame-color-background: #f2eadf;
-  --nalame-color-text: #080706;
-  --nalame-color-muted: #6f665d;
-  --nalame-color-outline: #d4c7b7;
-  --nalame-color-focus: #00ff2a;
-  --nalame-color-card: #f2eadf;
+  --nalame-color-primary: #3f51b5;
+  --nalame-color-primary-strong: #303f9f;
+  --nalame-color-secondary: #00796b;
+  --nalame-color-surface: #ffffff;
+  --nalame-color-surface-variant: #e3f2fd;
+  --nalame-color-background: #e3f2fd;
+  --nalame-color-text: #1a237e;
+  --nalame-color-muted: #455a64;
+  --nalame-color-outline: #90caf9;
+  --nalame-color-focus: #ffeb3b;
+  --nalame-color-card: #ffffff;
+  --nalame-answer-1: #3f51b5;
+  --nalame-answer-2: #009688;
+  --nalame-answer-3: #ff9800;
+  --nalame-answer-4: #e91e63;
+  --nalame-answer-selected: #4caf50;
   --nalame-radius-sm: 5px;
   --nalame-radius-md: 5px;
   --nalame-radius-lg: 5px;
@@ -27,32 +32,44 @@
   min-height: 100dvh;
   overflow-x: hidden;
   color: var(--nalame-color-text);
-  background: var(--nalame-color-background);
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 48%, #fff8e1 100%);
   font-family: var(--nalame-font-family); }
 
 .nalame[data-theme="dark"] {
-  --nalame-color-primary: #f2eadf;
-  --nalame-color-primary-strong: #f2eadf;
-  --nalame-color-secondary: #a8a099;
-  --nalame-color-surface: #030302;
-  --nalame-color-surface-variant: #15130f;
-  --nalame-color-background: #030302;
-  --nalame-color-text: #f2eadf;
-  --nalame-color-muted: #958f88;
-  --nalame-color-outline: #3a352e;
-  --nalame-color-card: #030302; }
+  --nalame-color-primary: #80deea;
+  --nalame-color-primary-strong: #26c6da;
+  --nalame-color-secondary: #ffcc80;
+  --nalame-color-surface: #121826;
+  --nalame-color-surface-variant: #1e293b;
+  --nalame-color-background: #0f172a;
+  --nalame-color-text: #f8fafc;
+  --nalame-color-muted: #cbd5e1;
+  --nalame-color-outline: #475569;
+  --nalame-color-card: #121826;
+  --nalame-answer-1: #5c6bc0;
+  --nalame-answer-2: #26a69a;
+  --nalame-answer-3: #ffa726;
+  --nalame-answer-4: #ec407a;
+  --nalame-answer-selected: #66bb6a;
+  background: linear-gradient(135deg, #0f172a 0%, #263238 50%, #311b92 100%); }
 
 .nalame[data-theme="light"] {
-  --nalame-color-primary: #080706;
-  --nalame-color-primary-strong: #080706;
-  --nalame-color-secondary: #625b54;
-  --nalame-color-surface: #f5eee3;
-  --nalame-color-surface-variant: #e7ddcf;
-  --nalame-color-background: #f2eadf;
-  --nalame-color-text: #080706;
-  --nalame-color-muted: #6f665d;
-  --nalame-color-outline: #d4c7b7;
-  --nalame-color-card: #f2eadf; }
+  --nalame-color-primary: #3f51b5;
+  --nalame-color-primary-strong: #303f9f;
+  --nalame-color-secondary: #00796b;
+  --nalame-color-surface: #ffffff;
+  --nalame-color-surface-variant: #e0f7fa;
+  --nalame-color-background: #e3f2fd;
+  --nalame-color-text: #1a237e;
+  --nalame-color-muted: #455a64;
+  --nalame-color-outline: #90caf9;
+  --nalame-color-card: #ffffff;
+  --nalame-answer-1: #3f51b5;
+  --nalame-answer-2: #009688;
+  --nalame-answer-3: #ff9800;
+  --nalame-answer-4: #e91e63;
+  --nalame-answer-selected: #4caf50;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 48%, #fff8e1 100%); }
 
 .nalame * {
   box-sizing: border-box;
@@ -84,7 +101,7 @@
   display: block;
   overflow: hidden;
   border-radius: 0;
-  background: rgba(8, 7, 6, 0.14); }
+  background: rgba(63, 81, 181, 0.18); }
 
 .nalame[data-theme="dark"] .nalame__progress-track {
   background: rgba(242, 234, 223, 0.18); }
@@ -129,7 +146,7 @@
   align-items: center;
   gap: var(--nalame-space-2);
   padding: var(--nalame-space-2);
-  border: 1px solid rgba(8, 7, 6, 0.08);
+  border: 1px solid rgba(63, 81, 181, 0.28);
   border-radius: var(--nalame-radius-md);
   background: transparent; }
 
@@ -279,13 +296,27 @@
   padding: var(--nalame-space-3) var(--nalame-space-4);
   border: 0;
   border-radius: var(--nalame-radius-md);
-  color: var(--nalame-color-background);
-  background: var(--nalame-color-primary);
+  color: #ffffff;
+  background: var(--nalame-answer-1);
   box-shadow: none;
   font-size: 1.15rem;
   font-weight: 900;
   line-height: 1.2;
   text-align: left; }
+
+.nalame__answer:nth-of-type(2) .nalame__answer-label {
+  background: var(--nalame-answer-2); }
+
+.nalame__answer:nth-of-type(3) .nalame__answer-label {
+  background: var(--nalame-answer-3);
+  color: #1b1b1b; }
+
+.nalame__answer:nth-of-type(4) .nalame__answer-label {
+  background: var(--nalame-answer-4); }
+
+.nalame__answer-input:checked + .nalame__answer-label {
+  color: #ffffff;
+  background: var(--nalame-answer-selected); }
 
 .nalame__answer-check {
   width: 2.5rem;
@@ -334,16 +365,18 @@
   justify-content: center;
   gap: var(--nalame-space-2);
   padding: 0 var(--nalame-space-5);
-  color: var(--nalame-color-text);
-  border: 1px solid rgba(8, 7, 6, 0.08);
-  background: transparent;
+  color: var(--nalame-color-primary-strong);
+  border: 2px solid var(--nalame-color-primary);
+  background: rgba(255, 255, 255, 0.55);
   font-size: 1.25rem; }
 
 .nalame[data-theme="dark"] .nalame__button {
-  border-color: rgba(242, 234, 223, 0.18); }
+  color: var(--nalame-color-text);
+  border-color: rgba(128, 222, 234, 0.5);
+  background: rgba(255, 255, 255, 0.08); }
 
 .nalame__button--primary {
-  color: var(--nalame-color-background);
+  color: #ffffff;
   border-color: var(--nalame-color-primary-strong);
   background: var(--nalame-color-primary-strong); }
 
