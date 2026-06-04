@@ -606,24 +606,51 @@
     animation-duration: 0.01ms;
     animation-iteration-count: 1; } }
 
-/* nalame requested placement: content starts 25 percent from page top */
+/* nalame 25 percent from top fix */
 .nalame__shell {
-  position: relative !important; }
+  position: relative !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  padding-top: 0 !important; }
 
 .nalame__main {
   position: absolute !important;
   top: 25vh !important;
   left: 0 !important;
   right: 0 !important;
+  z-index: 1 !important;
   width: 100% !important;
   min-height: 0 !important;
+  height: auto !important;
+  flex: none !important;
   display: block !important;
-  align-items: initial !important;
-  justify-content: initial !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  margin-top: 0 !important; }
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  margin: 0 !important;
+  padding: 0 var(--nalame-space-6) var(--nalame-space-5) !important;
+  overflow: visible !important; }
 
+.nalame__screen-viewport,
+.nalame__screen-track,
+.nalame__screen {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important; }
+
+.nalame__card,
 .nalame__card--quiz {
   margin-top: 0 !important;
-  justify-content: flex-start !important; }
+  transform: none !important; }
+
+@media (max-width: 720px) {
+  .nalame__main {
+    top: 25vh !important;
+    padding-left: var(--nalame-space-4) !important;
+    padding-right: var(--nalame-space-4) !important; } }
+
+@media (max-width: 420px) {
+  .nalame__main {
+    top: 25vh !important;
+    padding-left: var(--nalame-space-3) !important;
+    padding-right: var(--nalame-space-3) !important; } }
