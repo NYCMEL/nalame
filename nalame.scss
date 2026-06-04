@@ -307,7 +307,7 @@
 .nalame__answer:hover,
 .nalame__answer:focus-within,
 .nalame__answer:has(.nalame__answer-input:checked) {
-  border-color: var(--nalame-color-focus);
+    border: 2px green dashed;
 }
 
 .nalame__answer-input {
