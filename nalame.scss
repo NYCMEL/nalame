@@ -752,12 +752,27 @@
   }
 }
 
-/* nalame 25 percent top placement */
+/* nalame requested placement: content starts 25 percent from page top */
+.nalame__shell {
+  position: relative !important;
+}
+
 .nalame__main {
-  align-items: flex-start !important;
-  justify-content: center !important;
+  position: absolute !important;
+  top: 25vh !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  display: block !important;
+  align-items: initial !important;
+  justify-content: initial !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 
 .nalame__card--quiz {
-  margin-top: 25vh !important;
+  margin-top: 0 !important;
+  justify-content: flex-start !important;
 }
