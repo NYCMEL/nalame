@@ -78,16 +78,13 @@
     }
 
 
-
     handleInput(event) {
       const slider = event.target.closest('[data-nalame-slider]');
       if (!slider) {
         return;
       }
 
-      const wrap = slider.closest('.nalame__slider-wrap');
-      const output = wrap ? wrap.querySelector('.nalame__slider-output') : null;
-
+      const output = slider.parentElement ? slider.parentElement.querySelector('.nalame__slider-output') : null;
       if (output) {
         output.textContent = slider.value;
       }
@@ -374,9 +371,9 @@
 
       return `
         <div class="nalame__slider-wrap">
-          <div class="nalame__slider-row">
+          <input class="nalame__slider" type="range" min="${min}" max="${max}" step="1" value="${selectedValue}" data-nalame-slider aria-label="${this.escape(question.text)}">
+          <div class="nalame__slider-scale" aria-hidden="true">
             <span class="nalame__slider-label nalame__slider-label--left">${this.escape(question.answers[0].text)}</span>
-            <input class="nalame__slider" type="range" min="${min}" max="${max}" step="1" value="${selectedValue}" data-nalame-slider aria-label="${this.escape(question.text)}">
             <span class="nalame__slider-label nalame__slider-label--right">${this.escape(question.answers[question.answers.length - 1].text)}</span>
           </div>
           <output class="nalame__slider-output">${selectedValue}</output>
