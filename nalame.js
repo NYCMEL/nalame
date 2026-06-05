@@ -374,8 +374,8 @@
           <input class="nalame__slider" type="range" min="${min}" max="${max}" step="1" value="${selectedValue}" data-nalame-slider aria-label="${this.escape(question.text)}">
           <output class="nalame__slider-output">${selectedValue}</output>
           <div class="nalame__slider-scale" aria-hidden="true">
-            <span>${min}</span>
-            <span>${max}</span>
+            <span>${this.escape(question.answers[0].text)}</span>
+            <span>${this.escape(question.answers[question.answers.length - 1].text)}</span>
           </div>
         </div>
       `;

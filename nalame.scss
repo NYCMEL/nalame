@@ -908,3 +908,22 @@
 .nalame__slider-scale span:last-child {
   transform: translateX(0.25rem);
 }
+
+
+/* full slider labels */
+.nalame__slider-scale {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.3;
+  gap: 1rem;
+}
+
+.nalame__slider-scale span:first-child {
+  text-align: left;
+  max-width: 45%;
+}
+
+.nalame__slider-scale span:last-child {
+  text-align: right;
+  max-width: 45%;
+}
