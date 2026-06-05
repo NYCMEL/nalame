@@ -605,15 +605,53 @@
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;
     animation-iteration-count: 1; } }
-
-
-/* conversation message + question sizing */
-.nalame__conversation{
-  font-size:.95rem;
-  opacity:.8;
-  margin-bottom:1rem;
+/* conversation message + requested question size */
+.nalame__conversation {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto 1rem;
+  color: var(--nalame-color-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
 }
 
-.nalame__question{
-  font-size:2.5rem !important;
+.nalame__question {
+  font-size: 2.5rem !important;
+}
+
+@media (max-width: 720px) {
+  .nalame__conversation {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .nalame__question {
+    font-size: 2.5rem !important;
+  }
+}
+
+
+/* no question image */
+.nalame__question-media,
+.nalame__question-media--empty,
+.nalame__question-image {
+  display: none !important;
+}
+
+/* conversation message + requested question size */
+.nalame__conversation {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto 1rem;
+  color: var(--nalame-color-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.nalame__question {
+  font-size: 2.5rem !important;
 }

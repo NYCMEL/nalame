@@ -278,6 +278,28 @@
       `;
     }
 
+
+    conversationTemplate(questionIndex) {
+      if (!Number.isInteger(questionIndex) || questionIndex <= 0) {
+        return '';
+      }
+
+      const previousQuestion = this.questions[questionIndex - 1];
+      if (!previousQuestion) {
+        return '';
+      }
+
+      const previousAnswerId = this.answers[previousQuestion.id] || '';
+      const previousAnswer = this.findAnswer(previousQuestion, previousAnswerId);
+      const conversation = previousAnswer && previousAnswer.conversation ? previousAnswer.conversation : previousQuestion.conversation;
+
+      if (!conversation) {
+        return '';
+      }
+
+      return `<p class="nalame__conversation">${this.escape(conversation)}</p>`;
+    }
+
     questionTemplate(index) {
       const questionIndex = Number.isInteger(index) ? index : this.currentIndex;
       const question = this.questions[questionIndex] || this.getCurrentQuestion();
@@ -286,6 +308,7 @@
       return `
         <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
           ${this.questionImageTemplate(question)}
+          ${this.conversationTemplate(questionIndex)}
           <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
@@ -300,15 +323,7 @@
     }
 
     questionImageTemplate(question) {
-      const media = this.questionMedia && question ? this.questionMedia[question.id] : null;
-      if (!media || !media.src) {
-        return '<figure class="nalame__question-media nalame__question-media--empty" aria-hidden="true"></figure>';
-      }
-      return `
-        <figure class="nalame__question-media">
-          <img class="nalame__question-image" src="${this.escape(media.src)}" alt="${this.escape(media.alt || '')}">
-        </figure>
-      `;
+      return '';
     }
 
     answerTemplate(question, answer, currentAnswer) {
