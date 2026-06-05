@@ -371,12 +371,12 @@
 
       return `
         <div class="nalame__slider-wrap">
-          <input class="nalame__slider" type="range" min="${min}" max="${max}" step="1" value="${selectedValue}" data-nalame-slider aria-label="${this.escape(question.text)}">
-          <output class="nalame__slider-output">${selectedValue}</output>
-          <div class="nalame__slider-scale" aria-hidden="true">
-            <span>${this.escape(question.answers[0].text)}</span>
-            <span>${this.escape(question.answers[question.answers.length - 1].text)}</span>
+          <div class="nalame__slider-row">
+            <span class="nalame__slider-label nalame__slider-label--left">${this.escape(question.answers[0].text)}</span>
+            <input class="nalame__slider" type="range" min="${min}" max="${max}" step="1" value="${selectedValue}" data-nalame-slider aria-label="${this.escape(question.text)}">
+            <span class="nalame__slider-label nalame__slider-label--right">${this.escape(question.answers[question.answers.length - 1].text)}</span>
           </div>
+          <output class="nalame__slider-output">${selectedValue}</output>
         </div>
       `;
     }

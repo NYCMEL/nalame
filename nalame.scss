@@ -910,3 +910,48 @@
 .nalame__slider {
   height: 20px !important;
 }
+
+
+/* side slider labels */
+.nalame__slider-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) 1fr minmax(140px, 220px);
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.nalame__slider-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.nalame__slider-label--left {
+  text-align: right;
+}
+
+.nalame__slider-label--right {
+  text-align: left;
+}
+
+.nalame__slider-scale {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .nalame__slider-row {
+    grid-template-columns: 90px 1fr 90px;
+    gap: .5rem;
+  }
+
+  .nalame__slider-label {
+    font-size: 11px;
+  }
+}
+
+
+/* slider width */
+.nalame__slider-wrap {
+  max-width: 1000px !important;
+}
