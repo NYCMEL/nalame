@@ -840,3 +840,37 @@
     animation: none !important;
   }
 }
+
+/* conversation closer to question */
+.nalame__conversation {
+  margin-bottom: 0.25rem !important;
+}
+
+@media (max-width: 720px) {
+  .nalame__conversation {
+    margin-bottom: 0.2rem !important;
+  }
+}
+
+
+/* smoother conversation animation */
+.nalame__conversation {
+  animation: nalameConversationFloat 900ms cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+
+@keyframes nalameConversationFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(-32px) scale(0.98);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(4px) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
