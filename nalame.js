@@ -19,6 +19,7 @@
       this.onMessage = this.onMessage.bind(this);
       this.handleClick = this.handleClick.bind(this);
       this.handleChange = this.handleChange.bind(this);
+      this.handleInput = this.handleInput.bind(this);
       this.handleKeydown = this.handleKeydown.bind(this);
       this.init();
     }
@@ -31,6 +32,7 @@
       this.root.setAttribute('data-theme', this.theme);
       this.root.addEventListener('click', this.handleClick);
       this.root.addEventListener('change', this.handleChange);
+      this.root.addEventListener('input', this.handleInput);
       this.root.addEventListener('keydown', this.handleKeydown);
       if (window.wc && typeof window.wc.subscribe === 'function') {
         window.wc.subscribe('4-nalame', this.onMessage);
@@ -72,6 +74,19 @@
         case 'skip': this.skip(); break;
         case 'restart': this.restart(); break;
         default: break;
+      }
+    }
+
+
+    handleInput(event) {
+      const slider = event.target.closest('[data-nalame-slider]');
+      if (!slider) {
+        return;
+      }
+
+      const output = slider.parentElement ? slider.parentElement.querySelector('.nalame__slider-output') : null;
+      if (output) {
+        output.textContent = slider.value;
       }
     }
 
@@ -311,10 +326,11 @@
           ${this.questionImageTemplate(question)}
           ${this.conversationTemplate(questionIndex)}
           <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
+          ${this.isSliderQuestion(question) ? this.sliderTemplate(question, currentAnswer) : `
           <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}">
             <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>
             ${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}
-          </fieldset>
+          </fieldset>`}
           <div class="nalame__actions" aria-label="Quiz navigation">
             <button class="nalame__button" type="button" data-nalame-action="previous" ${questionIndex === 0 ? 'disabled' : ''}>&#8249; ${this.escape(this.app.previousLabel)}</button>
             <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)} &#8250;</button>
@@ -325,6 +341,44 @@
 
     questionImageTemplate(question) {
       return '';
+    }
+
+
+    isSliderQuestion(question) {
+      return Boolean(
+        question &&
+        Array.isArray(question.answers) &&
+        question.answers.length > 0 &&
+        /^1\b/.test(String(question.answers[0].text || '').trim())
+      );
+    }
+
+    sliderTemplate(question, currentAnswer) {
+      if (!this.isSliderQuestion(question)) {
+        return '';
+      }
+
+      const values = question.answers.map((answer, index) => {
+        const match = String(answer.text || '').match(/^(\d+)/);
+        return match ? Number(match[1]) : index + 1;
+      });
+
+      const min = Math.min.apply(null, values);
+      const max = Math.max.apply(null, values);
+      const selectedAnswer = this.findAnswer(question, currentAnswer) || question.answers[0];
+      const selectedValueMatch = String(selectedAnswer.text || '').match(/^(\d+)/);
+      const selectedValue = selectedValueMatch ? Number(selectedValueMatch[1]) : min;
+
+      return `
+        <div class="nalame__slider-wrap">
+          <input class="nalame__slider" type="range" min="${min}" max="${max}" step="1" value="${selectedValue}" data-nalame-slider aria-label="${this.escape(question.text)}">
+          <output class="nalame__slider-output">${selectedValue}</output>
+          <div class="nalame__slider-scale" aria-hidden="true">
+            <span>${min}</span>
+            <span>${max}</span>
+          </div>
+        </div>
+      `;
     }
 
     answerTemplate(question, answer, currentAnswer) {

@@ -702,3 +702,39 @@
   font-size: 22px !important;
   margin-bottom: -15px !important;
 }
+
+/* slider questions */
+.nalame__slider-wrap {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem 0;
+}
+
+.nalame__slider {
+  width: 100%;
+  accent-color: var(--nalame-color-primary);
+}
+
+.nalame__slider-output {
+  justify-self: center;
+  min-width: 4rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  color: var(--nalame-color-background);
+  background: var(--nalame-color-primary);
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+}
+
+.nalame__slider-scale {
+  display: flex;
+  justify-content: space-between;
+  color: var(--nalame-color-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
