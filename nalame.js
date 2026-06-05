@@ -78,13 +78,16 @@
     }
 
 
+
     handleInput(event) {
       const slider = event.target.closest('[data-nalame-slider]');
       if (!slider) {
         return;
       }
 
-      const output = slider.parentElement ? slider.parentElement.querySelector('.nalame__slider-output') : null;
+      const wrap = slider.closest('.nalame__slider-wrap');
+      const output = wrap ? wrap.querySelector('.nalame__slider-output') : null;
+
       if (output) {
         output.textContent = slider.value;
       }
