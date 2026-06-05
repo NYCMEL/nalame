@@ -853,3 +853,11 @@
 .nalame__slider-label--right {
   text-align: right;
 }
+
+
+/* move content up */
+.nalame__screen-viewport,
+.nalame__screen-track,
+.nalame__screen {
+  margin-top: -50px !important;
+}
