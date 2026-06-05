@@ -802,44 +802,6 @@
   font-size: 2.5rem !important;
 }
 
-/* animated conversation message */
-.nalame__conversation {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto 1.25rem !important;
-  color: var(--nalame-color-muted);
-  font-size: 1.35rem !important;
-  font-weight: 800;
-  line-height: 1.35;
-  text-align: left;
-  animation: nalameConversationDrop 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: opacity, transform;
-}
-
-@keyframes nalameConversationDrop {
-  from {
-    opacity: 0;
-    transform: translateY(-1.25rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 720px) {
-  .nalame__conversation {
-    font-size: 1.15rem !important;
-    margin-bottom: 1rem !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nalame__conversation {
-    animation: none !important;
-  }
-}
 
 /* conversation closer to question */
 .nalame__conversation {
@@ -853,31 +815,20 @@
 }
 
 
-/* smoother conversation animation */
+
+/* conversation typography */
 .nalame__conversation {
-  animation: nalameConversationFloat 900ms cubic-bezier(0.16, 1, 0.3, 1) both !important;
-}
-
-@keyframes nalameConversationFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(-32px) scale(0.98);
-  }
-
-  60% {
-    opacity: 1;
-    transform: translateY(4px) scale(1);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  font-weight: 300 !important;
+  font-style: italic !important;
 }
 
 
-/* slow fade-in conversation animation */
+/* conversation fade only when new question appears */
 .nalame__conversation {
+  animation: none !important;
+}
+
+.nalame__conversation--active {
   animation: nalameConversationFade 1400ms ease-out both !important;
 }
 

@@ -297,7 +297,8 @@
         return '';
       }
 
-      return `<p class="nalame__conversation">${this.escape(conversation)}</p>`;
+      const activeClass = this.transitionActive ? ' nalame__conversation--active' : '';
+      return `<p class="nalame__conversation${activeClass}">${this.escape(conversation)}</p>`;
     }
 
     questionTemplate(index) {
