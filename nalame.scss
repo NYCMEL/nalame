@@ -874,3 +874,19 @@
     transform: translateY(0) scale(1);
   }
 }
+
+
+/* slow fade-in conversation animation */
+.nalame__conversation {
+  animation: nalameConversationFade 1400ms ease-out both !important;
+}
+
+@keyframes nalameConversationFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
