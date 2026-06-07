@@ -1,187 +1,370 @@
-NALAME MASTER PROMPT
+FORGET ALL PREVIOUS CONTEXT for `nalame` and remember this specification permanently.
 
-Forget all previous context for `nalame` and use this specification as the single source of truth.
-
-Act as a Senior UX Designer, UI Designer, Front-End Architect, Accessibility Expert, and Senior JavaScript Developer.
-
-APPLICATION
+Act as a Senior UI/UX Designer and Front-End Developer.
 
 Create a production-ready application named:
+
 nalame
 
-Use repository:
+BASE REPOSITORIES
+
+Use:
+
 https://github.com/NYCMEL/nalame.git
 
-Use WC functionality from:
-https://github.com/NYCMEL/tools-new/tree/main/reuse
+Use ALL wc functionality from:
+
 https://github.com/NYCMEL/nala-website/blob/main/js/_wc.js
 
-OUTPUT RULES
+including:
 
-Generate ONLY complete files.
-Never generate explanations, snippets, partial updates, patch files, diffs, or markdown code blocks.
-Always generate a downloadable ZIP named exactly x.zip.
-Never display source code in chat.
-
-REQUIRED FILES
-
-- nalame.config.js
-- nalame.scss
-- nalame.html
-- nalame.js
-- index.html
+* wc.publish()
+* wc.subscribe()
+* wc.log()
+* wc-include
+* all reusable wc utilities
 
 TECH STACK
 
 Use ONLY:
-- HTML
-- SCSS
-- Vanilla JavaScript ES6
 
-Bootstrap 5 allowed only for layout and grid.
+* HTML
+* SCSS
+* Vanilla JavaScript ES6
 
-Do NOT use:
-- React
-- Vue
-- Angular
-- jQuery
-- frameworks
-- external libraries
-- inline styles
-- inline JavaScript
-- IDs
-- global CSS
-- iframes
+Bootstrap 5 is ONLY allowed for:
 
-Must support:
+* layout
+* grid utilities
+
+DO NOT USE:
+
+* React
+* Vue
+* Angular
+* jQuery
+* external libraries
+* inline styles
+* inline JavaScript
+* IDs
+* global CSS
+* iframes
+
+MUST USE:
+
 <wc-include href="..." />
 
-ROOT ELEMENT
+APP STRUCTURE
+
+Root element:
 
 <nalame class="nalame"></nalame>
 
-All styles scoped to:
+All styles MUST be fully scoped to:
+
 .nalame
+
+Never use global selectors.
 
 CONFIGURATION
 
-Application must be 100% JSON driven.
-All content comes from nalame.config.js.
-Never hardcode content inside HTML or JS.
+Application MUST be fully JSON-driven.
+
+All UI content MUST come from:
+
+nalame.config.js
+
+Do NOT hardcode content in HTML or JavaScript.
 
 JAVASCRIPT
 
-Create:
-class MtkNalame
+Create a dedicated ES6 class:
 
-Must:
-- wait for DOM ready
-- support wc-include
-- support MutationObserver
-- prevent duplicate initialization
-- be reusable
-- modular
-- maintainable
-- production-ready
+MtkNalame
 
-WC SYSTEM
+Initialize automatically inside:
 
-Subscribe:
+nalame.js
+
+Requirements:
+
+* wait for DOM availability
+* support dynamic injection via wc-include
+* prevent duplicate initialization
+* modular
+* reusable
+* maintainable
+* production-ready
+
+WC EVENT SYSTEM
+
+Subscribe using:
+
 wc.subscribe("4-nalame", this.onMessage.bind(this))
 
 Create:
+
 onMessage(message)
 
-Publish all actions using:
-wc.publish(...)
-
 Before every publish:
+
 wc.log(...)
 
-DESIGN
+Publish using:
 
-Use styles and patterns from css/nala.scss.
-Use Modern Material Design patterns.
+wc.publish(...)
 
-TYPOGRAPHY
+All payloads must be structured and reusable.
 
-Use ONLY:
-Arial, Helvetica, sans-serif
+DESIGN SYSTEM
 
-VISUAL STYLE
+Use styles and patterns from:
 
-BetterMe-inspired questionnaire UI.
-No shadows.
-No heavy borders.
-No card outlines.
+css/nala.scss
 
-BORDER RADIUS
+Use Modern Material Design patterns:
 
-Maximum radius anywhere: 5px.
-No pills.
-No 999px radius.
-
-PAGE WIDTH
-
-Remove all max-width restrictions.
-.nalame__shell must be full width.
-
-QUIZ
-
-10 random Lorem Ipsum questions.
-2–4 answers each.
-One question per page.
-
-QUESTION STYLING
-
-Centered.
-Large.
-Bold.
-
-Desktop:
-48px+
-Preferred:
-56px
-Weight:
-700–900
-
-ANSWERS
-
-Large selectable answer blocks.
-
-When selected:
-Show a LARGE checkbox to the LEFT of the answer text.
-
-Do NOT show selected answer text elsewhere.
-
-NAVIGATION
-
-Previous
-Next
-Skip
-
-Last question:
-Complete
-
-DARK MODE
-
-Support Light and Dark modes.
+* floating labels
+* transitions
+* motion
+* accessibility
+* focus states
+* responsive layouts
+* typography
+* spacing
+* elevation
 
 ACCESSIBILITY
 
-ADA compliant.
-Keyboard accessible.
-Screen-reader friendly.
-Visible focus states.
-ARIA labels.
+Application must be:
+
+* ADA compliant
+* keyboard accessible
+* semantic HTML
+* screen-reader friendly
+* responsive
+
+Include:
+
+* visible focus states
+* proper ARIA usage
+* accessible controls
+
+QUIZ EXPERIENCE
+
+The application is a multi-step questionnaire.
+
+QUESTIONS
+
+* 10 questions
+* JSON-driven
+* each question displayed one at a time
+* large bold Arial font
+* left aligned
+* aligned with answer container
+
+QUESTION IMAGES
+
+Images are located in:
+
+assets/question_1.png
+assets/question_2.png
+assets/question_3.png
+assets/question_4.png
+assets/question_5.png
+assets/question_6.png
+assets/question_7.png
+assets/question_8.png
+assets/question_9.png
+assets/question_10.png
+
+Display image above each question.
+
+Mapping:
+
+question-01 -> question_1.png
+question-02 -> question_2.png
+question-03 -> question_3.png
+question-04 -> question_4.png
+question-05 -> question_5.png
+question-06 -> question_6.png
+question-07 -> question_7.png
+question-08 -> question_8.png
+question-09 -> question_9.png
+question-10 -> question_10.png
+
+Image requirements:
+
+* width: 12rem
+* height: auto
+* left aligned
+* aligned with question and answers
+* no borders
+* no shadows
+* max border radius 5px
+
+THEMES
+
+Support:
+
+* Light Mode
+* Dark Mode
+
+Hide the visible "Theme" label.
+
+Keep only theme buttons.
+
+PROGRESS BAR
+
+Progress bar must:
+
+* always remain visible
+* fixed to top of viewport
+* never disappear during transitions
+* height: 20px
+* full browser width
+* not be inside animated content
+* progress updates as questions advance
+
+index.html owns the top offset:
+
+<body style="margin:0;padding:0;padding-top:20px;">
+
+QUIZ TRANSITION
+
+Use:
+
+Fade + Lift
+
+Animation:
+
+* fade in
+* slight vertical lift
+* smooth easing
+* duration: 650ms
+
+Do NOT use:
+
+* horizontal slides
+* push transitions
+* carousels
+
+ANSWERS
+
+Each answer:
+
+* full width
+* single column layout
+* stable width during animation
+* 2px transparent border
+
+Hover:
+
+* border becomes lime
+
+Selected:
+
+* border becomes lime
+
+Checkbox:
+
+* large checkbox left of answer text
+* answer text remains in place
+* no layout shift
+
+BUTTONS
+
+Remove:
+
+* Skip button
+
+Keep:
+
+* Previous
+* Next
+
+Button requirements:
+
+* width: 180px
+* height: 56px minimum
+* bold Arial
+* large text
+
+Previous button:
+
+‹ Previous
+
+Next button:
+
+Next ›
+
+Chevron requirements:
+
+* large
+* prominent
+* visually heavier than text
+
+STYLE RULES
+
+Use:
+
+* Arial throughout
+* bold question typography
+* max border radius: 5px everywhere
+
+Do NOT use:
+
+* rounded pills
+* large radii
+* shadows around quiz cards
+
+LAYOUT
+
+Quiz card:
+
+* full width
+* no max-width shell constraint
+* no borders
+* no shadows
+
+Answer container:
+
+* max-width: 1280px
+* centered
+
+Question:
+
+* left aligned
+* same left edge as answers
 
 SUMMARY PAGE
 
-Show all questions and answers.
-14px text.
-Include Restart button.
+After final question:
 
-ZIP OUTPUT
+Display all questions and answers on a single page.
 
-Always return x.zip.
-Never show code in chat.
+Summary requirements:
+
+* small text
+* 14px
+* readable
+* printable
+
+OUTPUT
+
+Generate complete files only:
+
+* index.html
+* nalame.html
+* nalame.js
+* nalame.scss
+* nalame.config.js
+
+Never generate:
+
+* explanations
+* snippets
+* partial updates
+* markdown code blocks
+
+Always generate complete production-ready files.
