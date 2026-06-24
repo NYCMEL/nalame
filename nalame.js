@@ -351,7 +351,7 @@
     actionsTemplate(isLast) {
       return `
         <div class="nalame__actions" aria-label="Quiz navigation">
-          <button class="nalame__button nalame__button--back" type="button" data-nalame-action="back">‹ ${this.escape(this.app.previousLabel || 'Back')}</button>
+          
           <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="continue">${this.escape(isLast ? (this.app.completeLabel || 'Complete') : (this.app.nextLabel || 'Continue'))} ›</button>
         </div>
       `;
