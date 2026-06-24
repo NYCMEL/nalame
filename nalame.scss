@@ -687,9 +687,19 @@ body {
 }
 
 
-.nalame__question-image,
-.nalame__question-image--1,
-.nalame__question-image--2,
-.nalame__question-image--3{
-  display:none !important;
+.nalame__question-images{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin:16px 0 20px;
+  flex-wrap:wrap;
+}
+
+.nalame__question-image{
+  width:120px;
+  height:80px;
+  border-radius:10px;
+  border:2px dashed #d6d6d6;
+  background:#f5f5f5;
 }

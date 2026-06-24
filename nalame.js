@@ -300,7 +300,10 @@
             
             <div class="nalame__conversation-image-holder" aria-hidden="true"><img class="nalame__conversation-image" src="https://picsum.photos/600/350?random=1" alt=""></div><h2 class="nalame__conversation-title" id="nalame-conversation-title-${index}">${this.escape(question && question.conversation ? question.conversation : '')}</h2>
             <div class="nalame__question-images">
-              </div>
+              <div class="nalame__question-image nalame__question-image--1"></div>
+              <div class="nalame__question-image nalame__question-image--2"></div>
+              <div class="nalame__question-image nalame__question-image--3"></div>
+            </div>
             <p class="nalame__conversation-copy">${this.escape(question && question.conversation ? question.conversation : '')}</p>
             <div class="nalame__conversation-actions">
               <button class="nalame__button nalame__button--primary nalame__button--center" type="button" data-nalame-action="continue">CONTINUE</button>
