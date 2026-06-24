@@ -685,3 +685,11 @@ body {
 .nalame__question-image--3{
   background-image:url('https://picsum.photos/300/200?random=33');
 }
+
+
+.nalame__question-image,
+.nalame__question-image--1,
+.nalame__question-image--2,
+.nalame__question-image--3{
+  display:none !important;
+}
