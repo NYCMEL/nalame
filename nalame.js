@@ -27,7 +27,7 @@
       if (!this.root || this.root.dataset.nalameInitialized === 'true') return;
       this.root.dataset.nalameInitialized = 'true';
       this.root.setAttribute('data-theme', this.theme);
-      this.loadScss('./scss/nalame.scss');
+      this.loadScss('./nalame.scss');
       this.root.addEventListener('click', this.handleClick);
       this.root.addEventListener('change', this.handleChange);
       this.root.addEventListener('input', this.handleInput);
@@ -71,9 +71,8 @@
       if (!actionTarget) return;
       const action = actionTarget.getAttribute('data-nalame-action');
       switch (action) {
-        case 'previous': this.previous(); break;
+        case 'continue': this.next(); break;
         case 'next': this.next(); break;
-        case 'skip': this.skip(); break;
         case 'restart': this.restart(); break;
         default: break;
       }
@@ -106,8 +105,10 @@
 
     handleKeydown(event) {
       if (this.isTransitioning || event.altKey || event.ctrlKey || event.metaKey) return;
-      if (event.key === 'ArrowRight') { event.preventDefault(); this.next(); }
-      if (event.key === 'ArrowLeft') { event.preventDefault(); this.previous(); }
+      if ((event.key === 'Enter' || event.key === ' ') && event.target && event.target.closest('[data-nalame-action="continue"]')) {
+        event.preventDefault();
+        this.next();
+      }
     }
 
     getCurrentQuestion() { return this.questions[this.currentIndex] || null; }
@@ -131,6 +132,12 @@
 
     next() {
       if (this.currentIndex >= this.questions.length || this.isTransitioning) return;
+      const question = this.getCurrentQuestion();
+      if (question && !this.answers[question.id]) {
+        this.statusText = this.app.requiredMessage || 'Select one option.';
+        this.render();
+        return;
+      }
       this.fadeTo(this.currentIndex + 1, 'next');
     }
 
@@ -216,10 +223,9 @@
     headerTemplate() {
       return `
         <header class="nalame__header">
-          <button class="nalame__icon-button" type="button" data-nalame-action="previous" aria-label="${this.escape(this.app.previousLabel)}" ${this.currentIndex === 0 ? 'disabled' : ''}>&#8249;</button>
           <div class="nalame__brand">nalame</div>
           <div class="nalame__header-title">${this.escape(this.app.title)}</div>
-          </header>`;
+        </header>`;
     }
 
     conversationTemplate(questionIndex) {
@@ -235,16 +241,19 @@
       const question = this.questions[index] || this.getCurrentQuestion();
       const currentAnswer = question ? this.answers[question.id] || '' : '';
       const isLast = index === this.questions.length - 1;
+      const actionLabel = isLast ? this.app.completeLabel : this.app.nextLabel;
+      const actionTemplate = currentAnswer ? `
+          <div class="nalame__footer-action" aria-label="Quiz navigation">
+            <button class="nalame__continue" type="button" data-nalame-action="continue">${this.escape(actionLabel)}</button>
+          </div>` : '';
       return `
         <section class="nalame__card nalame__card--quiz" aria-labelledby="nalame-question-title">
-          ${this.conversationTemplate(index)}
-          <p class="nalame__eyebrow">${this.escape(this.app.eyebrow)}</p>
-          <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
-          ${this.isSliderQuestion(question) ? this.sliderTemplate(question, currentAnswer) : `<fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}"><legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}</fieldset>`}
-          <div class="nalame__actions" aria-label="Quiz navigation">
-            <button class="nalame__button" type="button" data-nalame-action="previous" ${index === 0 ? 'disabled' : ''}>${this.escape(this.app.previousLabel)}</button>
-            <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="next">${this.escape(isLast ? this.app.completeLabel : this.app.nextLabel)}</button>
+          <div class="nalame__question-block">
+            <h2 class="nalame__question" id="nalame-question-title">${this.escape(question ? question.text : '')}</h2>
+            <p class="nalame__instruction">Select one option.</p>
           </div>
+          ${this.isSliderQuestion(question) ? this.sliderTemplate(question, currentAnswer) : `<fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel)}"><legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel)}</legend>${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}</fieldset>`}
+          ${actionTemplate}
         </section>`;
     }
 
@@ -273,8 +282,9 @@
         <label class="nalame__answer${selectedClass}">
           <input class="nalame__answer-input" type="radio" name="${this.escape(question.id)}" value="${this.escape(answer.id)}" data-nalame-answer ${checked}>
           <span class="nalame__answer-text">${this.escape(answer.text)}</span>
-          <span class="nalame__answer-check" aria-hidden="true">✓</span>
-        </label>`;
+          <span class="nalame__answer-check" aria-hidden="true"></span>
+        </label>
+      `;
     }
 
     summaryTemplate() {
