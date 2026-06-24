@@ -793,29 +793,3 @@
 
 .nalame__slider-label--right {
   text-align: right; }
-
-/* Remove colored answer backgrounds */
-.nalame__answer,
-.nalame__answer-label {
-  background: #ffffff !important;
-  color: #241409 !important; }
-
-.nalame__answer.is-selected,
-.nalame__answer-input:checked + .nalame__answer-label {
-  background: #f1ebe4 !important;
-  color: #241409 !important; }
-
-.nalame__answer-check {
-  background: transparent !important;
-  border: 2px solid #d0c3b5 !important; }
-
-.nalame__answer.is-selected .nalame__answer-check,
-.nalame__answer-input:checked + .nalame__answer-label .nalame__answer-check {
-  background: #3b1d10 !important;
-  border-color: #3b1d10 !important; }
-
-[class*="green"],
-[class*="blue"],
-[class*="pink"],
-[class*="teal"] {
-  background: inherit !important; }

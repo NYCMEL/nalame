@@ -1031,3 +1031,61 @@
 [class*="teal"]{
   background:inherit !important;
 }
+
+
+/* Reference screenshot question card style */
+.nalame__answers{
+  gap:24px !important;
+}
+
+.nalame__answer,
+.nalame__answer-label{
+  background:#ffffff !important;
+  border:1px solid #e6d9ca !important;
+  border-radius:32px !important;
+}
+
+.nalame__answer-label{
+  min-height:165px !important;
+  padding:0 56px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+}
+
+.nalame__answer.is-selected,
+.nalame__answer-input:checked + .nalame__answer-label{
+  background:#f2ece4 !important;
+}
+
+.nalame__answer-text{
+  color:#241409 !important;
+  font-size:34px !important;
+  font-weight:900 !important;
+  line-height:1.1 !important;
+}
+
+.nalame__answer-check{
+  width:56px !important;
+  height:56px !important;
+  border-radius:50% !important;
+  border:2px solid #d7c9b8 !important;
+  background:transparent !important;
+}
+
+.nalame__answer.is-selected .nalame__answer-check,
+.nalame__answer-input:checked + .nalame__answer-label .nalame__answer-check{
+  background:#3b2115 !important;
+  border-color:#3b2115 !important;
+}
+
+.nalame__answer.is-selected .nalame__answer-check::before,
+.nalame__answer-input:checked + .nalame__answer-label .nalame__answer-check::before{
+  content:"✓" !important;
+  color:#fff !important;
+  font-size:34px !important;
+  font-weight:900 !important;
+  line-height:56px !important;
+  text-align:center !important;
+  display:block !important;
+}
