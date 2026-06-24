@@ -649,3 +649,39 @@ body {
 .nalame__conversation-title{
   font-weight:400 !important;
 }
+
+
+.nalame__question{
+  font-weight:300 !important;
+}
+
+
+/* Random placeholder images below question */
+.nalame__question-images{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin:20px 0 20px;
+  flex-wrap:wrap;
+}
+
+.nalame__question-image{
+  width:120px;
+  height:80px;
+  border-radius:10px;
+  background-size:cover;
+  background-position:center;
+}
+
+.nalame__question-image--1{
+  background-image:url('https://picsum.photos/300/200?random=11');
+}
+
+.nalame__question-image--2{
+  background-image:url('https://picsum.photos/300/200?random=22');
+}
+
+.nalame__question-image--3{
+  background-image:url('https://picsum.photos/300/200?random=33');
+}
