@@ -286,7 +286,7 @@
         <section class="nalame__slide nalame__slide--conversation ${isActive ? 'is-active' : ''}" aria-labelledby="nalame-conversation-title-${index}" ${isActive ? '' : 'aria-hidden="true"'}>
           <div class="nalame__conversation-card">
             
-            <div class="nalame__conversation-image-holder" aria-hidden="true"></div><h2 class="nalame__conversation-title" id="nalame-conversation-title-${index}">${this.escape(question ? question.text : '')}</h2>
+            <div class="nalame__conversation-image-holder" aria-hidden="true"></div><h2 class="nalame__conversation-title" id="nalame-conversation-title-${index}">${this.escape(question && question.conversation ? question.conversation : '')}</h2>
             <p class="nalame__conversation-copy">${this.escape(question && question.conversation ? question.conversation : '')}</p>
             <div class="nalame__conversation-actions">
               <button class="nalame__button nalame__button--primary nalame__button--center" type="button" data-nalame-action="continue">CONTINUE</button>

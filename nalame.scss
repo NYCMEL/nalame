@@ -593,3 +593,15 @@ body {
   padding-top:100px !important;
   min-height:auto !important;
 }
+
+
+/* Remove display:flex from conversation slide */
+.nalame__slide--conversation{
+  display:block !important;
+}
+
+
+/* Hide conversation copy */
+.nalame__conversation-copy{
+  display:none !important;
+}
