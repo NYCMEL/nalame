@@ -71,8 +71,6 @@
       if (!actionTarget) return;
       const action = actionTarget.getAttribute('data-nalame-action');
       switch (action) {
-        case 'theme-light': this.setTheme('light'); break;
-        case 'theme-dark': this.setTheme('dark'); break;
         case 'previous': this.previous(); break;
         case 'next': this.next(); break;
         case 'skip': this.skip(); break;
@@ -221,11 +219,7 @@
           <button class="nalame__icon-button" type="button" data-nalame-action="previous" aria-label="${this.escape(this.app.previousLabel)}" ${this.currentIndex === 0 ? 'disabled' : ''}>&#8249;</button>
           <div class="nalame__brand">nalame</div>
           <div class="nalame__header-title">${this.escape(this.app.title)}</div>
-          <div class="nalame__theme" role="group" aria-label="${this.escape(this.app.modeLabel)}">
-            <button class="nalame__theme-button" type="button" data-nalame-action="theme-light" aria-pressed="${this.theme === 'light'}">${this.escape(this.app.lightLabel)}</button>
-            <button class="nalame__theme-button" type="button" data-nalame-action="theme-dark" aria-pressed="${this.theme === 'dark'}">${this.escape(this.app.darkLabel)}</button>
-          </div>
-        </header>`;
+          </header>`;
     }
 
     conversationTemplate(questionIndex) {

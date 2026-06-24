@@ -1,8 +1,7 @@
 html,
 body {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 .nalame {
   --nalame-bg: #fbf8f1;
@@ -19,8 +18,7 @@ body {
   display: block;
   background: var(--nalame-bg);
   color: var(--nalame-text);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  font-family: Arial, Helvetica, sans-serif; }
 
 .nalame[data-theme="dark"] {
   --nalame-bg: #21170f;
@@ -31,29 +29,24 @@ body {
   --nalame-selected: rgba(245, 234, 220, 0.12);
   --nalame-muted: #d4c4b3;
   --nalame-focus: #f5eadc;
-  --nalame-white: #2b2017;
-}
+  --nalame-white: #2b2017; }
 
 .nalame *,
 .nalame *::before,
 .nalame *::after {
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 .nalame button,
 .nalame input {
-  font: inherit;
-}
+  font: inherit; }
 
 .nalame button {
-  color: inherit;
-}
+  color: inherit; }
 
 .nalame__shell {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-}
+  flex-direction: column; }
 
 .nalame__header {
   min-height: 94px;
@@ -62,24 +55,21 @@ body {
   grid-template-columns: 56px auto 1fr auto;
   align-items: center;
   gap: 34px;
-  background: var(--nalame-bg);
-}
+  background: var(--nalame-bg); }
 
 .nalame__brand {
   font-size: 31px;
   line-height: 1;
   font-weight: 700;
   letter-spacing: -1.5px;
-  white-space: nowrap;
-}
+  white-space: nowrap; }
 
 .nalame__header-title {
   justify-self: center;
   font-size: 20px;
   line-height: 1;
   font-weight: 700;
-  letter-spacing: -0.5px;
-}
+  letter-spacing: -0.5px; }
 
 .nalame__icon-button {
   width: 56px;
@@ -93,18 +83,15 @@ body {
   cursor: pointer;
   font-size: 28px;
   line-height: 1;
-  transition: background-color var(--nalame-motion), border-color var(--nalame-motion), transform var(--nalame-motion);
-}
+  transition: background-color var(--nalame-motion), border-color var(--nalame-motion), transform var(--nalame-motion); }
 
 .nalame__icon-button:hover:not(:disabled) {
-  background: var(--nalame-selected);
-}
+  background: var(--nalame-selected); }
 
 .nalame__icon-button:disabled,
 .nalame__button:disabled {
   opacity: 0.35;
-  cursor: not-allowed;
-}
+  cursor: not-allowed; }
 
 .nalame__theme {
   display: inline-flex;
@@ -112,8 +99,7 @@ body {
   gap: 8px;
   padding: 6px;
   border: 1px solid var(--nalame-border);
-  border-radius: 999px;
-}
+  border-radius: 999px; }
 
 .nalame__theme-button {
   min-height: 42px;
@@ -124,51 +110,42 @@ body {
   color: var(--nalame-muted);
   cursor: pointer;
   font-size: 14px;
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 .nalame__theme-button[aria-pressed="true"] {
   background: var(--nalame-primary);
-  color: var(--nalame-bg);
-}
+  color: var(--nalame-bg); }
 
 .nalame__progress-wrap {
   height: 5px;
-  background: var(--nalame-line);
-}
+  background: var(--nalame-line); }
 
 .nalame__progress-track,
 .nalame__progress-bar {
   height: 5px;
-  display: block;
-}
+  display: block; }
 
 .nalame__progress-bar {
   width: 0;
   background: var(--nalame-primary);
-  transition: width 240ms ease;
-}
+  transition: width 240ms ease; }
 
 .nalame__main {
   width: 100%;
   max-width: 675px;
   margin: 0 auto;
   padding: 72px 20px 42px;
-  flex: 1;
-}
+  flex: 1; }
 
 .nalame__screen {
   opacity: 1;
-  transform: translateY(0);
-}
+  transform: translateY(0); }
 
 .nalame__screen-track--fade-lift {
-  animation: nalameFadeLift 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+  animation: nalameFadeLift 350ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 .nalame__screen-track--fade-lift-back {
-  animation: nalameFadeLiftBack 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+  animation: nalameFadeLiftBack 350ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 .nalame__eyebrow,
 .nalame__conversation {
@@ -178,16 +155,14 @@ body {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
+  text-transform: uppercase; }
 
 .nalame__conversation {
   max-width: 560px;
   margin: 0 auto 18px;
   text-transform: none;
   letter-spacing: 0;
-  line-height: 1.5;
-}
+  line-height: 1.5; }
 
 .nalame__question,
 .nalame__summary-title {
@@ -196,16 +171,14 @@ body {
   font-size: 43px;
   line-height: 1.1;
   font-weight: 700;
-  letter-spacing: -1.7px;
-}
+  letter-spacing: -1.7px; }
 
 .nalame__answers {
   display: grid;
   gap: 18px;
   margin: 0;
   padding: 0;
-  border: 0;
-}
+  border: 0; }
 
 .nalame__answer {
   width: 100%;
@@ -219,32 +192,27 @@ body {
   justify-content: space-between;
   gap: 18px;
   cursor: pointer;
-  transition: background-color var(--nalame-motion), border-color var(--nalame-motion), transform var(--nalame-motion), box-shadow var(--nalame-motion);
-}
+  transition: background-color var(--nalame-motion), border-color var(--nalame-motion), transform var(--nalame-motion), box-shadow var(--nalame-motion); }
 
 .nalame__answer:hover {
-  background: rgba(241, 235, 227, 0.45);
-}
+  background: rgba(241, 235, 227, 0.45); }
 
 .nalame__answer.is-selected,
 .nalame__answer:has(.nalame__answer-input:checked) {
   background: var(--nalame-selected);
-  border-color: transparent;
-}
+  border-color: transparent; }
 
 .nalame__answer-input {
   position: absolute;
   opacity: 0;
-  pointer-events: none;
-}
+  pointer-events: none; }
 
 .nalame__answer-text {
   text-align: left;
   font-size: 22px;
   line-height: 1.2;
   font-weight: 700;
-  letter-spacing: -0.6px;
-}
+  letter-spacing: -0.6px; }
 
 .nalame__answer-check {
   width: 28px;
@@ -257,15 +225,13 @@ body {
   flex: 0 0 auto;
   font-size: 16px;
   line-height: 1;
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 .nalame__answer.is-selected .nalame__answer-check,
 .nalame__answer:has(.nalame__answer-input:checked) .nalame__answer-check {
   background: var(--nalame-primary);
   border-color: var(--nalame-primary);
-  color: var(--nalame-white);
-}
+  color: var(--nalame-white); }
 
 .nalame__slider-wrap {
   display: grid;
@@ -273,21 +239,18 @@ body {
   padding: 28px;
   border: 1px solid var(--nalame-border);
   border-radius: 17px;
-  background: rgba(255, 255, 255, 0.55);
-}
+  background: rgba(255, 255, 255, 0.55); }
 
 .nalame__slider {
   width: 100%;
-  accent-color: var(--nalame-primary);
-}
+  accent-color: var(--nalame-primary); }
 
 .nalame__slider-scale {
   display: flex;
   justify-content: space-between;
   color: var(--nalame-muted);
   font-size: 14px;
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 .nalame__slider-output {
   justify-self: center;
@@ -298,16 +261,14 @@ body {
   display: grid;
   place-items: center;
   font-size: 24px;
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 .nalame__actions {
   margin-top: 34px;
   display: flex;
   justify-content: center;
   gap: 14px;
-  flex-wrap: wrap;
-}
+  flex-wrap: wrap; }
 
 .nalame__button {
   min-width: 160px;
@@ -320,19 +281,16 @@ body {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  transition: transform var(--nalame-motion), opacity var(--nalame-motion), box-shadow var(--nalame-motion);
-}
+  transition: transform var(--nalame-motion), opacity var(--nalame-motion), box-shadow var(--nalame-motion); }
 
 .nalame__button--primary {
   border: 0;
   background: var(--nalame-primary);
-  color: var(--nalame-bg);
-}
+  color: var(--nalame-bg); }
 
 .nalame__button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 18px 34px rgba(47, 27, 17, 0.2);
-}
+  box-shadow: 0 18px 34px rgba(47, 27, 17, 0.2); }
 
 .nalame__summary-intro {
   max-width: 520px;
@@ -340,37 +298,31 @@ body {
   text-align: center;
   color: var(--nalame-muted);
   font-size: 18px;
-  line-height: 1.5;
-}
+  line-height: 1.5; }
 
 .nalame__summary-list {
   display: grid;
   gap: 14px;
   margin: 0;
   padding: 0;
-  list-style: none;
-}
+  list-style: none; }
 
 .nalame__summary-item {
   padding: 20px 24px;
   border: 1px solid var(--nalame-border);
   border-radius: 17px;
-  background: rgba(255, 255, 255, 0.35);
-}
+  background: rgba(255, 255, 255, 0.35); }
 
 .nalame__summary-question,
 .nalame__summary-answer {
-  margin: 0;
-}
+  margin: 0; }
 
 .nalame__summary-question {
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 .nalame__summary-answer {
   margin-top: 8px;
-  color: var(--nalame-muted);
-}
+  color: var(--nalame-muted); }
 
 .nalame__icon-button:focus-visible,
 .nalame__theme-button:focus-visible,
@@ -378,8 +330,7 @@ body {
 .nalame__button:focus-visible,
 .nalame__slider:focus-visible {
   outline: 3px solid var(--nalame-focus);
-  outline-offset: 3px;
-}
+  outline-offset: 3px; }
 
 .nalame__sr-only {
   position: absolute;
@@ -390,65 +341,66 @@ body {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border: 0;
-}
+  border: 0; }
 
 @keyframes nalameFadeLift {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  from {
+    opacity: 0;
+    transform: translateY(14px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
 
 @keyframes nalameFadeLiftBack {
-  from { opacity: 0; transform: translateY(-14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  from {
+    opacity: 0;
+    transform: translateY(-14px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
 
 @media (max-width: 700px) {
   .nalame__header {
     min-height: 82px;
     padding: 0 18px;
     grid-template-columns: 48px auto 1fr;
-    gap: 14px;
-  }
-
+    gap: 14px; }
   .nalame__icon-button {
     width: 48px;
-    height: 48px;
-  }
-
+    height: 48px; }
   .nalame__brand {
-    font-size: 25px;
-  }
-
+    font-size: 25px; }
   .nalame__header-title {
-    display: none;
-  }
-
+    display: none; }
   .nalame__theme {
-    justify-self: end;
-  }
-
+    justify-self: end; }
   .nalame__theme-button {
     min-height: 36px;
     padding: 0 10px;
-    font-size: 12px;
-  }
-
+    font-size: 12px; }
   .nalame__main {
-    padding-top: 54px;
-  }
-
+    padding-top: 54px; }
   .nalame__question,
   .nalame__summary-title {
-    font-size: 34px;
-  }
-
+    font-size: 34px; }
   .nalame__answer {
     min-height: 76px;
-    padding: 0 20px;
-  }
-
+    padding: 0 20px; }
   .nalame__answer-text {
-    font-size: 19px;
-  }
-}
+    font-size: 19px; } }
+
+.nalame__theme {
+  display: none !important; }
+
+.nalame__button {
+  border: none;
+  border-radius: 20px;
+  min-height: 40px;
+  padding: 0 24px;
+  font-weight: 600;
+  background: #6750A4;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
+
+.nalame__button:not(:disabled):hover {
+  transform: translateY(-1px); }

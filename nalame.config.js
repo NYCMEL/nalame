@@ -7,10 +7,10 @@
       title: 'Locksmith Career Path',
       eyebrow: 'Personalized Flow',
       intro: 'Answer a few quick questions to help us understand your goals.',
-      modeLabel: 'Theme',
-      lightLabel: 'Light',
-      darkLabel: 'Dark',
-      defaultTheme: 'light',
+      
+      
+      
+      
       summaryTitle: 'Your Personalized Locksmith Path',
       summaryIntro: 'Review your answers and see the path that fits your goals.',
       emptyAnswerLabel: 'Skipped',
