@@ -151,7 +151,7 @@ body {
 .nalame__answers {
   width: 100%;
   display: grid;
-  gap: 24px;
+  gap: 12px;
   margin: 0;
   padding: 0;
   border: 0;
@@ -162,7 +162,7 @@ body {
   width: 100%;
   display: block;
   border: 0;
-  border-radius: 32px;
+  border-radius: 10px;
   background: transparent;
   cursor: pointer;
 }
@@ -179,15 +179,15 @@ body {
 
 .nalame__answer-label {
   width: 100%;
-  min-height: 132px;
+  min-height: 66px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 28px;
-  padding: 0 48px;
+  gap: 14px;
+  padding: 0 24px;
   border: 2px solid var(--nalame-border);
-  border-radius: 32px;
+  border-radius: 10px;
   background: var(--nalame-white);
   color: var(--nalame-text);
   box-shadow: none;
@@ -211,7 +211,7 @@ body {
   display: block;
   overflow-wrap: anywhere;
   color: var(--nalame-text);
-  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   line-height: 1.15;
   font-weight: 900;
   letter-spacing: -0.04em;
@@ -220,8 +220,8 @@ body {
 
 .nalame__answer-check {
   order: 2;
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   margin-left: auto;
   display: grid;
   place-items: center;
@@ -243,7 +243,7 @@ body {
 .nalame__answer-input:checked + .nalame__answer-label .nalame__answer-check::before {
   content: "✓";
   color: #ffffff;
-  font-size: 31px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 1;
   display: block;
@@ -267,7 +267,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 12px;
   margin-top: 30px;
 }
 
@@ -335,7 +335,7 @@ body {
 .nalame__summary-item {
   padding: 22px;
   border: 1px solid var(--nalame-border);
-  border-radius: 20px;
+  border-radius: 10px;
   background: var(--nalame-white);
 }
 
@@ -396,7 +396,7 @@ body {
   .nalame__answer-label {
     min-height: 86px;
     padding: 0 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     gap: 16px;
   }
 
