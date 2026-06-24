@@ -317,7 +317,7 @@
         <section class="nalame__slide nalame__slide--question ${isActive ? 'is-active' : ''}" aria-labelledby="nalame-question-title-${index}" ${isActive ? '' : 'aria-hidden="true"'}>
           <div class="nalame__card nalame__card--quiz">
             <h2 class="nalame__question" id="nalame-question-title-${index}">${this.escape(question ? question.text : '')}</h2>
-            <p class="nalame__instruction">Select one option.</p>
+            
             <fieldset class="nalame__answers" aria-label="${this.escape(this.app.answerGroupLabel || 'Answer choices')}">
               <legend class="nalame__sr-only">${this.escape(this.app.answerGroupLabel || 'Answer choices')}</legend>
               ${question && Array.isArray(question.answers) ? question.answers.map((answer) => this.answerTemplate(question, answer, currentAnswer)).join('') : ''}
