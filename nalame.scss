@@ -555,3 +555,33 @@ body {
     bottom: 18px !important;
   }
 }
+
+
+/* Continue button below conversation text with 30px gap */
+.nalame__conversation-card{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+}
+
+.nalame__conversation-copy{
+  margin-bottom:30px !important;
+}
+
+.nalame__conversation-actions{
+  position:static !important;
+  left:auto !important;
+  right:auto !important;
+  bottom:auto !important;
+  margin-top:30px !important;
+  padding:0 !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  pointer-events:auto !important;
+}
+
+.nalame__conversation-actions .nalame__button{
+  min-width:260px !important;
+  margin:0 auto !important;
+}
