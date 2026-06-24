@@ -279,6 +279,18 @@
       `;
     }
 
+
+    getRandomLocksmithImage() {
+      const images = [
+        'https://images.unsplash.com/photo-1517048676732-d65bc937f952',
+        'https://images.unsplash.com/photo-1521791136064-7986c2920216',
+        'https://images.unsplash.com/photo-1556155092-490a1ba16284',
+        'https://images.unsplash.com/photo-1450101499163-c8848c66ca85',
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780'
+      ];
+      return images[Math.floor(Math.random() * images.length)];
+    }
+
     conversationSlideTemplate(question, index) {
       const step = index * 2;
       const isActive = step === this.stepIndex;
@@ -286,7 +298,7 @@
         <section class="nalame__slide nalame__slide--conversation ${isActive ? 'is-active' : ''}" aria-labelledby="nalame-conversation-title-${index}" ${isActive ? '' : 'aria-hidden="true"'}>
           <div class="nalame__conversation-card">
             
-            <div class="nalame__conversation-image-holder" aria-hidden="true"></div><h2 class="nalame__conversation-title" id="nalame-conversation-title-${index}">${this.escape(question && question.conversation ? question.conversation : '')}</h2>
+            <div class="nalame__conversation-image-holder" aria-hidden="true"><img class="nalame__conversation-image" src="https://picsum.photos/600/350?random=1" alt=""></div><h2 class="nalame__conversation-title" id="nalame-conversation-title-${index}">${this.escape(question && question.conversation ? question.conversation : '')}</h2>
             <p class="nalame__conversation-copy">${this.escape(question && question.conversation ? question.conversation : '')}</p>
             <div class="nalame__conversation-actions">
               <button class="nalame__button nalame__button--primary nalame__button--center" type="button" data-nalame-action="continue">CONTINUE</button>
