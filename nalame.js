@@ -7,7 +7,7 @@
       this.config = window.NalameConfig || {};
       this.app = this.config.app || {};
       this.questions = Array.isArray(this.config.questions) ? this.config.questions : [];
-      this.currentIndex = 0;
+      this.stepIndex = 0;
       this.answers = {};
       this.statusText = '';
       this.touchStartX = 0;
@@ -53,6 +53,26 @@
         .catch(() => {});
     }
 
+    get totalQuestionSteps() {
+      return this.questions.length * 2;
+    }
+
+    get questionIndex() {
+      return Math.floor(this.stepIndex / 2);
+    }
+
+    get isConversationStep() {
+      return this.stepIndex % 2 === 0;
+    }
+
+    get isSummaryStep() {
+      return this.stepIndex >= this.totalQuestionSteps;
+    }
+
+    getCurrentQuestion() {
+      return this.questions[this.questionIndex] || null;
+    }
+
     handleClick(event) {
       const actionTarget = event.target.closest('[data-nalame-action]');
       if (!actionTarget) {
@@ -79,7 +99,7 @@
       if (!input) {
         return;
       }
-      const question = this.questions[this.currentIndex];
+      const question = this.getCurrentQuestion();
       const selectedAnswer = this.findAnswer(question, input.value);
       if (!question || !selectedAnswer) {
         return;
@@ -90,7 +110,7 @@
         questionId: question.id,
         answerId: selectedAnswer.id,
         answerText: selectedAnswer.text,
-        index: this.currentIndex
+        index: this.questionIndex
       });
       this.render();
     }
@@ -134,40 +154,45 @@
     }
 
     next() {
-      const question = this.questions[this.currentIndex];
-      if (question && !this.answers[question.id]) {
+      if (this.isSummaryStep) {
+        return;
+      }
+
+      const question = this.getCurrentQuestion();
+
+      if (!this.isConversationStep && question && !this.answers[question.id]) {
         this.statusText = this.app.requiredMessage || 'Select one option.';
         this.render();
         return;
       }
-      if (this.currentIndex >= this.questions.length) {
-        return;
-      }
-      this.currentIndex += 1;
+
+      this.stepIndex = Math.min(this.stepIndex + 1, this.totalQuestionSteps);
       this.statusText = '';
       this.publish('nalame:next', {
-        index: this.currentIndex,
-        complete: this.currentIndex >= this.questions.length,
-        questionId: this.questions[this.currentIndex] ? this.questions[this.currentIndex].id : ''
+        stepIndex: this.stepIndex,
+        questionIndex: this.questionIndex,
+        complete: this.isSummaryStep,
+        questionId: this.getCurrentQuestion() ? this.getCurrentQuestion().id : ''
       });
       this.render();
     }
 
     previous() {
-      if (this.currentIndex <= 0) {
+      if (this.stepIndex <= 0) {
         return;
       }
-      this.currentIndex -= 1;
+      this.stepIndex -= 1;
       this.statusText = '';
       this.publish('nalame:previous', {
-        index: this.currentIndex,
-        questionId: this.questions[this.currentIndex] ? this.questions[this.currentIndex].id : ''
+        stepIndex: this.stepIndex,
+        questionIndex: this.questionIndex,
+        questionId: this.getCurrentQuestion() ? this.getCurrentQuestion().id : ''
       });
       this.render();
     }
 
     restart() {
-      this.currentIndex = 0;
+      this.stepIndex = 0;
       this.answers = {};
       this.statusText = '';
       this.publish('nalame:restart', { totalQuestions: this.questions.length });
@@ -196,7 +221,7 @@
           ${this.progressTemplate()}
           ${this.headerTemplate()}
           <main class="nalame__main">
-            ${this.currentIndex >= this.questions.length ? this.summaryTemplate() : this.carouselTemplate()}
+            ${this.isSummaryStep ? this.summaryTemplate() : this.carouselTemplate()}
           </main>
           <div class="nalame__sr-only" aria-live="polite">${this.escape(this.statusText || '')}</div>
         </div>
@@ -204,10 +229,10 @@
     }
 
     progressTemplate() {
-      const completed = this.questions.length ? Math.min(this.currentIndex, this.questions.length) : 0;
-      const progress = this.questions.length ? (completed / this.questions.length) * 100 : 0;
+      const completedQuestions = Math.min(this.questionIndex, this.questions.length);
+      const progress = this.totalQuestionSteps ? (this.stepIndex / this.totalQuestionSteps) * 100 : 0;
       return `
-        <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel || 'Question')} ${completed} of ${this.questions.length}">
+        <div class="nalame__progress-wrap" aria-label="${this.escape(this.app.progressLabel || 'Question')} ${completedQuestions} of ${this.questions.length}">
           <span class="nalame__progress-track" aria-hidden="true">
             <span class="nalame__progress-bar" style="width: ${progress}%"></span>
           </span>
@@ -229,19 +254,55 @@
     carouselTemplate() {
       return `
         <section class="nalame__carousel" aria-label="Question carousel">
-          <div class="nalame__track" style="transform: translateX(-${this.currentIndex * 100}%);">
-            ${this.questions.map((question, index) => this.slideTemplate(question, index)).join('')}
+          <div class="nalame__track" style="transform: translateX(-${this.stepIndex * 100}%);">
+            ${this.questions.map((question, index) => this.conversationSlideTemplate(question, index)).join('')}
+            ${this.questions.map((question, index) => this.questionSlideTemplate(question, index)).join('')}
           </div>
         </section>
       `;
     }
 
-    slideTemplate(question, index) {
+    orderedSlidesTemplate() {
+      return this.questions.map((question, index) => `
+        ${this.conversationSlideTemplate(question, index)}
+        ${this.questionSlideTemplate(question, index)}
+      `).join('');
+    }
+
+    carouselTemplate() {
+      return `
+        <section class="nalame__carousel" aria-label="Question carousel">
+          <div class="nalame__track" style="transform: translateX(-${this.stepIndex * 100}%);">
+            ${this.orderedSlidesTemplate()}
+          </div>
+        </section>
+      `;
+    }
+
+    conversationSlideTemplate(question, index) {
+      const step = index * 2;
+      const isActive = step === this.stepIndex;
+      return `
+        <section class="nalame__slide nalame__slide--conversation ${isActive ? 'is-active' : ''}" aria-labelledby="nalame-conversation-title-${index}" ${isActive ? '' : 'aria-hidden="true"'}>
+          <div class="nalame__conversation-card">
+            
+            <div class="nalame__conversation-image-holder" aria-hidden="true"></div><h2 class="nalame__conversation-title" id="nalame-conversation-title-${index}">${this.escape(question ? question.text : '')}</h2>
+            <p class="nalame__conversation-copy">${this.escape(question && question.conversation ? question.conversation : '')}</p>
+            <div class="nalame__conversation-actions">
+              <button class="nalame__button nalame__button--primary nalame__button--center" type="button" data-nalame-action="continue">CONTINUE</button>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    questionSlideTemplate(question, index) {
+      const step = index * 2 + 1;
+      const isActive = step === this.stepIndex;
       const currentAnswer = question ? this.answers[question.id] || '' : '';
       const isLast = index === this.questions.length - 1;
-      const isActive = index === this.currentIndex;
       return `
-        <section class="nalame__slide ${isActive ? 'is-active' : ''}" aria-labelledby="nalame-question-title-${index}" ${isActive ? '' : 'aria-hidden="true"'}>
+        <section class="nalame__slide nalame__slide--question ${isActive ? 'is-active' : ''}" aria-labelledby="nalame-question-title-${index}" ${isActive ? '' : 'aria-hidden="true"'}>
           <div class="nalame__card nalame__card--quiz">
             <h2 class="nalame__question" id="nalame-question-title-${index}">${this.escape(question ? question.text : '')}</h2>
             <p class="nalame__instruction">Select one option.</p>
@@ -273,7 +334,7 @@
     actionsTemplate(isLast) {
       return `
         <div class="nalame__actions" aria-label="Quiz navigation">
-          <button class="nalame__button nalame__button--back" type="button" data-nalame-action="back" ${this.currentIndex === 0 ? 'disabled' : ''}>‹ ${this.escape(this.app.previousLabel || 'Back')}</button>
+          <button class="nalame__button nalame__button--back" type="button" data-nalame-action="back">‹ ${this.escape(this.app.previousLabel || 'Back')}</button>
           <button class="nalame__button nalame__button--primary" type="button" data-nalame-action="continue">${this.escape(isLast ? (this.app.completeLabel || 'Complete') : (this.app.nextLabel || 'Continue'))} ›</button>
         </div>
       `;

@@ -30,7 +30,7 @@
       {
         id: 'question-01',
         text: 'What best describes your current work situation?',
-          conversation: 'Let us start with where you are today.',
+        conversation: 'Let us start with where you are today.',
         answers: [
           { id: 'q01-a01', text: 'Working full-time', conversation: 'That is helpful. Many people begin building a new skill while still working full-time.' },
           { id: 'q01-a02', text: 'Working part-time', conversation: 'Good to know. A part-time schedule may give you room to build momentum.' },
