@@ -585,3 +585,11 @@ body {
   min-width:260px !important;
   margin:0 auto !important;
 }
+
+
+/* Move conversation screen content up ~100px */
+.nalame__conversation-card{
+  justify-content:flex-start !important;
+  padding-top:100px !important;
+  min-height:auto !important;
+}
