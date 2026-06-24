@@ -605,6 +605,7 @@
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;
     animation-iteration-count: 1; } }
+
 /* conversation message + requested question size */
 .nalame__conversation {
   width: 100%;
@@ -614,31 +615,23 @@
   font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.4;
-  text-align: left;
-}
+  text-align: left; }
 
 .nalame__question {
-  font-size: 2.5rem !important;
-}
+  font-size: 2.5rem !important; }
 
 @media (max-width: 720px) {
   .nalame__conversation {
     font-size: 0.875rem;
-    margin-bottom: 0.75rem;
-  }
-
+    margin-bottom: 0.75rem; }
   .nalame__question {
-    font-size: 2.5rem !important;
-  }
-}
-
+    font-size: 2.5rem !important; } }
 
 /* no question image */
 .nalame__question-media,
 .nalame__question-media--empty,
 .nalame__question-image {
-  display: none !important;
-}
+  display: none !important; }
 
 /* conversation message + requested question size */
 .nalame__conversation {
@@ -649,59 +642,41 @@
   font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.4;
-  text-align: left;
-}
+  text-align: left; }
 
 .nalame__question {
-  font-size: 2.5rem !important;
-}
-
+  font-size: 2.5rem !important; }
 
 /* conversation closer to question */
 .nalame__conversation {
-  margin-bottom: 0.25rem !important;
-}
+  margin-bottom: 0.25rem !important; }
 
 @media (max-width: 720px) {
   .nalame__conversation {
-    margin-bottom: 0.2rem !important;
-  }
-}
-
-
+    margin-bottom: 0.2rem !important; } }
 
 /* conversation typography */
 .nalame__conversation {
   font-weight: 300 !important;
-  font-style: italic !important;
-}
-
+  font-style: italic !important; }
 
 /* conversation fade only when new question appears */
 .nalame__conversation {
-  animation: none !important;
-}
+  animation: none !important; }
 
 .nalame__conversation--active {
-  animation: nalameConversationFade 1400ms ease-out both !important;
-}
+  animation: nalameConversationFade 1400ms ease-out both !important; }
 
 @keyframes nalameConversationFade {
   from {
-    opacity: 0;
-  }
-
+    opacity: 0; }
   to {
-    opacity: 1;
-  }
-}
-
+    opacity: 1; } }
 
 /* conversation spacing and size */
 .nalame__conversation {
   font-size: 22px !important;
-  margin-bottom: -15px !important;
-}
+  margin-bottom: -15px !important; }
 
 /* slider questions */
 .nalame__slider-wrap {
@@ -710,13 +685,11 @@
   margin: 0 auto;
   display: grid;
   gap: 1rem;
-  padding: 1.25rem 0;
-}
+  padding: 1.25rem 0; }
 
 .nalame__slider {
   width: 100%;
-  accent-color: var(--nalame-color-primary);
-}
+  accent-color: var(--nalame-color-primary); }
 
 .nalame__slider-output {
   justify-self: center;
@@ -728,43 +701,33 @@
   font-size: 2rem;
   font-weight: 900;
   line-height: 1;
-  text-align: center;
-}
+  text-align: center; }
 
 .nalame__slider-scale {
   display: flex;
   justify-content: space-between;
   color: var(--nalame-color-muted);
   font-size: 0.875rem;
-  font-weight: 700;
-}
-
-
+  font-weight: 700; }
 
 /* full slider labels */
 .nalame__slider-scale {
   font-size: 14px !important;
   font-weight: 600 !important;
   line-height: 1.3;
-  gap: 1rem;
-}
+  gap: 1rem; }
 
 .nalame__slider-scale span:first-child {
   text-align: left;
-  max-width: 45%;
-}
+  max-width: 45%; }
 
 .nalame__slider-scale span:last-child {
   text-align: right;
-  max-width: 45%;
-}
-
+  max-width: 45%; }
 
 /* slider dimensions */
 .nalame__slider {
-  height: 20px !important;
-}
-
+  height: 20px !important; }
 
 /* side slider labels */
 .nalame__slider-row {
@@ -772,63 +735,44 @@
   grid-template-columns: minmax(140px, 220px) 1fr minmax(140px, 220px);
   align-items: center;
   gap: 1rem;
-  width: 100%;
-}
+  width: 100%; }
 
 .nalame__slider-label {
   font-size: 14px;
   font-weight: 600;
-  line-height: 1.3;
-}
+  line-height: 1.3; }
 
 .nalame__slider-label--left {
-  text-align: right;
-}
+  text-align: right; }
 
 .nalame__slider-label--right {
-  text-align: left;
-}
+  text-align: left; }
 
 .nalame__slider-scale {
-  display: none !important;
-}
+  display: none !important; }
 
 @media (max-width: 768px) {
   .nalame__slider-row {
     grid-template-columns: 90px 1fr 90px;
-    gap: .5rem;
-  }
-
+    gap: .5rem; }
   .nalame__slider-label {
-    font-size: 11px;
-  }
-}
-
+    font-size: 11px; } }
 
 /* slider width */
 .nalame__slider-wrap {
-  max-width: 1000px !important;
-}
-
+  max-width: 1000px !important; }
 
 /* mobile typography adjustments */
 @media (max-width: 768px) {
   .nalame__question {
-    font-size: 1.625rem !important;
-  }
-
+    font-size: 1.625rem !important; }
   .nalame__conversation {
     font-size: 14px !important;
-    margin-bottom: 10px !important;
-  }
-}
-
+    margin-bottom: 10px !important; } }
 
 /* question font size */
 .nalame__question {
-  font-size: 1.2rem !important;
-}
-
+  font-size: 1.2rem !important; }
 
 /* slider labels below slider */
 .nalame__slider-scale {
@@ -836,20 +780,16 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
-  margin-top: 8px;
-}
+  margin-top: 8px; }
 
 .nalame__slider-label {
   font-size: 14px;
   font-weight: 600;
   line-height: 1.3;
-  max-width: 45%;
-}
+  max-width: 45%; }
 
 .nalame__slider-label--left {
-  text-align: left;
-}
+  text-align: left; }
 
 .nalame__slider-label--right {
-  text-align: right;
-}
+  text-align: right; }
