@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Personalized Income Roadmap</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="eyebrow">Personalized income roadmap</div>
+      <h1 id="headline">This is your plan.</h1>
+      <p id="subhead">
+        Answer a few questions and watch your roadmap adjust in real time.
+      </p>
+    </section>
+
+    <section class="planner">
+      <aside class="controls-card" aria-label="Roadmap inputs">
+        <h2>Your answers</h2>
+
+        <label>
+          Current income
+          <input id="currentIncome" type="range" min="0" max="12000" step="250" />
+          <span id="currentIncomeLabel"></span>
+        </label>
+
+        <label>
+          Target income
+          <input id="targetIncome" type="range" min="1000" max="25000" step="500" />
+          <span id="targetIncomeLabel"></span>
+        </label>
+
+        <label>
+          Available hours per week
+          <input id="availableHours" type="range" min="5" max="60" step="1" />
+          <span id="availableHoursLabel"></span>
+        </label>
+
+        <label>
+          Goal type
+          <select id="goalType">
+            <option value="side">Side income</option>
+            <option value="fulltime">Full-time</option>
+            <option value="career">Career change</option>
+          </select>
+        </label>
+
+        <button id="replayBtn" type="button">Replay animation</button>
+      </aside>
+
+      <section class="experience-card" aria-label="Personalized roadmap chart">
+        <div class="kpi-grid">
+          <article>
+            <span>Today</span>
+            <strong id="todayKpi">$2,500/mo</strong>
+          </article>
+          <article>
+            <span>Goal</span>
+            <strong id="goalKpi">$8,000/mo</strong>
+          </article>
+          <article>
+            <span>Increase</span>
+            <strong id="monthlyIncreaseKpi">+$5,500/mo</strong>
+          </article>
+          <article>
+            <span>Annual upside</span>
+            <strong id="annualIncreaseKpi">+$66,000/yr</strong>
+          </article>
+        </div>
+
+        <div class="chart-wrap">
+          <svg id="roadmapSvg" viewBox="0 0 1000 520" role="img" aria-labelledby="chartTitle chartDesc">
+            <title id="chartTitle">Personalized income roadmap</title>
+            <desc id="chartDesc">An animated growth path from current monthly income to target monthly income.</desc>
+
+            <defs>
+              <filter id="greenGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <linearGradient id="fillGradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#33ff99" stop-opacity="0.24" />
+                <stop offset="100%" stop-color="#33ff99" stop-opacity="0.01" />
+              </linearGradient>
+            </defs>
+
+            <g id="grid"></g>
+            <path id="areaPath" class="area-path"></path>
+            <path id="growthPathShadow" class="growth-shadow"></path>
+            <path id="growthPath" class="growth-path"></path>
+            <g id="points"></g>
+            <g id="labels"></g>
+          </svg>
+
+          <div class="chart-badge today-badge" id="todayBadge">
+            <span>You are here</span>
+            <strong id="todayBadgeValue">$2,500/mo</strong>
+          </div>
+
+          <div class="chart-badge goal-badge" id="goalBadge">
+            <span>Goal</span>
+            <strong id="goalBadgeValue">$8,000/mo</strong>
+          </div>
+        </div>
+
+        <div class="timeline-summary">
+          <div>
+            <span>Estimated timeline</span>
+            <strong id="timelineKpi">7 months</strong>
+          </div>
+          <div>
+            <span>Plan confidence</span>
+            <strong id="confidenceKpi">82%</strong>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="milestones-card">
+      <div>
+        <h2>Your path</h2>
+        <p id="pathCopy">Built from your income goal, time available, and preferred path.</p>
+      </div>
+      <div id="milestones" class="milestones"></div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/journey-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
